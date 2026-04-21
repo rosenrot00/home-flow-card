@@ -36,31 +36,18 @@ Use Home Flow Card when you want to:
 
 ### HACS
 
+#### Automatic
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=rosenrot00&repository=home-flow-card&category=Dashboard)
+
+#### Manual
+
 1. Open HACS
 2. Add this repository as a custom repository or install it once it is included as a default repository
 3. Choose the `Dashboard` category
 4. Install `Home Flow Card`
 5. Add the card as a Lovelace resource if Home Assistant does not do it automatically
 
-## Manual installation
-
-1. Copy `dist/home-flow-card.js` to your Home Assistant instance:
-
-   ```text
-   /config/www/community/home-flow-card/home-flow-card.js
-   ```
-
-2. Add the resource:
-
-   ```text
-   /local/community/home-flow-card/home-flow-card.js
-   ```
-
-3. Use the card:
-
-   ```yaml
-   type: custom:home-flow-card
-   ```
 
 ## License
 

@@ -62,38 +62,8 @@ Use Home Flow Card when you want to:
    type: custom:home-flow-card
    ```
 
-## Development
-
-```bash
-npm install
-npm run dev
-```
-
-Card build:
-
-```bash
-npm run build:card
-```
-
-The build artifact used for Home Assistant and HACS is:
-
-```text
-dist/home-flow-card.js
-```
-
 ## License
 
 This project is licensed under **PolyForm Noncommercial 1.0.0**.
 
 Noncommercial use is allowed under the license terms. Commercial use requires separate permission from the licensor.
-
-## Publishing notes
-
-For HACS inclusion as a default repository, the repository also needs:
-
-- a public GitHub repository
-- repository description
-- GitHub topics
-- issues enabled
-- a passing HACS validation workflow
-- at least one GitHub release created after validation passed

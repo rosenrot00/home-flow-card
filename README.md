@@ -8,7 +8,7 @@ Instead of forcing a fixed layout, the card lets you place nodes freely, connect
 
 The editor is built directly for Home Assistant. You can position nodes, route labels, adjust anchors, choose routing styles, configure primary and secondary values, and define click actions without leaving the card editor.
 
-![Home Flow Card preview](./docs/preview.svg)
+![Home Flow Card preview](https://github.com/user-attachments/assets/5f8df22f-99ac-4f85-879f-bb862e0933df)
 
 ## What the card is for
 

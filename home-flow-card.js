@@ -281,37 +281,37 @@ var T = class extends HTMLElement {
 T.elementStyles = [], T.shadowRootOptions = { mode: "open" }, T[x("elementProperties")] = /* @__PURE__ */ new Map(), T[x("finalized")] = /* @__PURE__ */ new Map(), b == null || b({ ReactiveElement: T }), ((u = _.reactiveElementVersions) == null ? _.reactiveElementVersions = [] : u).push("2.1.2");
 //#endregion
 //#region node_modules/lit-html/lit-html.js
-var ee, E = globalThis, te = (e) => e, D = E.trustedTypes, O = D ? D.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, ne = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, re = "?" + k, ie = `<${re}>`, A = document, ae = () => A.createComment(""), oe = (e) => e === null || typeof e != "object" && typeof e != "function", se = Array.isArray, ce = (e) => se(e) || typeof (e == null ? void 0 : e[Symbol.iterator]) == "function", le = "[ 	\n\f\r]", j = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ue = /-->/g, de = />/g, M = RegExp(`>|${le}(?:([^\\s"'>=/]+)(${le}*=${le}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), fe = /'/g, pe = /"/g, me = /^(?:script|style|textarea|title)$/i, he = (e) => (t, ...n) => ({
+var ee, te = globalThis, ne = (e) => e, E = te.trustedTypes, D = E ? E.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, O = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, A = "?" + k, re = `<${A}>`, j = document, ie = () => j.createComment(""), ae = (e) => e === null || typeof e != "object" && typeof e != "function", oe = Array.isArray, se = (e) => oe(e) || typeof (e == null ? void 0 : e[Symbol.iterator]) == "function", ce = "[ 	\n\f\r]", M = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, le = /-->/g, ue = />/g, N = RegExp(`>|${ce}(?:([^\\s"'>=/]+)(${ce}*=${ce}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), de = /'/g, fe = /"/g, pe = /^(?:script|style|textarea|title)$/i, me = (e) => (t, ...n) => ({
 	_$litType$: e,
 	strings: t,
 	values: n
-}), N = he(1), P = he(2), F = Symbol.for("lit-noChange"), I = Symbol.for("lit-nothing"), ge = /* @__PURE__ */ new WeakMap(), L = A.createTreeWalker(A, 129);
-function _e(e, t) {
-	if (!se(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
-	return O === void 0 ? t : O.createHTML(t);
+}), P = me(1), F = me(2), I = Symbol.for("lit-noChange"), L = Symbol.for("lit-nothing"), he = /* @__PURE__ */ new WeakMap(), R = j.createTreeWalker(j, 129);
+function ge(e, t) {
+	if (!oe(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
+	return D === void 0 ? t : D.createHTML(t);
 }
-var ve = (e, t) => {
-	let n = e.length - 1, r = [], i, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = j;
+var _e = (e, t) => {
+	let n = e.length - 1, r = [], i, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = M;
 	for (let t = 0; t < n; t++) {
 		var s;
 		let n = e[t], c, l, u = -1, d = 0;
-		for (; d < n.length && (o.lastIndex = d, l = o.exec(n), l !== null);) d = o.lastIndex, o === j ? l[1] === "!--" ? o = ue : l[1] === void 0 ? l[2] === void 0 ? l[3] !== void 0 && (o = M) : (me.test(l[2]) && (i = RegExp("</" + l[2], "g")), o = M) : o = de : o === M ? l[0] === ">" ? (o = (s = i) == null ? j : s, u = -1) : l[1] === void 0 ? u = -2 : (u = o.lastIndex - l[2].length, c = l[1], o = l[3] === void 0 ? M : l[3] === "\"" ? pe : fe) : o === pe || o === fe ? o = M : o === ue || o === de ? o = j : (o = M, i = void 0);
-		let f = o === M && e[t + 1].startsWith("/>") ? " " : "";
-		a += o === j ? n + ie : u >= 0 ? (r.push(c), n.slice(0, u) + ne + n.slice(u) + k + f) : n + k + (u === -2 ? t : f);
+		for (; d < n.length && (o.lastIndex = d, l = o.exec(n), l !== null);) d = o.lastIndex, o === M ? l[1] === "!--" ? o = le : l[1] === void 0 ? l[2] === void 0 ? l[3] !== void 0 && (o = N) : (pe.test(l[2]) && (i = RegExp("</" + l[2], "g")), o = N) : o = ue : o === N ? l[0] === ">" ? (o = (s = i) == null ? M : s, u = -1) : l[1] === void 0 ? u = -2 : (u = o.lastIndex - l[2].length, c = l[1], o = l[3] === void 0 ? N : l[3] === "\"" ? fe : de) : o === fe || o === de ? o = N : o === le || o === ue ? o = M : (o = N, i = void 0);
+		let f = o === N && e[t + 1].startsWith("/>") ? " " : "";
+		a += o === M ? n + re : u >= 0 ? (r.push(c), n.slice(0, u) + O + n.slice(u) + k + f) : n + k + (u === -2 ? t : f);
 	}
-	return [_e(e, a + (e[n] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
-}, ye = class e {
+	return [ge(e, a + (e[n] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
+}, ve = class e {
 	constructor({ strings: t, _$litType$: n }, r) {
 		let i;
 		this.parts = [];
-		let a = 0, o = 0, s = t.length - 1, c = this.parts, [l, u] = ve(t, n);
-		if (this.el = e.createElement(l, r), L.currentNode = this.el.content, n === 2 || n === 3) {
+		let a = 0, o = 0, s = t.length - 1, c = this.parts, [l, u] = _e(t, n);
+		if (this.el = e.createElement(l, r), R.currentNode = this.el.content, n === 2 || n === 3) {
 			let e = this.el.content.firstChild;
 			e.replaceWith(...e.childNodes);
 		}
-		for (; (i = L.nextNode()) !== null && c.length < s;) {
+		for (; (i = R.nextNode()) !== null && c.length < s;) {
 			if (i.nodeType === 1) {
-				if (i.hasAttributes()) for (let e of i.getAttributeNames()) if (e.endsWith(ne)) {
+				if (i.hasAttributes()) for (let e of i.getAttributeNames()) if (e.endsWith(O)) {
 					let t = u[o++], n = i.getAttribute(e).split(k), r = /([.?@])?(.*)/.exec(t);
 					c.push({
 						type: 1,
@@ -324,18 +324,18 @@ var ve = (e, t) => {
 					type: 6,
 					index: a
 				}), i.removeAttribute(e));
-				if (me.test(i.tagName)) {
+				if (pe.test(i.tagName)) {
 					let e = i.textContent.split(k), t = e.length - 1;
 					if (t > 0) {
-						i.textContent = D ? D.emptyScript : "";
-						for (let n = 0; n < t; n++) i.append(e[n], ae()), L.nextNode(), c.push({
+						i.textContent = E ? E.emptyScript : "";
+						for (let n = 0; n < t; n++) i.append(e[n], ie()), R.nextNode(), c.push({
 							type: 2,
 							index: ++a
 						});
-						i.append(e[t], ae());
+						i.append(e[t], ie());
 					}
 				}
-			} else if (i.nodeType === 8) if (i.data === re) c.push({
+			} else if (i.nodeType === 8) if (i.data === A) c.push({
 				type: 2,
 				index: a
 			});
@@ -350,15 +350,15 @@ var ve = (e, t) => {
 		}
 	}
 	static createElement(e, t) {
-		let n = A.createElement("template");
+		let n = j.createElement("template");
 		return n.innerHTML = e, n;
 	}
 };
-function R(e, t, n = e, r) {
+function ye(e, t, n = e, r) {
 	var i, a, o;
-	if (t === F) return t;
-	let s = r === void 0 ? n._$Cl : (i = n._$Co) == null ? void 0 : i[r], c = oe(t) ? void 0 : t._$litDirective$;
-	return (s == null ? void 0 : s.constructor) !== c && (s == null || (a = s._$AO) == null || a.call(s, !1), c === void 0 ? s = void 0 : (s = new c(e), s._$AT(e, n, r)), r === void 0 ? n._$Cl = s : ((o = n._$Co) == null ? n._$Co = [] : o)[r] = s), s !== void 0 && (t = R(e, s._$AS(e, t.values), s, r)), t;
+	if (t === I) return t;
+	let s = r === void 0 ? n._$Cl : (i = n._$Co) == null ? void 0 : i[r], c = ae(t) ? void 0 : t._$litDirective$;
+	return (s == null ? void 0 : s.constructor) !== c && (s == null || (a = s._$AO) == null || a.call(s, !1), c === void 0 ? s = void 0 : (s = new c(e), s._$AT(e, n, r)), r === void 0 ? n._$Cl = s : ((o = n._$Co) == null ? n._$Co = [] : o)[r] = s), s !== void 0 && (t = ye(e, s._$AS(e, t.values), s, r)), t;
 }
 var be = class {
 	constructor(e, t) {
@@ -372,17 +372,17 @@ var be = class {
 	}
 	u(e) {
 		var t;
-		let { el: { content: n }, parts: r } = this._$AD, i = ((t = e == null ? void 0 : e.creationScope) == null ? A : t).importNode(n, !0);
-		L.currentNode = i;
-		let a = L.nextNode(), o = 0, s = 0, c = r[0];
+		let { el: { content: n }, parts: r } = this._$AD, i = ((t = e == null ? void 0 : e.creationScope) == null ? j : t).importNode(n, !0);
+		R.currentNode = i;
+		let a = R.nextNode(), o = 0, s = 0, c = r[0];
 		for (; c !== void 0;) {
 			if (o === c.index) {
 				let t;
 				c.type === 2 ? t = new xe(a, a.nextSibling, this, e) : c.type === 1 ? t = new c.ctor(a, c.name, c.strings, this, e) : c.type === 6 && (t = new Ee(a, this, e)), this._$AV.push(t), c = r[++s];
 			}
-			o !== (c == null ? void 0 : c.index) && (a = L.nextNode(), o++);
+			o !== (c == null ? void 0 : c.index) && (a = R.nextNode(), o++);
 		}
-		return L.currentNode = A, i;
+		return R.currentNode = j, i;
 	}
 	p(e) {
 		let t = 0;
@@ -395,7 +395,7 @@ var be = class {
 	}
 	constructor(e, t, n, r) {
 		var i;
-		this.type = 2, this._$AH = I, this._$AN = void 0, this._$AA = e, this._$AB = t, this._$AM = n, this.options = r, this._$Cv = (i = r == null ? void 0 : r.isConnected) == null ? !0 : i;
+		this.type = 2, this._$AH = L, this._$AN = void 0, this._$AA = e, this._$AB = t, this._$AM = n, this.options = r, this._$Cv = (i = r == null ? void 0 : r.isConnected) == null ? !0 : i;
 	}
 	get parentNode() {
 		let e = this._$AA.parentNode, t = this._$AM;
@@ -408,7 +408,7 @@ var be = class {
 		return this._$AB;
 	}
 	_$AI(e, t = this) {
-		e = R(this, e, t), oe(e) ? e === I || e == null || e === "" ? (this._$AH !== I && this._$AR(), this._$AH = I) : e !== this._$AH && e !== F && this._(e) : e._$litType$ === void 0 ? e.nodeType === void 0 ? ce(e) ? this.k(e) : this._(e) : this.T(e) : this.$(e);
+		e = ye(this, e, t), ae(e) ? e === L || e == null || e === "" ? (this._$AH !== L && this._$AR(), this._$AH = L) : e !== this._$AH && e !== I && this._(e) : e._$litType$ === void 0 ? e.nodeType === void 0 ? se(e) ? this.k(e) : this._(e) : this.T(e) : this.$(e);
 	}
 	O(e) {
 		return this._$AA.parentNode.insertBefore(e, this._$AB);
@@ -417,11 +417,11 @@ var be = class {
 		this._$AH !== e && (this._$AR(), this._$AH = this.O(e));
 	}
 	_(e) {
-		this._$AH !== I && oe(this._$AH) ? this._$AA.nextSibling.data = e : this.T(A.createTextNode(e)), this._$AH = e;
+		this._$AH !== L && ae(this._$AH) ? this._$AA.nextSibling.data = e : this.T(j.createTextNode(e)), this._$AH = e;
 	}
 	$(e) {
 		var t;
-		let { values: n, _$litType$: r } = e, i = typeof r == "number" ? this._$AC(e) : (r.el === void 0 && (r.el = ye.createElement(_e(r.h, r.h[0]), this.options)), r);
+		let { values: n, _$litType$: r } = e, i = typeof r == "number" ? this._$AC(e) : (r.el === void 0 && (r.el = ve.createElement(ge(r.h, r.h[0]), this.options)), r);
 		if (((t = this._$AH) == null ? void 0 : t._$AD) === i) this._$AH.p(n);
 		else {
 			let e = new be(i, this), t = e.u(this.options);
@@ -429,20 +429,20 @@ var be = class {
 		}
 	}
 	_$AC(e) {
-		let t = ge.get(e.strings);
-		return t === void 0 && ge.set(e.strings, t = new ye(e)), t;
+		let t = he.get(e.strings);
+		return t === void 0 && he.set(e.strings, t = new ve(e)), t;
 	}
 	k(t) {
-		se(this._$AH) || (this._$AH = [], this._$AR());
+		oe(this._$AH) || (this._$AH = [], this._$AR());
 		let n = this._$AH, r, i = 0;
-		for (let a of t) i === n.length ? n.push(r = new e(this.O(ae()), this.O(ae()), this, this.options)) : r = n[i], r._$AI(a), i++;
+		for (let a of t) i === n.length ? n.push(r = new e(this.O(ie()), this.O(ie()), this, this.options)) : r = n[i], r._$AI(a), i++;
 		i < n.length && (this._$AR(r && r._$AB.nextSibling, i), n.length = i);
 	}
 	_$AR(e = this._$AA.nextSibling, t) {
 		var n;
 		for ((n = this._$AP) == null || n.call(this, !1, !0, t); e !== this._$AB;) {
-			let t = te(e).nextSibling;
-			te(e).remove(), e = t;
+			let t = ne(e).nextSibling;
+			ne(e).remove(), e = t;
 		}
 	}
 	setConnected(e) {
@@ -457,34 +457,34 @@ var be = class {
 		return this._$AM._$AU;
 	}
 	constructor(e, t, n, r, i) {
-		this.type = 1, this._$AH = I, this._$AN = void 0, this.element = e, this.name = t, this._$AM = r, this.options = i, n.length > 2 || n[0] !== "" || n[1] !== "" ? (this._$AH = Array(n.length - 1).fill(/* @__PURE__ */ new String()), this.strings = n) : this._$AH = I;
+		this.type = 1, this._$AH = L, this._$AN = void 0, this.element = e, this.name = t, this._$AM = r, this.options = i, n.length > 2 || n[0] !== "" || n[1] !== "" ? (this._$AH = Array(n.length - 1).fill(/* @__PURE__ */ new String()), this.strings = n) : this._$AH = L;
 	}
 	_$AI(e, t = this, n, r) {
 		let i = this.strings, a = !1;
-		if (i === void 0) e = R(this, e, t, 0), a = !oe(e) || e !== this._$AH && e !== F, a && (this._$AH = e);
+		if (i === void 0) e = ye(this, e, t, 0), a = !ae(e) || e !== this._$AH && e !== I, a && (this._$AH = e);
 		else {
 			var o;
 			let r = e, s, c;
-			for (e = i[0], s = 0; s < i.length - 1; s++) c = R(this, r[n + s], t, s), c === F && (c = this._$AH[s]), a || (a = !oe(c) || c !== this._$AH[s]), c === I ? e = I : e !== I && (e += ((o = c) == null ? "" : o) + i[s + 1]), this._$AH[s] = c;
+			for (e = i[0], s = 0; s < i.length - 1; s++) c = ye(this, r[n + s], t, s), c === I && (c = this._$AH[s]), a || (a = !ae(c) || c !== this._$AH[s]), c === L ? e = L : e !== L && (e += ((o = c) == null ? "" : o) + i[s + 1]), this._$AH[s] = c;
 		}
 		a && !r && this.j(e);
 	}
 	j(e) {
-		e === I ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, e == null ? "" : e);
+		e === L ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, e == null ? "" : e);
 	}
 }, Ce = class extends Se {
 	constructor() {
 		super(...arguments), this.type = 3;
 	}
 	j(e) {
-		this.element[this.name] = e === I ? void 0 : e;
+		this.element[this.name] = e === L ? void 0 : e;
 	}
 }, we = class extends Se {
 	constructor() {
 		super(...arguments), this.type = 4;
 	}
 	j(e) {
-		this.element.toggleAttribute(this.name, !!e && e !== I);
+		this.element.toggleAttribute(this.name, !!e && e !== L);
 	}
 }, Te = class extends Se {
 	constructor(e, t, n, r, i) {
@@ -492,8 +492,8 @@ var be = class {
 	}
 	_$AI(e, t = this) {
 		var n;
-		if ((e = (n = R(this, e, t, 0)) == null ? I : n) === F) return;
-		let r = this._$AH, i = e === I && r !== I || e.capture !== r.capture || e.once !== r.once || e.passive !== r.passive, a = e !== I && (r === I || i);
+		if ((e = (n = ye(this, e, t, 0)) == null ? L : n) === I) return;
+		let r = this._$AH, i = e === L && r !== L || e.capture !== r.capture || e.once !== r.once || e.passive !== r.passive, a = e !== L && (r === L || i);
 		i && this.element.removeEventListener(this.name, this, r), a && this.element.addEventListener(this.name, this, e), this._$AH = e;
 	}
 	handleEvent(e) {
@@ -508,32 +508,32 @@ var be = class {
 		return this._$AM._$AU;
 	}
 	_$AI(e) {
-		R(this, e);
+		ye(this, e);
 	}
 }, De = {
-	M: ne,
+	M: O,
 	P: k,
-	A: re,
+	A,
 	C: 1,
-	L: ve,
+	L: _e,
 	R: be,
-	D: ce,
-	V: R,
+	D: se,
+	V: ye,
 	I: xe,
 	H: Se,
 	N: we,
 	U: Te,
 	B: Ce,
 	F: Ee
-}, Oe = E.litHtmlPolyfillSupport;
-Oe == null || Oe(ye, xe), ((ee = E.litHtmlVersions) == null ? E.litHtmlVersions = [] : ee).push("3.3.2");
+}, Oe = te.litHtmlPolyfillSupport;
+Oe == null || Oe(ve, xe), ((ee = te.litHtmlVersions) == null ? te.litHtmlVersions = [] : ee).push("3.3.2");
 var ke = (e, t, n) => {
 	var r;
 	let i = (r = n == null ? void 0 : n.renderBefore) == null ? t : r, a = i._$litPart$;
 	if (a === void 0) {
 		var o;
 		let e = (o = n == null ? void 0 : n.renderBefore) == null ? null : o;
-		i._$litPart$ = a = new xe(t.insertBefore(ae(), e), e, void 0, n == null ? {} : n);
+		i._$litPart$ = a = new xe(t.insertBefore(ie(), e), e, void 0, n == null ? {} : n);
 	}
 	return a._$AI(e), a;
 }, Ae, je, Me = globalThis, z = class extends T {
@@ -558,7 +558,7 @@ var ke = (e, t, n) => {
 		super.disconnectedCallback(), (e = this._$Do) == null || e.setConnected(!1);
 	}
 	render() {
-		return F;
+		return I;
 	}
 };
 z._$litElement$ = !0, z.finalized = !0, (Ae = Me.litElementHydrateSupport) == null || Ae.call(Me, { LitElement: z });
@@ -566,22 +566,22 @@ var Ne = Me.litElementPolyfillSupport;
 Ne == null || Ne({ LitElement: z }), ((je = Me.litElementVersions) == null ? Me.litElementVersions = [] : je).push("4.2.2");
 //#endregion
 //#region src/home-flow-graph-card.ts
-var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, H = 0, U = 12, Ve = 4, He = 4, W = 32, Ue = 3.2, We = 7, Ge = 15, Ke = 21, qe = 7, G = 18, K = 40, Je = 1.8, q = .5, Ye = 1, Xe = 28, Ze = 14, Qe = 10, $e = 12e3, et = 2.4, tt = 14, nt = 1.15, rt = 72, J = {
+var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, H = 0, U = 12, Ve = 4, He = 4, W = 32, Ue = 3.2, We = 7, Ge = 15, Ke = 21, qe = 7, G = 18, K = 40, Je = 1.8, q = .5, Ye = 1, Xe = 28, Ze = 14, Qe = 10, $e = 12e3, et = 2.4, tt = 14, nt = 1.15, rt = Math.ceil(tt / 2), it = 72, J = {
 	minX: 70,
 	maxX: 916,
 	minY: 62,
 	maxY: 658
-}, it = {
+}, at = {
 	leaf: "var(--home-flow-leaf-color, #c65b4a)",
 	junction: "var(--home-flow-junction-1-color, #f6b73c)"
-}, at = [
+}, ot = [
 	"var(--home-flow-junction-1-color, #f6b73c)",
 	"var(--home-flow-junction-2-color, #ef6c00)",
 	"var(--home-flow-junction-3-color, #f4a340)",
 	"var(--home-flow-junction-4-color, #b85f1a)"
-], Y = (e, t, n) => Math.min(Math.max(e, t), n), ot = 0, st = class extends z {
+], Y = (e, t, n) => Math.min(Math.max(e, t), n), st = 0, ct = class extends z {
 	constructor(...e) {
-		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot, this._htmlIconsReady = !1;
+		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++st, this._htmlIconsReady = !1;
 	}
 	firstUpdated() {
 		this._scheduleHtmlIconViewportUpdate();
@@ -599,7 +599,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	render() {
 		let e = this._model(), t = this._normalizedLinks(e.nodes), n = this._visibleNodes(e.nodes), r = t.filter((t) => this._isVisibleLink(t, e.nodes)), i = this._renderContext(e, r, t), a = r.filter((t) => this._isJunctionJunctionLink(t, e.nodes)), o = r.filter((t) => !this._isJunctionJunctionLink(t, e.nodes)), s = this._nodesByZLayer(n);
-		return N`
+		return P`
       <section
         class=${`card ${this.editable ? "editable" : "readonly"}`}
         aria-label="Flow graph"
@@ -616,12 +616,12 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
           @pointercancel=${this.editable ? this._handlePointerUp : void 0}
           @keydown=${this.editable ? this._handleKeydown : void 0}
         >
-          ${this.editable ? this._renderEditorGrid() : I}
+          ${this.editable ? this._renderEditorGrid() : L}
           ${o.map((n) => this._renderGraphLink(n, e, t, i))}
           ${a.map((n) => this._renderGraphLink(n, e, t, i))}
           ${s.map((n) => this._renderNodeLayer(n, e, r, t, i))}
-          ${this.editable ? this._renderPendingLink(n, t) : I}
-          ${this.editable ? this._renderAnchorControls(n, r) : I}
+          ${this.editable ? this._renderPendingLink(n, t) : L}
+          ${this.editable ? this._renderAnchorControls(n, r) : L}
         </svg>
         ${this._renderHtmlIconLayer(s)}
       </section>
@@ -629,7 +629,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	_renderEditorGrid() {
 		let e = `home-flow-grid-minor-${this.graphInstanceId}`, t = `home-flow-grid-major-${this.graphInstanceId}`, n = U * Ve;
-		return P`
+		return F`
       <defs>
         <pattern
           id=${e}
@@ -664,15 +664,17 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_renderContext(e, t, n = t) {
 		let r = {
 			colors: /* @__PURE__ */ new Map(),
+			joinGeometries: /* @__PURE__ */ new Map(),
 			maxValues: /* @__PURE__ */ new Map(),
 			minVisibleValues: /* @__PURE__ */ new Map(),
 			nodeColors: /* @__PURE__ */ new Map(),
 			paths: /* @__PURE__ */ new Map(),
+			sideNodeIds: /* @__PURE__ */ new Map(),
 			signedValues: /* @__PURE__ */ new Map(),
 			sourceParts: /* @__PURE__ */ new Map()
 		}, i = e.nodes;
 		return t.forEach((t) => {
-			let a = this._linkSignedValue(t, i, n), o = this._linkMinVisibleValue(t, i, n), s = this._linkMaxValue(t, o, i, n), c = this._graphLinkPath(t, i, n);
+			let a = this._linkSignedValue(t, i, n, r), o = this._linkMinVisibleValue(t, i, n), s = this._linkMaxValue(t, o, i, n), c = this._graphLinkPath(t, i, n, r);
 			r.signedValues.set(t.id, a), r.minVisibleValues.set(t.id, o), r.maxValues.set(t.id, s), r.paths.set(t.id, c), this._shouldShowFlow(Math.abs(a), o) && (r.colors.set(t.id, this._linkColor(t, e, n, a, r)), r.sourceParts.set(t.id, this._linkSourceParts(t, e, n, a, r)));
 		}), r;
 	}
@@ -751,22 +753,22 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_renderGraphLink(e, t, n, r) {
 		var i, a, o, s, c;
 		let l = t.nodes, u = l[e.from], d = l[e.to];
-		if (!u || !d) return I;
-		let f = (i = r.signedValues.get(e.id)) == null ? this._linkSignedValue(e, l, n) : i, p = Math.abs(f), m = (a = r.paths.get(e.id)) == null ? this._graphLinkPath(e, l, n) : a;
-		if (!m) return I;
-		let h = this.selectedLink === e.id, g = (o = r.minVisibleValues.get(e.id)) == null ? this._linkMinVisibleValue(e, l, n) : o, _ = (s = r.maxValues.get(e.id)) == null ? this._linkMaxValue(e, g, l, n) : s, v = this._shouldShowFlow(p, g), y = v ? this._flowWidth(p, g, _) : et, b = v ? (c = r.colors.get(e.id)) == null ? this._linkColor(e, t, n, f, r) : c : it.junction, x = v ? r.sourceParts.has(e.id) ? r.sourceParts.get(e.id) : this._linkSourceParts(e, t, n, f, r) : void 0, S = this._junctionConnectionMarker(e, t, n);
-		return P`
+		if (!u || !d) return L;
+		let f = (i = r.signedValues.get(e.id)) == null ? this._linkSignedValue(e, l, n, r) : i, p = Math.abs(f), m = (a = r.paths.get(e.id)) == null ? this._graphLinkPath(e, l, n, r) : a;
+		if (!m) return L;
+		let h = this.selectedLink === e.id, g = (o = r.minVisibleValues.get(e.id)) == null ? this._linkMinVisibleValue(e, l, n) : o, _ = (s = r.maxValues.get(e.id)) == null ? this._linkMaxValue(e, g, l, n) : s, v = this._shouldShowFlow(p, g), y = v ? this._flowWidth(p, g, _) : et, b = v ? (c = r.colors.get(e.id)) == null ? this._linkColor(e, t, n, f, r) : c : at.junction, x = v ? r.sourceParts.has(e.id) ? r.sourceParts.get(e.id) : this._linkSourceParts(e, t, n, f, r) : void 0, S = this._junctionConnectionMarker(e, t, n, r);
+		return F`
       <path class=${`connector base ${h ? "selected" : ""}`} d=${m} />
-      ${v ? this._renderFlowPath(e, m, f, b, y, x) : I}
-      ${S ? this._renderJunctionConnectionMarker(S, h) : I}
-      ${this.editable || e.entity ? P`
+      ${v ? this._renderFlowPath(e, m, f, b, y, x) : L}
+      ${S ? this._renderJunctionConnectionMarker(S, h) : L}
+      ${this.editable || e.entity ? F`
             <path
               class=${`connector-hit ${h ? "selected" : ""}`}
               d=${m}
               @pointerdown=${this.editable ? (t) => this._selectLink(t, e.id) : void 0}
               @click=${!this.editable && e.entity ? (t) => this._emitEntityMoreInfo(e.entity, t) : void 0}
             />
-          ` : I}
+          ` : L}
     `;
 	}
 	_renderFlowPath(e, t, n, r, i, a) {
@@ -776,7 +778,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			length: G,
 			start: 0
 		}];
-		if (o.length === 1) return P`
+		if (o.length === 1) return F`
         <path
           class="connector flow source-single"
           d=${t}
@@ -788,7 +790,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
         </path>
       `;
 		let [s, ...c] = o, l = this._splitFlowMaskId(e);
-		return P`
+		return F`
       <mask
         id=${l}
         class="source-flow-mask"
@@ -821,7 +823,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
         </path>
         ${c.map((e) => {
 			let r = this._sourceTailOffset(e), a = this._sourceTailVisibleLength(e);
-			return P`
+			return F`
             <path
               class="connector flow split-flow source-split"
               d=${t}
@@ -839,7 +841,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	_renderFlowAnimation(e, t = 0) {
 		let n = e >= 0 ? t - K : t + K;
-		return P`
+		return F`
       <animate
         attributeName="stroke-dashoffset"
         begin="0s"
@@ -859,13 +861,13 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_splitFlowMaskId(e) {
 		return `home-flow-split-${this.graphInstanceId}-${e.id.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
 	}
-	_junctionConnectionMarker(e, t, n) {
+	_junctionConnectionMarker(e, t, n, r) {
 		if (!this._isJunctionJunctionLink(e, t.nodes)) return;
-		let r = this._junctionJoinGeometry(e, t.nodes, n);
-		if (!(!(r != null && r.tap) || r.branchLinkId !== e.id)) return r.tap;
+		let i = this._junctionJoinGeometry(e, t.nodes, n, r);
+		if (!(!(i != null && i.tap) || i.branchLinkId !== e.id)) return i.tap;
 	}
 	_renderJunctionConnectionMarker(e, t) {
-		return P`
+		return F`
       <circle
         class=${`bus-tap ${t ? "selected" : ""}`}
         cx=${e.x}
@@ -880,33 +882,33 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		let r = t == null || (n = t[e]) == null ? void 0 : n.color;
 		if (r) return r;
 		let i = Object.values(t == null ? {} : t).filter((e) => e.kind === "junction");
-		return at[Math.max(0, i.findIndex((t) => t.id === e)) % at.length];
+		return ot[Math.max(0, i.findIndex((t) => t.id === e)) % ot.length];
 	}
-	_graphLinkPath(e, t, n) {
-		let r = t[e.from], i = t[e.to];
-		if (!r || !i) return "";
-		let a = [r, i].find((e) => e.kind === "junction"), o = [r, i].find((e) => e.kind === "leaf");
-		if (o && a) {
-			let r = this._linkedLeafNodes(a.id, t, n), i = this._sortedLaneNodes(r.filter((e) => e.point.y <= a.point.y - a.radius), "x"), s = this._sortedLaneNodes(r.filter((e) => e.point.y >= a.point.y + a.radius), "x"), c = this._sortedLaneNodes(r.filter((e) => e.point.x <= a.point.x), "y"), l = this._sortedLaneNodes(r.filter((e) => e.point.x >= a.point.x), "y"), u = {
-				from: this._linkAnchor(e, o.id),
-				to: this._linkAnchor(e, a.id)
+	_graphLinkPath(e, t, n, r) {
+		let i = t[e.from], a = t[e.to];
+		if (!i || !a) return "";
+		let o = [i, a].find((e) => e.kind === "junction"), s = [i, a].find((e) => e.kind === "leaf");
+		if (s && o) {
+			let r = this._linkedLeafNodes(o.id, t, n), i = this._sortedLaneNodes(r.filter((e) => e.point.y <= o.point.y - o.radius), "x"), a = this._sortedLaneNodes(r.filter((e) => e.point.y >= o.point.y + o.radius), "x"), c = this._sortedLaneNodes(r.filter((e) => e.point.x <= o.point.x), "y"), l = this._sortedLaneNodes(r.filter((e) => e.point.x >= o.point.x), "y"), u = {
+				from: this._linkAnchor(e, s.id),
+				to: this._linkAnchor(e, o.id)
 			};
-			if (this.leafRouting === "radial") return this._radialConnectorPath(o, a, u);
-			if (this.leafRouting === "sweep") return this._defaultConnectorPath(o, a, u);
-			switch (this._leafConnectorSide(o, a)) {
-				case "upper": return this.leafRouting === "channel" ? this._upperLeafChannelPath(o, a, this._laneSlotForNode(o.id, i).index, Math.max(1, i.length), u) : this.leafRouting === "orthogonal" ? this._upperLeafOrthogonalPath(o, a, this._laneSlotForNode(o.id, i).index, Math.max(1, i.length), u) : this._upperLeafConnectorPath(o, a, this._laneSlotForNode(o.id, i).index, Math.max(1, i.length), u);
-				case "lower": return this.leafRouting === "channel" ? this._lowerLeafChannelPath(o, a, this._laneSlotForNode(o.id, s).index, Math.max(1, s.length), u) : this.leafRouting === "orthogonal" ? this._lowerLeafOrthogonalPath(o, a, this._laneSlotForNode(o.id, s).index, Math.max(1, s.length), u) : this._lowerLeafConnectorPath(o, a, this._laneSlotForNode(o.id, s).index, Math.max(1, s.length), u);
-				case "left": return this.leafRouting === "channel" ? this._leftLeafChannelPath(o, a, this._laneSlotForNode(o.id, c).index, Math.max(1, c.length), u) : this.leafRouting === "orthogonal" ? this._leftLeafOrthogonalPath(o, a, this._laneSlotForNode(o.id, c).index, Math.max(1, c.length), u) : this._leftLeafConnectorPath(o, a, this._laneSlotForNode(o.id, c).index, Math.max(1, c.length), u);
-				case "right": return this.leafRouting === "channel" ? this._rightLeafChannelPath(o, a, this._laneSlotForNode(o.id, l).index, Math.max(1, l.length), u) : this.leafRouting === "orthogonal" ? this._rightLeafOrthogonalPath(o, a, this._laneSlotForNode(o.id, l).index, Math.max(1, l.length), u) : this._rightLeafConnectorPath(o, a, this._laneSlotForNode(o.id, l).index, Math.max(1, l.length), u);
-				default: return this._radialConnectorPath(o, a, u);
+			if (this.leafRouting === "radial") return this._radialConnectorPath(s, o, u);
+			if (this.leafRouting === "sweep") return this._defaultConnectorPath(s, o, u);
+			switch (this._leafConnectorSide(s, o)) {
+				case "upper": return this.leafRouting === "channel" ? this._upperLeafChannelPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u) : this.leafRouting === "orthogonal" ? this._upperLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u) : this._upperLeafConnectorPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u);
+				case "lower": return this.leafRouting === "channel" ? this._lowerLeafChannelPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u) : this.leafRouting === "orthogonal" ? this._lowerLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u) : this._lowerLeafConnectorPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u);
+				case "left": return this.leafRouting === "channel" ? this._leftLeafChannelPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u) : this.leafRouting === "orthogonal" ? this._leftLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u) : this._leftLeafConnectorPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u);
+				case "right": return this.leafRouting === "channel" ? this._rightLeafChannelPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u) : this.leafRouting === "orthogonal" ? this._rightLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u) : this._rightLeafConnectorPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u);
+				default: return this._radialConnectorPath(s, o, u);
 			}
 		}
-		return r.kind === "junction" && i.kind === "junction" ? this._junctionJoinedConnectionPath(e, t, n) || this._junctionConnectorPath(r, i, t, {
-			from: this._linkAnchor(e, r.id),
-			to: this._linkAnchor(e, i.id)
-		}) : this._defaultConnectorPath(r, i, {
-			from: this._linkAnchor(e, r.id),
-			to: this._linkAnchor(e, i.id)
+		return i.kind === "junction" && a.kind === "junction" ? this._junctionJoinedConnectionPath(e, t, n, r) || this._junctionConnectorPath(i, a, t, {
+			from: this._linkAnchor(e, i.id),
+			to: this._linkAnchor(e, a.id)
+		}) : this._defaultConnectorPath(i, a, {
+			from: this._linkAnchor(e, i.id),
+			to: this._linkAnchor(e, a.id)
 		});
 	}
 	_junctionConnectorPath(e, t, n, r = {}) {
@@ -936,45 +938,51 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		}, l = {
 			x: n.point.x - e.x,
 			y: n.point.y - e.y
-		}, u = l.x * s.x + l.y * s.y, d = l.x * c.x + l.y * c.y, f = n.radius + B, p = f + Math.max(0, r), m = Math.max(18, n.radius - 8);
-		if (u <= f || u >= o - f || Math.abs(d) > p) return;
-		let h = Math.abs(d) < m ? m : Math.abs(d) > f ? p : f, g = Math.sqrt(Math.max(0, h ** 2 - d ** 2)), _ = Math.max(0, u - g), v = Math.min(o, u + g), y = +(d >= 0), b = y === 1 ? -1 : 1, x = {
-			x: Math.round(n.point.x + c.x * b * h),
-			y: Math.round(n.point.y + c.y * b * h)
+		}, u = l.x * s.x + l.y * s.y, d = l.x * c.x + l.y * c.y, f = n.radius + B, p = f + Math.max(0, r), m = Math.max(18, n.radius - 8), h = Math.min(f, Math.max(34, n.radius * .55));
+		if (u <= h || u >= o - h || Math.abs(d) > p) return;
+		let g = Math.abs(d) < m ? m : Math.abs(d) > f ? p : f, _ = Math.sqrt(Math.max(0, g ** 2 - d ** 2)), v = Math.max(0, u - _), y = Math.min(o, u + _), b = +(d >= 0), x = b === 1 ? -1 : 1, S = {
+			x: Math.round(n.point.x + c.x * x * g),
+			y: Math.round(n.point.y + c.y * x * g)
 		};
 		return {
-			afterDistance: v,
-			beforeDistance: _,
+			afterDistance: y,
+			beforeDistance: v,
 			entry: {
-				x: e.x + s.x * _,
-				y: e.y + s.y * _
-			},
-			exit: {
 				x: e.x + s.x * v,
 				y: e.y + s.y * v
 			},
+			exit: {
+				x: e.x + s.x * y,
+				y: e.y + s.y * y
+			},
 			nodeId: n.id,
-			radius: h,
+			radius: g,
 			signedDistance: d,
-			sweepFlag: y,
-			tap: x,
-			tapAnchor: this._nearestAnchorIndex(n, x)
+			sweepFlag: b,
+			tap: S,
+			tapAnchor: this._nearestAnchorIndex(n, S)
 		};
 	}
-	_junctionJoinedConnectionPath(e, t, n) {
-		var r;
-		let i = this._junctionJoinGeometry(e, t, n);
-		if (!i) return;
-		let a = (r = i.pathsByLinkId) == null ? void 0 : r[e.id];
-		if (a) return a;
-		if (e.from === i.firstOuterId && e.to === i.middleId) return i.beforePath;
-		if (e.from === i.middleId && e.to === i.firstOuterId) return i.beforeReversePath;
-		if (e.from === i.middleId && e.to === i.secondOuterId) return i.afterPath;
-		if (e.from === i.secondOuterId && e.to === i.middleId) return i.afterReversePath;
+	_junctionJoinedConnectionPath(e, t, n, r) {
+		var i;
+		let a = this._junctionJoinGeometry(e, t, n, r);
+		if (!a) return;
+		let o = (i = a.pathsByLinkId) == null ? void 0 : i[e.id];
+		if (o) return o;
+		if (e.from === a.firstOuterId && e.to === a.middleId) return a.beforePath;
+		if (e.from === a.middleId && e.to === a.firstOuterId) return a.beforeReversePath;
+		if (e.from === a.middleId && e.to === a.secondOuterId) return a.afterPath;
+		if (e.from === a.secondOuterId && e.to === a.middleId) return a.afterReversePath;
 	}
-	_junctionJoinGeometry(e, t, n) {
-		let r = t[e.from], i = t[e.to];
-		if (!(!r || !i || r.kind !== "junction" || i.kind !== "junction")) return [r, i].map((r) => this._junctionJoinGeometryForMiddle(e, r, t, n)).filter((e) => !!e)[0];
+	_junctionJoinGeometry(e, t, n, r) {
+		if (r != null && r.joinGeometries.has(e.id)) return r.joinGeometries.get(e.id);
+		let i = t[e.from], a = t[e.to];
+		if (!i || !a || i.kind !== "junction" || a.kind !== "junction") {
+			r == null || r.joinGeometries.set(e.id, void 0);
+			return;
+		}
+		let o = [i, a].map((r) => this._junctionJoinGeometryForMiddle(e, r, t, n)).filter((e) => !!e)[0];
+		return r == null || r.joinGeometries.set(e.id, o), o;
 	}
 	_junctionJoinGeometryForMiddle(e, t, n, r) {
 		let i = this._linkAnchor(e, t.id), a = e.junctionJoinId;
@@ -1339,7 +1347,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		if (i <= 0) return t;
 		let a = Y(e - t, -i, i);
 		if (r <= 1) return t + a;
-		let o = this._laneOffset(n, r, rt, i);
+		let o = this._laneOffset(n, r, it, i);
 		return t + Y(a * .75 + o * .25, -i, i);
 	}
 	_laneOffset(e, t, n, r) {
@@ -1364,18 +1372,60 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		};
 	}
 	_renderNodeLayer(e, t, n, r, i) {
-		return P`
+		return F`
       ${this._renderNodeShell(e, t, r, i)}
+      ${this._renderWrappedJunctionLinksFront(e, t, n, r, i)}
       ${this._renderNodeBusCover(e, t, n, r, i)}
       ${this._renderNodeOverlay(e, t, r)}
     `;
 	}
+	_renderWrappedJunctionLinksFront(e, t, n, r, i) {
+		if (e.kind !== "junction") return L;
+		let a = t.nodes, o = r.filter((t) => {
+			if (!this._isJunctionJunctionLink(t, a) || t.from !== e.id && t.to !== e.id) return !1;
+			let n = this._junctionJoinGeometry(t, a, r, i);
+			return (n == null ? void 0 : n.middleId) === e.id;
+		});
+		if (o.length === 0) return L;
+		let s = `wrapped-junction-front-${this.graphInstanceId}-${e.id.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+		return F`
+      <defs>
+        <clipPath id=${s} clipPathUnits="userSpaceOnUse">
+          <circle
+            cx=${e.point.x}
+            cy=${e.point.y}
+            r=${e.radius + rt}
+          />
+        </clipPath>
+      </defs>
+      <g
+        class="wrapped-junction-links-front"
+        aria-hidden="true"
+        clip-path=${`url(#${s})`}
+      >
+        ${o.map((e) => n.includes(e) ? this._renderGraphLinkVisual(e, t, r, i) : L)}
+      </g>
+    `;
+	}
+	_renderGraphLinkVisual(e, t, n, r) {
+		var i, a, o, s, c;
+		let l = t.nodes, u = l[e.from], d = l[e.to];
+		if (!u || !d) return L;
+		let f = (i = r == null ? void 0 : r.signedValues.get(e.id)) == null ? this._linkSignedValue(e, l, n, r) : i, p = Math.abs(f), m = (a = r == null ? void 0 : r.paths.get(e.id)) == null ? this._graphLinkPath(e, l, n, r) : a;
+		if (!m) return L;
+		let h = this.selectedLink === e.id, g = (o = r == null ? void 0 : r.minVisibleValues.get(e.id)) == null ? this._linkMinVisibleValue(e, l, n) : o, _ = (s = r == null ? void 0 : r.maxValues.get(e.id)) == null ? this._linkMaxValue(e, g, l, n) : s, v = this._shouldShowFlow(p, g), y = v ? this._flowWidth(p, g, _) : et, b = v ? (c = r == null ? void 0 : r.colors.get(e.id)) == null ? this._linkColor(e, t, n, f, r) : c : at.junction, x = v ? r != null && r.sourceParts.has(e.id) ? r.sourceParts.get(e.id) : this._linkSourceParts(e, t, n, f, r) : void 0, S = this._junctionConnectionMarker(e, t, n, r);
+		return F`
+      <path class=${`connector base ${h ? "selected" : ""}`} d=${m} />
+      ${v ? this._renderFlowPath(e, m, f, b, y, x) : L}
+      ${S ? this._renderJunctionConnectionMarker(S, h) : L}
+    `;
+	}
 	_renderNodeOverlay(e, t, n) {
-		return P`
+		return F`
       ${this._renderNodeContent(e, t, n)}
       ${this._renderNodeLabel(e, t, n)}
       ${this._renderLabelHandle(e, t, n)}
-      ${this.editable ? P`
+      ${this.editable ? F`
             <g
               class="node-hit-layer"
               transform=${`translate(${e.point.x} ${e.point.y})`}
@@ -1386,11 +1436,11 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
                 @pointerdown=${(t) => this._startNodeDrag(t, e)}
               />
             </g>
-          ` : I}
+          ` : L}
     `;
 	}
 	_renderNodeBusCover(e, t, n, r, i) {
-		return this._shouldBusStayBehindNode(e, n, t.nodes) ? P`
+		return this._shouldBusStayBehindNode(e, n, t.nodes, i) ? F`
       <g
         class="node-bus-cover"
         transform=${`translate(${e.point.x} ${e.point.y})`}
@@ -1403,18 +1453,25 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
           stroke-width=${e.kind === "junction" ? 4 : 2.5}
         />
       </g>
-    ` : I;
+    ` : L;
 	}
-	_shouldBusStayBehindNode(e, t, n) {
-		return e.kind === "junction" ? t.filter((t) => (t.from === e.id || t.to === e.id) && this._isJunctionJunctionLink(t, n)).length <= 1 : !1;
+	_shouldBusStayBehindNode(e, t, n, r) {
+		return e.kind !== "junction" || this._isWrappedJunction(e, t, n, r) ? !1 : t.filter((t) => (t.from === e.id || t.to === e.id) && this._isJunctionJunctionLink(t, n)).length <= 1;
+	}
+	_isWrappedJunction(e, t, n, r) {
+		return t.some((i) => {
+			if (!this._isJunctionJunctionLink(i, n)) return !1;
+			let a = this._junctionJoinGeometry(i, n, t, r);
+			return (a == null ? void 0 : a.middleId) === e.id;
+		});
 	}
 	_renderNodeShell(e, t, n, r) {
-		return P`
+		return F`
       <g
         class=${`node ${e.kind}-node ${!this.editable && e.primaryAction ? "actionable" : ""} ${this.activeNode === e.id ? "dragging" : ""} ${this.selectedNode === e.id ? "selected" : ""}`}
         transform=${`translate(${e.point.x} ${e.point.y})`}
         tabindex=${this.editable || e.primaryAction ? 0 : -1}
-        role=${!this.editable && e.primaryAction ? "button" : I}
+        role=${!this.editable && e.primaryAction ? "button" : L}
         aria-label=${!this.editable && e.primaryAction ? `${e.label} ${this._nodeActionLabel(e.primaryAction)}` : e.label}
         @pointerdown=${this.editable ? (t) => this._startNodeDrag(t, e) : void 0}
         @click=${!this.editable && e.primaryAction ? (t) => this._emitNodeAction(e.primaryAction, t) : void 0}
@@ -1433,16 +1490,16 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_renderNodeContent(e, t, n) {
 		var r, i, a;
 		let o = !!(e.icon || e.secondaryIcon), s = e.secondary !== void 0, c = this._nodeDisplayValue(e, t, n), l = !this._shouldHideNodeValue(e, c), u = s && !this._shouldHideNodeValue(e, (r = e.secondary) == null ? 0 : r), d = this._nodePrimaryValue(e, t, n), f = l ? this._nodeTextLines(d, e) : [], p = u ? this._nodeTextLines((i = e.secondaryDisplayValue) == null ? `${Math.round((a = e.secondary) == null ? 0 : a)}%` : i, e) : [], m = !o, h = f.length > 0, g = p.length > 0, _ = this._nodePrimaryTextY(e, o, s, h, g), v = this._nodeSecondaryTextY(e, o, s, h, g);
-		return P`
+		return F`
       <g
         class=${`node-content ${e.kind}-content`}
         transform=${`translate(${e.point.x} ${e.point.y})`}
       >
-        ${o ? this._renderNodeIcons(e) : I}
+        ${o ? this._renderNodeIcons(e) : L}
         ${this._renderNodeFlowArrow(e)}
-        ${f.length > 0 ? this._renderTextLines(this._textLineClass("node-value", f, e), f, _, e, 0, m) : I}
-        ${p.length > 0 ? this._renderTextLines(this._textLineClass("node-secondary", p, e), p, v, e, 0, m) : I}
-        ${p.length > 0 ? this._renderSecondaryActionHitArea(e, p, v) : I}
+        ${f.length > 0 ? this._renderTextLines(this._textLineClass("node-value", f, e), f, _, e, 0, m) : L}
+        ${p.length > 0 ? this._renderTextLines(this._textLineClass("node-secondary", p, e), p, v, e, 0, m) : L}
+        ${p.length > 0 ? this._renderSecondaryActionHitArea(e, p, v) : L}
       </g>
     `;
 	}
@@ -1454,10 +1511,10 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	_renderNodeLabel(e, t, n) {
 		let r = e.label.trim();
-		if (!r) return I;
+		if (!r) return L;
 		if (this.labelStyle === "straight") {
 			let i = this._nodeStraightLabelPoint(e, t, n);
-			return P`
+			return F`
         <text
           class=${`node-label node-label-straight ${i.className}`}
           x=${i.x}
@@ -1470,7 +1527,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
       `;
 		}
 		let i = this._nodeLabelArc(e, t, n);
-		return P`
+		return F`
       <path id=${i.id} class="node-label-path" d=${i.path} />
       <text class="node-label node-label-curved">
         <textPath href=${`#${i.id}`} startOffset="50%">
@@ -1480,9 +1537,9 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
     `;
 	}
 	_renderLabelHandle(e, t, n) {
-		if (!this.editable || this.selectedNode !== e.id || !e.label.trim()) return I;
+		if (!this.editable || this.selectedNode !== e.id || !e.label.trim()) return L;
 		let r = this.labelStyle === "straight" ? this._nodeStraightLabelPoint(e, t, n) : this._nodeCurvedLabelHandlePoint(e, t, n);
-		return P`
+		return F`
       <g class="label-handle">
         <circle
           class="label-handle-hit"
@@ -1601,27 +1658,27 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		let o = this._textFontSize(e, t, r);
 		if (t.length <= 1) {
 			var s;
-			return P`
+			return F`
         <text
           class=${e}
           x=${i}
           y=${n}
           style=${`font-size:${o}px;`}
-          dominant-baseline=${a ? "middle" : I}
+          dominant-baseline=${a ? "middle" : L}
         >
           ${(s = t[0]) == null ? "" : s}
         </text>
       `;
 		}
 		let c = this._textLineGap(e, t, r), l = n - c / 2;
-		return P`
-      ${t.map((t, n) => P`
+		return F`
+      ${t.map((t, n) => F`
             <text
               class=${e}
               x=${i}
               y=${l + n * c}
               style=${`font-size:${o}px;`}
-              dominant-baseline=${a ? "middle" : I}
+              dominant-baseline=${a ? "middle" : L}
             >
               ${t}
             </text>
@@ -1629,9 +1686,9 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
     `;
 	}
 	_renderSecondaryActionHitArea(e, t, n) {
-		if (this.editable || !e.secondaryAction) return I;
+		if (this.editable || !e.secondaryAction) return L;
 		let r = this._textLineGap("node-secondary", t, e), i = t.length <= 1 ? 28 : r * (t.length - 1) + 30, a = (t.length <= 1 ? n : n - r / 2) + (t.length - 1) * r / 2, o = Math.max(52, e.radius * 1.55);
-		return P`
+		return F`
       <rect
         class="value-hit secondary-value-hit"
         x=${-o / 2}
@@ -1655,21 +1712,21 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	_renderNodeIcons(e) {
 		let t = [e.icon, e.secondaryIcon].filter(Boolean);
-		if (t.length === 0) return I;
+		if (t.length === 0) return L;
 		if (t.length === 1) {
-			if (t[0].startsWith("mdi:")) return I;
+			if (t[0].startsWith("mdi:")) return L;
 			let { scale: n, y: r } = this._nodeIconMetrics(e);
 			return this._renderIconAt(t[0], 0, r, n);
 		}
 		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
-		return P`
-      ${t.slice(0, 2).map((e, t) => e.startsWith("mdi:") ? I : this._renderIconAt(e, t === 0 ? -i : i, r, n))}
+		return F`
+      ${t.slice(0, 2).map((e, t) => e.startsWith("mdi:") ? L : this._renderIconAt(e, t === 0 ? -i : i, r, n))}
     `;
 	}
 	_renderHtmlIconLayer(e) {
-		if (!this._htmlIconViewport || !this._htmlIconsReady) return I;
+		if (!this._htmlIconViewport || !this._htmlIconsReady) return L;
 		let t = e.flatMap((e) => this._htmlNodeIcons(e));
-		return t.length === 0 ? I : N`<div class="html-icon-layer">${t}</div>`;
+		return t.length === 0 ? L : P`<div class="html-icon-layer">${t}</div>`;
 	}
 	_htmlNodeIcons(e) {
 		let t = [e.icon, e.secondaryIcon].filter(Boolean);
@@ -1679,13 +1736,13 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			return t[0].startsWith("mdi:") ? [this._htmlIconAt(t[0], e, 0, r, n)] : [];
 		}
 		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
-		return t.slice(0, 2).map((t, a) => t.startsWith("mdi:") ? this._htmlIconAt(t, e, a === 0 ? -i : i, r, n) : I).filter((e) => e !== I);
+		return t.slice(0, 2).map((t, a) => t.startsWith("mdi:") ? this._htmlIconAt(t, e, a === 0 ? -i : i, r, n) : L).filter((e) => e !== L);
 	}
 	_htmlIconAt(e, t, n, r, i) {
 		let a = this._htmlIconViewport;
-		if (!a) return I;
+		if (!a) return L;
 		let o = a.scale, s = Math.round(68 * i * o);
-		return N`
+		return P`
       <div
         class="html-node-icon"
         style=${`${`left:${a.offsetX + (t.point.x + n) * a.scale}px;top:${a.offsetY + (t.point.y + r) * a.scale}px;`}width:${s}px;height:${s}px;`}
@@ -1718,16 +1775,16 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		});
 	}
 	_renderIconAt(e, t, n, r) {
-		return P`
+		return F`
       <g class="node-icon" transform=${`translate(${t} ${n}) scale(${r})`}>
         ${this._iconTemplate(e)}
       </g>
     `;
 	}
 	_renderNodeFlowArrow(e) {
-		if (!this._hasNodeFlowArrow(e)) return I;
+		if (!this._hasNodeFlowArrow(e)) return L;
 		let t = e.icon && e.secondaryIcon ? this._dualIconMetrics(e) : void 0, { y: n, scale: r } = t == null ? this._nodeIconMetrics(e) : t, i = (t ? -t.gap : 0) + 68 * r * .42 + 10, a = this._nodeFlowArrow(e);
-		return P`<text class="flow-icon-arrow" x=${i} y=${n + 3} dominant-baseline="middle">${a}</text>`;
+		return F`<text class="flow-icon-arrow" x=${i} y=${n + 3} dominant-baseline="middle">${a}</text>`;
 	}
 	_nodeFlowArrow(e) {
 		return this._nodeFlowValue(e) >= 0 ? "→" : "←";
@@ -1753,56 +1810,56 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		};
 	}
 	_iconTemplate(e) {
-		return e.startsWith("mdi:") ? I : e === "grid" ? P`
+		return e.startsWith("mdi:") ? L : e === "grid" ? F`
         <path class="icon-line" d="M-16 24 L0 -28 L16 24" />
         <path class="icon-line" d="M-10 -7 H10 M-16 10 H16 M-25 29 H25" />
-      ` : e === "home" ? P`
+      ` : e === "home" ? F`
         <path class="icon-line" d="M-28 -4 L0 -28 L28 -4" />
         <path class="icon-line" d="M-20 -4 H20 V26 H-20 Z" />
         <path class="bolt" d="M2 -2 L-8 14 H2 L-4 28 L13 8 H2 Z" />
-      ` : e === "junction" ? P`
+      ` : e === "junction" ? F`
         <rect class="icon-box" x="-28" y="-16" width="56" height="34" rx="5" />
         <path class="icon-line" d="M-21 2 C-13 -9 -5 -9 3 2 S20 14 28 2" />
-      ` : e === "battery" ? P`
+      ` : e === "battery" ? F`
         <g transform="translate(0 0)">
           <rect class="icon-box" x="-14" y="-25" width="28" height="50" rx="4" />
           <path class="icon-line" d="M-7 -31 H7 V-25" />
           <rect class="battery-fill" x="-9" y="-14" width="18" height="31" rx="3" />
         </g>
-      ` : e === "ev" ? P`
+      ` : e === "ev" ? F`
         <path class="icon-line" d="M-25 6 H25 L18 -11 H-15 L-25 6 Z" />
         <path class="icon-line" d="M-11 -11 L-5 -25 H9" />
         <circle class="icon-dot" cx="-13" cy="17" r="4" />
         <circle class="icon-dot" cx="14" cy="17" r="4" />
-      ` : e === "heat_pump" ? P`
+      ` : e === "heat_pump" ? F`
         <circle class="icon-line" cx="0" cy="0" r="18" />
         <path class="icon-line" d="M0 -16 C12 -2 3 3 0 18 M14 8 C-2 12 -4 0 -17 -9 M-14 8 C-3 -9 7 -4 18 -3" />
-      ` : e === "plug" || e === "appliance" ? P`
+      ` : e === "plug" || e === "appliance" ? F`
         <path class="icon-line" d="M-13 -20 V0 M13 -20 V0" />
         <path class="icon-line" d="M-22 0 H22 V10 C22 24 -22 24 -22 10 Z" />
         <path class="icon-line" d="M0 23 V32" />
-      ` : e === "water" ? P`
+      ` : e === "water" ? F`
         <path class="icon-line" d="M0 -28 C-20 -4 -20 18 0 24 C20 18 20 -4 0 -28 Z" />
         <path class="icon-line thin" d="M-9 9 C-5 17 7 17 11 9" />
-      ` : e === "solar" ? P`
+      ` : e === "solar" ? F`
         <rect class="icon-box" x="-26" y="-18" width="52" height="36" rx="3" />
         <path class="icon-line thin" d="M-9 -18 V18 M9 -18 V18 M-26 0 H26" />
-      ` : P`
+      ` : F`
       <circle class="icon-line" cx="0" cy="0" r="18" />
       <path class="icon-line thin" d="M0 -9 V9 M-9 0 H9" />
     `;
 	}
 	_renderPendingLink(e, t) {
-		if (!this.pendingLink || !this.pointerPoint) return I;
+		if (!this.pendingLink || !this.pointerPoint) return L;
 		let n = e[this.pendingLink.from];
-		if (!n) return I;
+		if (!n) return L;
 		let r = this._pendingLinkPath(n, e, t);
-		return r ? P`
+		return r ? F`
       <path
         class="connector base selected pending"
         d=${r}
       />
-    ` : I;
+    ` : L;
 	}
 	_pendingLinkPath(e, t, n) {
 		if (!this.pendingLink || !this.pointerPoint) return "";
@@ -1822,28 +1879,28 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_renderAnchorControls(e, t) {
 		if (this.pendingLink) {
 			let t = e[this.pendingLink.from], n = this.hoverTarget ? e[this.hoverTarget] : void 0, r = n && this.pointerPoint ? this._nearestAnchorIndex(n, this.pointerPoint) : void 0;
-			return P`
-        ${t ? this._renderAnchorPoints(t, "source", { selectedAnchorIndex: this.pendingLink.fromAnchor }) : I}
-        ${n ? this._renderAnchorPoints(n, "target", { selectedAnchorIndex: r }) : I}
+			return F`
+        ${t ? this._renderAnchorPoints(t, "source", { selectedAnchorIndex: this.pendingLink.fromAnchor }) : L}
+        ${n ? this._renderAnchorPoints(n, "target", { selectedAnchorIndex: r }) : L}
       `;
 		}
 		if (this.selectedLink) {
 			let n = t.find((e) => e.id === this.selectedLink);
-			if (n) return P`
+			if (n) return F`
           ${this._linkEndControls(n, e, t).map((e) => this._renderAnchorPoints(e.node, "source", { fixedLinkEnd: e }))}
         `;
 		}
-		if (!this.selectedNode) return I;
+		if (!this.selectedNode) return L;
 		let n = e[this.selectedNode];
-		return !n || !this._canStartLink(n) ? I : this._renderAnchorPoints(n, "source", { linkEnds: this._nodeLinkEndControls(n.id, e, t) });
+		return !n || !this._canStartLink(n) ? L : this._renderAnchorPoints(n, "source", { linkEnds: this._nodeLinkEndControls(n.id, e, t) });
 	}
 	_renderAnchorPoints(e, t, n = {}) {
-		return P`
+		return F`
       <g class=${`anchor-controls ${t}`}>
         ${Array.from({ length: W }, (r, i) => {
 			var a, o;
 			let s = this._anchorPoint(e, i), c = (a = n.fixedLinkEnd) == null ? (o = n.linkEnds) == null ? void 0 : o.find((e) => e.anchorIndex === i) : a, l = n.selectedAnchorIndex !== void 0 && this._normalizeAnchorIndex(n.selectedAnchorIndex) === i, u = n.fixedLinkEnd ? n.fixedLinkEnd.anchorIndex === i : !!c || l;
-			return P`
+			return F`
             <g class=${`anchor-handle ${u ? "selected" : ""}`}>
               <circle
                 class="anchor-hit"
@@ -1930,7 +1987,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			linkId: t.link.id,
 			nodeId: t.node.id,
 			pointerId: e.pointerId
-		}, this._setLinkEndAnchor(t.link.id, t.end, i, !1), this._capturePointer(e), e.stopPropagation(), e.preventDefault();
+		}, this._setLinkEndAnchor(t.link.id, t.end, i, !0, !0), this._capturePointer(e), e.stopPropagation(), e.preventDefault();
 	}
 	_startPendingLink(e, t, n) {
 		if (!this.editable || !this._canStartLink(t)) return;
@@ -2039,21 +2096,21 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			this.selectedNode = void 0, this.selectedLink = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this._emitNodeRemove(t), this._emitNodeSelect(void 0), e.stopPropagation(), e.preventDefault();
 		}
 	}
-	_setLinkEndAnchor(e, t, n, r = !0) {
-		let i = this._normalizeAnchorIndex(n), a = !1, o = this.links.map((n) => {
+	_setLinkEndAnchor(e, t, n, r = !0, i = !1) {
+		let a = this._normalizeAnchorIndex(n), o = !1, s = this.links.map((n) => {
 			if (n.id !== e) return n;
 			let r = t === "from" ? {
 				...n,
-				fromAnchor: i,
+				fromAnchor: a,
 				fromAnchorMode: "manual"
 			} : {
 				...n,
-				toAnchor: i,
+				toAnchor: a,
 				toAnchorMode: "manual"
 			};
-			return a = a || r.fromAnchor !== n.fromAnchor || r.fromAnchorMode !== n.fromAnchorMode || r.toAnchor !== n.toAnchor || r.toAnchorMode !== n.toAnchorMode, r;
+			return o = o || r.fromAnchor !== n.fromAnchor || r.fromAnchorMode !== n.fromAnchorMode || r.toAnchor !== n.toAnchor || r.toAnchorMode !== n.toAnchorMode, r;
 		});
-		a && (this.links = o, r && this._emitLinksChange(o));
+		o && (this.links = s, r && this._emitLinksChange(s, i));
 	}
 	_startNodeDrag(e, t) {
 		var n;
@@ -2097,7 +2154,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		if (n && e.pointerId === n.pointerId) {
 			let e = this._model().nodes[n.nodeId];
 			if (!e) return;
-			this._setLinkEndAnchor(n.linkId, n.end, this._nearestAnchorIndex(e, t), !1);
+			this._setLinkEndAnchor(n.linkId, n.end, this._nearestAnchorIndex(e, t), !0, !0);
 			return;
 		}
 		let r = this._labelDrag;
@@ -2363,22 +2420,22 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			distance: Math.hypot(e.point.x - t.x, e.point.y - t.y)
 		})).filter(({ node: e, distance: t }) => t <= e.radius + 46).sort((e, t) => e.distance - t.distance)[0]) == null ? void 0 : r.node;
 	}
-	_linkSignedValue(e, t, n = this.links) {
+	_linkSignedValue(e, t, n = this.links, r) {
 		if (Number.isFinite(e.value)) return Number(e.value);
-		let r = t[e.from], i = t[e.to];
-		return (r == null ? void 0 : r.kind) === "leaf" ? this._nodeFlowValue(r) : (i == null ? void 0 : i.kind) === "leaf" ? -this._nodeFlowValue(i) : (r == null ? void 0 : r.kind) === "junction" && (i == null ? void 0 : i.kind) === "junction" ? this._derivedJunctionLinkValue(e, r, i, t, n) : 0;
+		let i = t[e.from], a = t[e.to];
+		return (i == null ? void 0 : i.kind) === "leaf" ? this._nodeFlowValue(i) : (a == null ? void 0 : a.kind) === "leaf" ? -this._nodeFlowValue(a) : (i == null ? void 0 : i.kind) === "junction" && (a == null ? void 0 : a.kind) === "junction" ? this._derivedJunctionLinkValue(e, i, a, t, n, r) : 0;
 	}
 	_nodeFlowValue(e) {
 		return Number.isFinite(e.flowValue) ? Number(e.flowValue) : e.value;
 	}
-	_derivedJunctionLinkValue(e, t, n, r, i) {
-		let a = this._nodeIdsOnSideOfLink(e, t.id, n.id, r, i);
-		if (!a || a.has(n.id)) return 0;
-		let o = 0, s = Array.from(a).reduce((e, t) => {
+	_derivedJunctionLinkValue(e, t, n, r, i, a) {
+		let o = this._nodeIdsOnSideOfLinkCached(e, t.id, n.id, r, i, a);
+		if (!o || o.has(n.id)) return 0;
+		let s = 0, c = Array.from(o).reduce((e, t) => {
 			let n = r[t];
-			return !n || !this._nodeContributesToAutoFlow(n) ? e : (o += 1, e + this._nodeFlowValue(n));
+			return !n || !this._nodeContributesToAutoFlow(n) ? e : (s += 1, e + this._nodeFlowValue(n));
 		}, 0);
-		return o > 0 ? s : 0;
+		return s > 0 ? c : 0;
 	}
 	_linkSourceParts(e, t, n, r, i) {
 		if (e.color || Math.abs(r) <= q) return;
@@ -2400,7 +2457,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_linkFlowSources(e, t, n, r, i) {
 		let a = t.nodes, o = a[e.from], s = a[e.to];
 		if (!o || !s) return [];
-		let c = r >= 0 ? e.from : e.to, l = r >= 0 ? e.to : e.from, u = this._nodeIdsOnSideOfLink(e, c, l, a, n);
+		let c = r >= 0 ? e.from : e.to, l = r >= 0 ? e.to : e.from, u = this._nodeIdsOnSideOfLinkCached(e, c, l, a, n, i);
 		if (!u || u.has(l)) return [];
 		let d = a[c], f = a[l], p = this._sourceProjectionDirection(d, f);
 		return Array.from(u).map((e) => a[e]).filter((e) => !!e).filter((e) => this._nodeContributesToAutoFlow(e)).map((e) => ({
@@ -2461,6 +2518,11 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		var t;
 		return (t = e.contributesToFlow) == null ? e.kind === "leaf" : t;
 	}
+	_nodeIdsOnSideOfLinkCached(e, t, n, r, i, a) {
+		if (!a) return this._nodeIdsOnSideOfLink(e, t, n, r, i);
+		let o = `${e.id}|${t}|${n}`;
+		return a.sideNodeIds.has(o) || a.sideNodeIds.set(o, this._nodeIdsOnSideOfLink(e, t, n, r, i)), a.sideNodeIds.get(o);
+	}
 	_nodeIdsOnSideOfLink(e, t, n, r, i) {
 		if (!r[t] || !r[n]) return;
 		let a = /* @__PURE__ */ new Set(), o = [t], s = (t) => t.id === e.id || t.from === e.from && t.to === e.to || t.from === e.to && t.to === e.from;
@@ -2478,7 +2540,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		let a = t.nodes;
 		if (e.color) return e.color;
 		let o = a[e.from], s = a[e.to], c = r >= 0 ? o : s;
-		return c ? this._nodeColorCached(c, t, n, i) : it.junction;
+		return c ? this._nodeColorCached(c, t, n, i) : at.junction;
 	}
 	_nodeColorCached(e, t, n, r) {
 		if (!r) return this._nodeColor(e, t, n);
@@ -2488,10 +2550,10 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		return r.nodeColors.set(e.id, a), a;
 	}
 	_nodeColor(e, t, n, r = /* @__PURE__ */ new Set()) {
-		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (t && n ? this._overlappingUnlinkedLeafColor(e, t, n, new Set(r).add(e.id)) : void 0) || (e.icon === "solar" ? "var(--energy-solar-color, #d6a500)" : e.icon === "battery" ? "var(--energy-battery-discharge-color, #3f79c9)" : it.leaf) : this._nonLeafColor(e, t);
+		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (t && n ? this._overlappingUnlinkedLeafColor(e, t, n, new Set(r).add(e.id)) : void 0) || (e.icon === "solar" ? "var(--energy-solar-color, #d6a500)" : e.icon === "battery" ? "var(--energy-battery-discharge-color, #3f79c9)" : at.leaf) : this._nonLeafColor(e, t);
 	}
 	_nodeDirectColor(e, t, n) {
-		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (e.icon === "solar" ? "var(--energy-solar-color, #d6a500)" : e.icon === "battery" ? "var(--energy-battery-discharge-color, #3f79c9)" : it.leaf) : this._nonLeafColor(e, t);
+		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (e.icon === "solar" ? "var(--energy-solar-color, #d6a500)" : e.icon === "battery" ? "var(--energy-battery-discharge-color, #3f79c9)" : at.leaf) : this._nonLeafColor(e, t);
 	}
 	_attachedLeafColor(e, t, n) {
 		let r = n.filter((t) => t.from === e.id || t.to === e.id).map((n) => t.nodes[n.from === e.id ? n.to : n.from]).filter((e) => !!e).find((e) => e.kind === "junction");
@@ -2516,7 +2578,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		return a;
 	}
 	_nonLeafColor(e, t) {
-		return e.color ? e.color : e.kind === "junction" && t ? this._junctionFlowColor(e.id, t.nodes) : it[e.kind];
+		return e.color ? e.color : e.kind === "junction" && t ? this._junctionFlowColor(e.id, t.nodes) : at[e.kind];
 	}
 	_connectionPoint(e, t, n, r) {
 		if (e.radius > 0) {
@@ -2738,7 +2800,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		e.key !== "Enter" && e.key !== " " || this._emitNodeAction(t, e);
 	}
 };
-Pe = st, Pe.properties = {
+Pe = ct, Pe.properties = {
 	activeNode: { state: !0 },
 	editable: { type: Boolean },
 	hoverTarget: { state: !0 },
@@ -3088,25 +3150,48 @@ Pe = st, Pe.properties = {
     .connector-hit.selected {
       filter: drop-shadow(0 1px 4px rgb(63 121 201 / 0.45));
     }
-  `, customElements.get("home-flow-graph-card") || customElements.define("home-flow-graph-card", st);
+  `, customElements.get("home-flow-graph-card") || customElements.define("home-flow-graph-card", ct);
+//#endregion
+//#region src/preview-events.ts
+var lt = 0;
+function ut(e) {
+	return lt += 1, `${e}-${lt}`;
+}
+function dt(e, t = {}) {
+	var n;
+	window.dispatchEvent(new CustomEvent("home-flow-card-preview-config-changed", { detail: {
+		config: e,
+		configKey: t.configKey,
+		sourceConfigKey: (n = t.sourceConfigKey) == null ? t.configKey : n,
+		sourceId: t.sourceId
+	} }));
+}
+function ft(e, t = {}) {
+	window.dispatchEvent(new CustomEvent("home-flow-card-preview-node-selected", { detail: {
+		configKey: t.configKey,
+		nodeId: e,
+		sourceId: t.sourceId,
+		targetId: t.targetId
+	} }));
+}
 //#endregion
 //#region src/home-flow-card.ts
-var ct, lt, ut = "home-flow-card", dt = 12e3, ft = "curved", pt = "funnel", mt = "native", ht = "#2d8f8a", gt = "#8b9a90", _t = "#c65b4a", vt = "#3f79c9", yt = "#d6a500", bt = .5, xt = [
+var pt, mt, ht = "home-flow-card", gt = 12e3, _t = "curved", vt = "funnel", yt = "fit-width", bt = "#2d8f8a", xt = "#3f79c9", St = "#c65b4a", Ct = "#3f79c9", wt = "#d6a500", Tt = .5, Et = [
 	"device_class",
 	"friendly_name",
 	"icon",
 	"unit_of_measurement"
-], St = [
+], Dt = [
 	"#f6b73c",
 	"#ef6c00",
 	"#f4a340",
 	"#b85f1a"
-], Ct = [
-	ht,
-	gt,
-	yt,
-	vt,
-	_t,
+], Ot = [
+	bt,
+	xt,
+	wt,
+	Ct,
+	St,
 	"#ef6c00",
 	"#4f9b6d",
 	"#8a5cc2",
@@ -3114,54 +3199,26 @@ var ct, lt, ut = "home-flow-card", dt = 12e3, ft = "curved", pt = "funnel", mt =
 	"#4d90d9",
 	"#7a7f2f",
 	"#c86b2f"
-], wt = [
+], kt = [
 	{
-		id: "meter",
+		id: "grid",
 		kind: "junction",
-		label: "Meter",
-		entity: "sensor.grid_power",
-		icon: "mdi:transmission-tower",
+		label: "Grid",
+		icon: "grid",
 		radius: 90,
-		color: ht,
+		color: bt,
 		flowDirection: "supply",
 		balance_role: "junction"
 	},
 	{
-		id: "building",
+		id: "home",
 		kind: "junction",
-		label: "Building",
-		entity: "sensor.home_power",
-		icon: "mdi:home",
+		label: "Home",
+		icon: "home",
 		radius: 90,
-		color: gt,
+		color: xt,
 		flowDirection: "consume",
 		balance_role: "junction"
-	},
-	{
-		id: "junction-1",
-		kind: "junction",
-		label: "Junction",
-		icon: "mdi:hub",
-		radius: 90,
-		balance_role: "junction"
-	},
-	{
-		id: "pv-1",
-		kind: "leaf",
-		label: "PV",
-		icon: "solar",
-		radius: 65,
-		flowDirection: "supply",
-		balance_role: "measured"
-	},
-	{
-		id: "battery-1",
-		kind: "leaf",
-		label: "Battery",
-		icon: "battery",
-		radius: 65,
-		flowDirection: "supply",
-		balance_role: "measured"
 	},
 	{
 		id: "heat-pump",
@@ -3172,93 +3229,57 @@ var ct, lt, ut = "home-flow-card", dt = 12e3, ft = "curved", pt = "funnel", mt =
 		flowDirection: "consume",
 		balance_role: "measured"
 	}
-], Tt = [
-	{
-		id: "meter->junction-1",
-		from: "meter",
-		to: "junction-1",
-		entity: "sensor.grid_power"
+], At = [{
+	id: "grid->home",
+	from: "grid",
+	to: "home"
+}, {
+	id: "heat-pump->home",
+	from: "heat-pump",
+	to: "home"
+}], jt = {
+	grid: {
+		x: 245,
+		y: 365
 	},
-	{
-		id: "junction-1->building",
-		from: "junction-1",
-		to: "building",
-		entity: "sensor.home_power"
-	},
-	{
-		id: "pv-1->junction-1",
-		from: "pv-1",
-		to: "junction-1"
-	},
-	{
-		id: "battery-1->junction-1",
-		from: "battery-1",
-		to: "junction-1"
-	},
-	{
-		id: "heat-pump->building",
-		from: "heat-pump",
-		to: "building"
-	}
-], Et = {
-	meter: {
-		x: 99,
-		y: 210
-	},
-	building: {
-		x: 887,
-		y: 210
-	},
-	"junction-1": {
-		x: 361,
-		y: 348
-	},
-	"pv-1": {
-		x: 300,
-		y: 86
-	},
-	"battery-1": {
-		x: 361,
-		y: 592
+	home: {
+		x: 490,
+		y: 365
 	},
 	"heat-pump": {
-		x: 790,
-		y: 370
+		x: 705,
+		y: 365
 	}
 };
 function X(e) {
-	let t = fn(e) ? e : {}, n = pn(t.flow_min_visible_value, 10), r = Math.max(pn(t.flow_max_value, dt), n + 1), i = t.hide_zero_values === !0;
+	let t = _n(e) ? e : {}, n = Array.isArray(t.nodes), r = vn(t.flow_min_visible_value, 10), i = Math.max(vn(t.flow_max_value, gt), r + 1), a = t.hide_zero_values === !0;
 	return {
-		type: typeof t.type == "string" ? t.type : `custom:${ut}`,
+		type: typeof t.type == "string" ? t.type : `custom:${ht}`,
 		title: typeof t.title == "string" ? t.title : void 0,
-		nodes: Dt(t.nodes, i),
-		links: Ft(t.links),
-		layout: It(t.layout),
-		flow_min_visible_value: n,
-		flow_max_value: r,
-		label_style: t.label_style === "straight" ? "straight" : ft,
-		leaf_routing: t.leaf_routing === "channel" || t.leaf_routing === "radial" || t.leaf_routing === "orthogonal" || t.leaf_routing === "sweep" ? t.leaf_routing : pt,
-		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "grow" || t.scaling_mode === "shrink" ? t.scaling_mode : mt,
-		width: pn(t.width, 502),
-		height: pn(t.height, 383)
+		nodes: Mt(t.nodes, a),
+		links: Bt(t.links, !n),
+		layout: Vt(t.layout, !n),
+		flow_min_visible_value: r,
+		flow_max_value: i,
+		label_style: t.label_style === "straight" ? "straight" : _t,
+		leaf_routing: t.leaf_routing === "channel" || t.leaf_routing === "radial" || t.leaf_routing === "orthogonal" || t.leaf_routing === "sweep" ? t.leaf_routing : vt,
+		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "grow" || t.scaling_mode === "shrink" ? t.scaling_mode : yt,
+		width: vn(t.width, 502),
+		height: vn(t.height, 360)
 	};
 }
-function Dt(e, t = !1) {
-	if (!Array.isArray(e)) return dn(wt).map((e) => ({
-		...e,
-		...t ? { hide_zero_values: !0 } : {}
-	}));
-	let n = e.filter((e) => fn(e)).filter((e) => typeof e.id == "string" && Ot(e.kind) !== void 0).map((e) => {
+function Mt(e, t = !1) {
+	return Array.isArray(e) ? e.filter((e) => _n(e)).filter((e) => typeof e.id == "string" && Nt(e.kind) !== void 0).map((e) => {
 		var n, r, i;
-		let a = (n = Ot(e.kind)) == null ? "leaf" : n;
+		let a = (n = Nt(e.kind)) == null ? "leaf" : n;
 		return {
 			id: String(e.id),
 			kind: a,
-			label: typeof e.label == "string" ? e.label : un(String(e.id)),
+			label: typeof e.label == "string" ? e.label : hn(String(e.id)),
 			label_angle: $(e.label_angle),
 			label_offset_x: $(e.label_offset_x),
 			label_offset_y: $(e.label_offset_y),
-			flow_mode: At(e.flow_mode),
+			flow_mode: Ft(e.flow_mode),
 			entity: Z(e.entity),
 			attribute: Q(e.attribute),
 			incoming_entity: Z(e.incoming_entity),
@@ -3267,53 +3288,55 @@ function Dt(e, t = !1) {
 			outgoing_attribute: Q(e.outgoing_attribute),
 			secondary_entity: Z(e.secondary_entity),
 			secondary_attribute: Q(e.secondary_attribute),
-			primary_action: Nt(e.primary_action),
+			primary_action: Rt(e.primary_action),
 			primary_action_path: Q(e.primary_action_path),
-			secondary_action: Nt(e.secondary_action),
+			secondary_action: Rt(e.secondary_action),
 			secondary_action_path: Q(e.secondary_action_path),
 			value: $(e.value),
 			secondary: $(e.secondary),
 			factor: $(e.factor),
 			invert: e.invert === !0,
-			flowDirection: kt(e.flowDirection),
-			allowed_flow: Mt(e.allowed_flow),
-			balance_role: (r = jt(e.balance_role)) == null ? en(a) : r,
+			flowDirection: Pt(e.flowDirection),
+			allowed_flow: Lt(e.allowed_flow),
+			balance_role: (r = It(e.balance_role)) == null ? on(a) : r,
 			hide_zero_values: typeof e.hide_zero_values == "boolean" ? e.hide_zero_values : t ? !0 : void 0,
 			hide_if_zero: typeof e.hide_if_zero == "boolean" ? e.hide_if_zero : void 0,
 			show_flow_arrow: typeof e.show_flow_arrow == "boolean" ? e.show_flow_arrow : void 0,
 			flowMinVisibleValue: $(e.flowMinVisibleValue),
 			flowMaxValue: $(e.flowMaxValue),
-			radius: mn((i = $(e.radius)) == null ? Qt(a) : i, 20, 100),
-			icon: Pt(e.icon),
+			radius: yn((i = $(e.radius)) == null ? rn(a) : i, 20, 100),
+			icon: zt(e.icon),
 			unit: Q(e.unit),
 			color: Q(e.color)
 		};
-	});
-	return n.length > 0 ? n : dn(wt);
-}
-function Ot(e) {
-	if (e === "junction" || e === "leaf") return e;
-}
-function kt(e) {
-	if (e === "consume" || e === "supply") return e;
-}
-function At(e) {
-	if (e === "signed" || e === "bidirectional") return e;
-}
-function jt(e) {
-	if (e === "junction" || e === "measured" || e === "ignore") return e;
-}
-function Mt(e) {
-	if (e === "both" || e === "supply" || e === "consume") return e;
+	}) : gn(kt).map((e) => ({
+		...e,
+		...t ? { hide_zero_values: !0 } : {}
+	}));
 }
 function Nt(e) {
-	if (e === "more-info" || e === "toggle" || e === "navigate" || e === "url" || e === "none") return e;
+	if (e === "junction" || e === "leaf") return e;
 }
 function Pt(e) {
-	return e === null ? null : Q(e);
+	if (e === "consume" || e === "supply") return e;
 }
 function Ft(e) {
-	return Array.isArray(e) ? e.filter((e) => fn(e)).filter((e) => typeof e.from == "string" && typeof e.to == "string").map((e) => ({
+	if (e === "signed" || e === "bidirectional") return e;
+}
+function It(e) {
+	if (e === "junction" || e === "measured" || e === "ignore") return e;
+}
+function Lt(e) {
+	if (e === "both" || e === "supply" || e === "consume") return e;
+}
+function Rt(e) {
+	if (e === "more-info" || e === "toggle" || e === "navigate" || e === "url" || e === "none") return e;
+}
+function zt(e) {
+	return e === null ? null : Q(e);
+}
+function Bt(e, t = !0) {
+	return Array.isArray(e) ? e.filter((e) => _n(e)).filter((e) => typeof e.from == "string" && typeof e.to == "string").map((e) => ({
 		id: typeof e.id == "string" ? e.id : `${String(e.from)}->${String(e.to)}`,
 		from: String(e.from),
 		to: String(e.to),
@@ -3331,22 +3354,22 @@ function Ft(e) {
 		toAnchor: $(e.toAnchor),
 		toAnchorMode: e.toAnchorMode === "manual" ? "manual" : void 0,
 		junctionJoinId: Q(e.junctionJoinId)
-	})) : Tt.map((e) => ({ ...e }));
+	})) : t ? At.map((e) => ({ ...e })) : [];
 }
-function It(e) {
-	return fn(e) ? Object.fromEntries(Object.entries(e).filter((e) => {
+function Vt(e, t = !0) {
+	return _n(e) ? Object.fromEntries(Object.entries(e).filter((e) => {
 		let t = e[1];
-		return fn(t) && Number.isFinite(t.x) && Number.isFinite(t.y);
+		return _n(t) && Number.isFinite(t.x) && Number.isFinite(t.y);
 	}).map(([e, t]) => [e, {
 		x: Number(t.x),
 		y: Number(t.y)
-	}])) : { ...Et };
+	}])) : t ? { ...jt } : {};
 }
-function Lt(e, t) {
+function Ht(e, t) {
 	var n;
-	return ((n = e.nodes) == null ? dn(wt) : n).map((e) => {
-		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _, v, y, b, x, S, C, w, T, ee, E, te, D;
-		let O = (n = e.flow_mode) == null ? "signed" : n, ne = O === "signed" ? Vt(t, e.entity ? {
+	return ((n = e.nodes) == null ? gn(kt) : n).map((e) => {
+		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _, v, y, b, x, S, C, w, T, ee, te, ne, E;
+		let D = (n = e.flow_mode) == null ? "signed" : n, O = D === "signed" ? Kt(t, e.entity ? {
 			entity: e.entity,
 			attribute: e.attribute,
 			factor: e.factor,
@@ -3354,48 +3377,48 @@ function Lt(e, t) {
 		} : {
 			value: e.value,
 			unit: e.unit
-		}) : void 0, k = O === "bidirectional" ? Vt(t, {
+		}) : void 0, k = D === "bidirectional" ? Kt(t, {
 			entity: e.incoming_entity,
 			attribute: e.incoming_attribute,
 			unit: e.unit
-		}) : void 0, re = O === "bidirectional" ? Vt(t, {
+		}) : void 0, A = D === "bidirectional" ? Kt(t, {
 			entity: e.outgoing_entity,
 			attribute: e.outgoing_attribute,
 			unit: e.unit
-		}) : void 0, ie = e.secondary_entity ? Vt(t, {
+		}) : void 0, re = e.secondary_entity ? Kt(t, {
 			entity: e.secondary_entity,
 			attribute: e.secondary_attribute,
 			value: e.secondary
-		}) : void 0, A = e.value !== void 0 || (O === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ae = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = re == null ? void 0 : re.value) == null ? 0 : i), oe = (a = (o = (s = e.unit) == null ? ne == null ? void 0 : ne.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? re == null ? void 0 : re.unit : a, se = (c = ie == null ? void 0 : ie.value) == null ? e.secondary : c, ce = (l = (u = ie == null ? void 0 : ie.unit) == null ? e.unit : u) == null ? "%" : l, le = (d = e.flowDirection) == null ? $t(e) : d, j = O === "bidirectional" ? ae : ((f = (p = ne == null ? void 0 : ne.value) == null ? e.value : p) == null ? 0 : f) * (le === "consume" ? -1 : 1), ue = zt(e.invert === !0 ? -j : j, (m = e.allowed_flow) == null ? "both" : m), de = Math.abs(ue), M = O === "bidirectional" ? ue > bt ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : ue < -bt ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, fe = Rt((S = e.primary_action) == null ? "more-info" : S, M, e.primary_action_path), pe = Rt((C = e.secondary_action) == null ? "more-info" : C, e.secondary_entity, e.secondary_action_path), me = O === "bidirectional" ? (w = e.incoming_entity) == null ? e.outgoing_entity : w : e.entity, he = e.icon === null ? null : (T = (ee = e.icon) == null ? Wt(t, me) : ee) == null ? Zt(e.kind) : T, N = tn(e), P = nn(N) || e.kind === "junction" && N !== "ignore" && A;
+		}) : void 0, j = e.value !== void 0 || (D === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = A == null ? void 0 : A.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? O == null ? void 0 : O.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? A == null ? void 0 : A.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? an(e) : d, M = D === "bidirectional" ? ie : ((f = (p = O == null ? void 0 : O.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), le = Wt(e.invert === !0 ? -M : M, (m = e.allowed_flow) == null ? "both" : m), ue = Math.abs(le), N = D === "bidirectional" ? le > Tt ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : le < -Tt ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, de = Ut((S = e.primary_action) == null ? "more-info" : S, N, e.primary_action_path), fe = Ut((C = e.secondary_action) == null ? "more-info" : C, e.secondary_entity, e.secondary_action_path), pe = D === "bidirectional" ? (w = e.incoming_entity) == null ? e.outgoing_entity : w : e.entity, me = e.icon === null ? null : (T = (ee = e.icon) == null ? Yt(t, pe) : ee) == null ? nn(e.kind) : T, P = sn(e), F = cn(P) || e.kind === "junction" && P !== "ignore" && j;
 		return {
 			id: e.id,
 			kind: e.kind,
-			label: (E = (te = e.label) == null ? Ht(t, e.entity) : te) == null ? un(e.id) : E,
+			label: (te = (ne = e.label) == null ? qt(t, e.entity) : ne) == null ? hn(e.id) : te,
 			labelAngle: e.label_angle,
 			labelOffsetX: e.label_offset_x,
 			labelOffsetY: e.label_offset_y,
-			value: de,
-			flowValue: ue,
-			hasOwnValue: A,
-			contributesToFlow: P,
+			value: ue,
+			flowValue: le,
+			hasOwnValue: j,
+			contributesToFlow: F,
 			hideZeroValues: e.hide_zero_values,
 			hideIfZero: e.hide_if_zero === !0,
 			showFlowArrow: e.show_flow_arrow === !0,
-			primaryAction: fe,
-			secondaryAction: pe,
-			secondary: se,
-			secondaryDisplayValue: se === void 0 ? void 0 : `${Yt(se)}${ce ? ` ${ce}` : ""}`,
-			radius: (D = e.radius) == null ? Qt(e.kind) : D,
-			icon: he,
+			primaryAction: de,
+			secondaryAction: fe,
+			secondary: oe,
+			secondaryDisplayValue: oe === void 0 ? void 0 : `${en(oe)}${se ? ` ${se}` : ""}`,
+			radius: (E = e.radius) == null ? rn(e.kind) : E,
+			icon: me,
 			secondaryIcon: void 0,
-			unit: oe,
+			unit: ae,
 			color: e.color,
 			flowMinVisibleValue: e.flowMinVisibleValue,
 			flowMaxValue: e.flowMaxValue
 		};
 	});
 }
-function Rt(e, t, n) {
+function Ut(e, t, n) {
 	switch (e) {
 		case "none": return;
 		case "more-info":
@@ -3411,26 +3434,26 @@ function Rt(e, t, n) {
 		default: return;
 	}
 }
-function zt(e, t) {
+function Wt(e, t) {
 	return t === "supply" ? Math.max(e, 0) : t === "consume" ? Math.min(e, 0) : e;
 }
-function Bt(e, t) {
+function Gt(e, t) {
 	var n;
 	return ((n = e.links) == null ? [] : n).map((e) => {
 		var n, r;
-		let i = e.entity ? Vt(t, {
+		let i = e.entity ? Kt(t, {
 			...e,
 			value: void 0
-		}) : Vt(t, e), a = (n = i == null ? void 0 : i.value) == null ? e.value : n, o = (r = e.unit) == null ? i == null ? void 0 : i.unit : r;
+		}) : Kt(t, e), a = (n = i == null ? void 0 : i.value) == null ? e.value : n, o = (r = e.unit) == null ? i == null ? void 0 : i.unit : r;
 		return {
 			...e,
 			value: a,
 			unit: o,
-			displayValue: a === void 0 ? void 0 : Xt(a, o)
+			displayValue: a === void 0 ? void 0 : tn(a, o)
 		};
 	});
 }
-function Vt(e, t) {
+function Kt(e, t) {
 	var n, r, i;
 	if (!(t != null && t.entity)) return (t == null ? void 0 : t.value) === void 0 ? void 0 : {
 		value: t.value,
@@ -3441,12 +3464,12 @@ function Vt(e, t) {
 		value: t.value,
 		unit: t.unit
 	};
-	let o = Jt(t.attribute ? a.attributes[t.attribute] : a.state);
+	let o = $t(t.attribute ? a.attributes[t.attribute] : a.state);
 	if (!Number.isFinite(o)) return t.value === void 0 ? void 0 : {
 		value: t.value,
 		unit: t.unit
 	};
-	let s = String((n = a.attributes.unit_of_measurement) == null ? "" : n).trim(), c = (r = t.unit) == null ? s : r, l = qt(c), u = (i = t.factor) == null ? l : i, d = t.invert ? -1 : 1;
+	let s = String((n = a.attributes.unit_of_measurement) == null ? "" : n).trim(), c = (r = t.unit) == null ? s : r, l = Qt(c), u = (i = t.factor) == null ? l : i, d = t.invert ? -1 : 1;
 	return {
 		value: o * u * d,
 		unit: l === 1 ? c : "W"
@@ -3456,38 +3479,38 @@ function Z(e) {
 	var t;
 	if (typeof e == "string") return Q(e);
 	if (Array.isArray(e)) return Z(e[0]);
-	if (fn(e)) return (t = Q(e.entity)) == null ? Q(e.entity_id) : t;
+	if (_n(e)) return (t = Q(e.entity)) == null ? Q(e.entity_id) : t;
 }
-function Ht(e, t) {
+function qt(e, t) {
 	var n;
 	if (!t) return;
 	let r = e == null || (n = e.states[t]) == null ? void 0 : n.attributes.friendly_name;
-	return typeof r == "string" ? r : un(t);
+	return typeof r == "string" ? r : hn(t);
 }
-function Ut(e) {
+function Jt(e) {
 	var t;
 	return Object.keys((t = e == null ? void 0 : e.states) == null ? {} : t).sort();
 }
-function Wt(e, t) {
+function Yt(e, t) {
 	if (!t) return;
 	let n = e == null ? void 0 : e.states[t], r = n == null ? void 0 : n.attributes.icon;
 	if (typeof r == "string" && r.startsWith("mdi:")) return r;
 	let i = n == null ? void 0 : n.attributes.device_class;
 	if (typeof i == "string") {
-		let e = Gt(i);
+		let e = Xt(i);
 		if (e) return e;
 	}
 	let a = t.split(".")[0];
-	return Kt(a);
+	return Zt(a);
 }
-function Gt(e) {
+function Xt(e) {
 	if (e === "battery") return "battery";
 	if (e === "gas") return "mdi:fire";
 	if (e === "power" || e === "energy") return "mdi:flash";
 	if (e === "temperature") return "mdi:thermometer";
 	if (e === "water") return "water";
 }
-function Kt(e) {
+function Zt(e) {
 	if (e === "battery") return "battery";
 	if (e === "binary_sensor") return "mdi:checkbox-marked-circle-outline";
 	if (e === "climate") return "heat_pump";
@@ -3498,42 +3521,43 @@ function Kt(e) {
 	if (e === "switch") return "mdi:toggle-switch";
 	if (e === "water_heater") return "mdi:water-boiler";
 }
-function qt(e) {
+function Qt(e) {
 	return e === "kW" ? 1e3 : e === "MW" ? 1e6 : 1;
 }
-function Jt(e) {
+function $t(e) {
 	if (typeof e == "number") return e;
 	if (typeof e != "string") return NaN;
 	let t = e.trim().replace(",", ".").match(/[-+]?\d+(?:\.\d+)?/);
 	return t ? Number(t[0]) : NaN;
 }
-function Yt(e) {
+function en(e) {
 	return e.toLocaleString("en-US", { maximumFractionDigits: e >= 100 ? 0 : 1 });
 }
-function Xt(e, t) {
+function tn(e, t) {
 	let n = Math.abs(e);
-	return !t || t === "W" || t === "kW" || t === "MW" ? n >= 1e3 ? `${Yt(n / 1e3)} kW` : `${Math.round(n).toLocaleString("en-US")} W` : `${Yt(n)} ${t}`;
-}
-function Zt(e) {
-	return e === "junction" ? "mdi:hub" : "mdi:leaf";
-}
-function Qt(e) {
-	return e === "junction" ? 90 : 65;
-}
-function $t(e) {
-	return e.flowDirection ? e.flowDirection : e.icon === "heat_pump" || e.icon === "ev" || e.icon === "plug" || e.icon === "appliance" || e.icon === "home" ? "consume" : "supply";
-}
-function en(e) {
-	return e === "leaf" ? "measured" : "junction";
-}
-function tn(e) {
-	var t;
-	return (t = e.balance_role) == null ? en(e.kind) : t;
+	return !t || t === "W" || t === "kW" || t === "MW" ? n >= 1e3 ? `${en(n / 1e3)} kW` : `${Math.round(n).toLocaleString("en-US")} W` : `${en(n)} ${t}`;
 }
 function nn(e) {
+	return e === "junction" ? "mdi:hub" : "mdi:leaf";
+}
+function rn(e) {
+	return e === "junction" ? 90 : 65;
+}
+function an(e) {
+	var t;
+	return (t = e.flowDirection) == null ? "supply" : t;
+}
+function on(e) {
+	return e === "leaf" ? "measured" : "junction";
+}
+function sn(e) {
+	var t;
+	return (t = e.balance_role) == null ? on(e.kind) : t;
+}
+function cn(e) {
 	return e === "measured";
 }
-function rn(e, t) {
+function ln(e, t) {
 	var n, r, i;
 	let { [t]: a, ...o } = (n = e.layout) == null ? {} : n;
 	return X({
@@ -3543,70 +3567,80 @@ function rn(e, t) {
 		layout: o
 	});
 }
-function an(e, t) {
+function un(e, t) {
 	let n = t.filter((e) => e.kind === "junction");
-	return St[Math.max(0, n.findIndex((t) => t.id === e)) % St.length];
+	return Dt[Math.max(0, n.findIndex((t) => t.id === e)) % Dt.length];
 }
-function on(e) {
+function dn(e) {
 	let t = /^#?([0-9a-f]{6})$/i.exec(e == null ? "" : e);
 	return t ? `#${t[1].toLowerCase()}` : void 0;
 }
-function sn(e, t) {
-	let n = cn(e), r = cn(t);
+function fn(e, t) {
+	let n = pn(e), r = pn(t);
 	return !n || !r ? 0 : Math.hypot(n.r - r.r, n.g - r.g, n.b - r.b);
 }
-function cn(e) {
-	let t = on(e);
+function pn(e) {
+	let t = dn(e);
 	if (t) return {
 		r: Number.parseInt(t.slice(1, 3), 16),
 		g: Number.parseInt(t.slice(3, 5), 16),
 		b: Number.parseInt(t.slice(5, 7), 16)
 	};
 }
-function ln(e) {
-	return /^#[0-9a-f]{6}$/i.test(e == null ? "" : e) ? e : _t;
+function mn(e) {
+	return /^#[0-9a-f]{6}$/i.test(e == null ? "" : e) ? e : St;
 }
-function un(e) {
+function hn(e) {
 	return (e.includes(".") ? e.split(".").slice(1).join(".") : e).replace(/[_-]+/g, " ").replace(/\b\w/g, (e) => e.toUpperCase());
 }
-function dn(e) {
+function gn(e) {
 	return e.map((e) => ({ ...e }));
 }
-function fn(e) {
+function _n(e) {
 	return !!(e && typeof e == "object" && !Array.isArray(e));
 }
 function Q(e) {
 	return typeof e == "string" && e.trim() ? e.trim() : void 0;
 }
-function pn(e, t) {
+function vn(e, t) {
 	return Number.isFinite(e) ? Number(e) : t;
 }
 function $(e) {
 	return Number.isFinite(e) ? Number(e) : void 0;
 }
-function mn(e, t, n) {
+function yn(e, t, n) {
 	return Math.min(Math.max(e, t), n);
 }
-function hn(e, t) {
+function bn(e, t) {
 	e.dispatchEvent(new CustomEvent("config-changed", {
 		bubbles: !0,
 		composed: !0,
 		detail: { config: t }
 	}));
 }
-function gn(e) {
-	window.dispatchEvent(new CustomEvent("home-flow-card-preview-config-changed", { detail: { config: e } }));
+function xn(e) {
+	var t, n;
+	let r = X(e);
+	return JSON.stringify({
+		links: ((t = r.links) == null ? [] : t).map((e) => ({
+			from: e.from,
+			id: e.id,
+			to: e.to
+		})),
+		nodes: ((n = r.nodes) == null ? [] : n).map((e) => ({
+			id: e.id,
+			kind: e.kind
+		})),
+		type: r.type
+	});
 }
-function _n(e) {
-	window.dispatchEvent(new CustomEvent("home-flow-card-preview-node-selected", { detail: { nodeId: e } }));
-}
-function vn(e) {
+function Sn(e) {
 	var t, n;
 	let r = /* @__PURE__ */ new Map(), i = (e, t) => {
 		var n;
 		if (!e) return;
 		let i = (n = r.get(e)) == null ? /* @__PURE__ */ new Set() : n;
-		xt.forEach((e) => i.add(e)), t && i.add(t), r.set(e, i);
+		Et.forEach((e) => i.add(e)), t && i.add(t), r.set(e, i);
 	};
 	return ((t = e.nodes) == null ? [] : t).forEach((e) => {
 		i(e.entity, e.attribute), i(e.incoming_entity, e.incoming_attribute), i(e.outgoing_entity, e.outgoing_attribute), i(e.secondary_entity, e.secondary_attribute);
@@ -3615,28 +3649,48 @@ function vn(e) {
 		entityId: e
 	}));
 }
-function yn(e, t, n) {
-	return e.some((e) => bn(e, t == null ? void 0 : t.states[e.entityId], n == null ? void 0 : n.states[e.entityId]));
+function Cn(e, t, n) {
+	return e.some((e) => wn(e, t == null ? void 0 : t.states[e.entityId], n == null ? void 0 : n.states[e.entityId]));
 }
-function bn(e, t, n) {
+function wn(e, t, n) {
 	return t === n ? !1 : !t || !n ? t !== n : t.state === n.state ? e.attributes.some((e) => t.attributes[e] !== n.attributes[e]) : !0;
 }
-function xn(e, t) {
+function Tn(e, t) {
 	return {
-		links: Bt(e, t),
-		nodes: Lt(e, t)
+		links: Gt(e, t),
+		nodes: Ht(e, t)
 	};
 }
-var Sn = class extends z {
+var En = class extends z {
 	constructor(...e) {
-		super(...e), this.config = X(void 0), this.editMode = !1, this._entityWatchers = vn(this.config), this._normalizedConfig = this.config, this._resolvedGraphData = xn(this.config, void 0);
+		super(...e), this.config = X(void 0), this.editMode = !1, this._previewSourceId = ut("preview"), this._entityWatchers = Sn(this.config), this._normalizedConfig = this.config, this._resolvedGraphData = Tn(this.config, void 0), this._handlePreviewNodeSelected = (e) => {
+			if (!this.editMode) return;
+			let t = e.detail;
+			this._matchesPreviewNodeSelectedEvent(t) && (this._selectedNode = t == null ? void 0 : t.nodeId);
+		};
+	}
+	connectedCallback() {
+		super.connectedCallback(), window.addEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected);
+	}
+	disconnectedCallback() {
+		window.removeEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), super.disconnectedCallback();
+	}
+	_matchesPreviewNodeSelectedEvent(e) {
+		return !e || e.sourceId === this._previewSourceId ? !1 : e.targetId ? e.targetId === this._previewSourceId : !e.configKey || e.configKey === xn(this.config);
+	}
+	_previewEventScope(e = this.config) {
+		return {
+			configKey: xn(this.config),
+			sourceConfigKey: xn(e),
+			sourceId: this._previewSourceId
+		};
 	}
 	setConfig(e) {
 		this.config = X(e);
 	}
 	getCardSize() {
 		var e;
-		return Math.ceil(((e = X(this.config).height) == null ? 383 : e) / 50);
+		return Math.ceil(((e = X(this.config).height) == null ? 360 : e) / 50);
 	}
 	static getStubConfig() {
 		return X(void 0);
@@ -3648,28 +3702,29 @@ var Sn = class extends z {
 		if (e.has("config")) return this._syncGraphCache(this.config, this.hass, e.get("config")), !0;
 		if (e.has("hass")) {
 			let t = e.get("hass");
-			return yn(this._entityWatchers, t, this.hass) ? (this._resolvedGraphData = xn(this._normalizedConfig, this.hass), !0) : !1;
+			return Cn(this._entityWatchers, t, this.hass) ? (this._resolvedGraphData = Tn(this._normalizedConfig, this.hass), !0) : !1;
 		}
 		return !0;
 	}
 	render() {
 		var e, t, n, r, i, a;
-		let o = this._normalizedConfig, s = (e = o.width) == null ? 502 : e, c = (t = o.height) == null ? 383 : t;
-		return N`
+		let o = this._normalizedConfig, s = (e = o.width) == null ? 502 : e, c = (t = o.height) == null ? 360 : t;
+		return P`
       <ha-card
-        class=${`scale-${(n = o.scaling_mode) == null ? mt : n}`}
+        class=${`scale-${(n = o.scaling_mode) == null ? yt : n}`}
         style=${`--graph-width:${s};--graph-height:${c};--graph-aspect:${s} / ${c};`}
       >
-        ${o.title ? N`<div class="title">${o.title}</div>` : I}
+        ${o.title ? P`<div class="title">${o.title}</div>` : L}
         <div class="graph-frame">
           <div class="graph-canvas">
             <home-flow-graph-card
               .nodes=${this._resolvedGraphData.nodes}
               .links=${this._resolvedGraphData.links}
               .layout=${(r = o.layout) == null ? {} : r}
-              .labelStyle=${(i = o.label_style) == null ? ft : i}
-              .leafRouting=${(a = o.leaf_routing) == null ? pt : a}
+              .labelStyle=${(i = o.label_style) == null ? _t : i}
+              .leafRouting=${(a = o.leaf_routing) == null ? vt : a}
               .editable=${this.editMode}
+              .selectedNode=${this._selectedNode}
               @graph-layout-change=${this._handleLayoutChange}
               @graph-links-change=${this._handleLinksChange}
               @graph-node-label-change=${this._handleNodeLabelChange}
@@ -3684,24 +3739,28 @@ var Sn = class extends z {
     `;
 	}
 	_syncGraphCache(e, t, n) {
-		this._normalizedConfig = e, !(n && n.nodes === e.nodes && n.links === e.links) && (this._entityWatchers = vn(e), this._resolvedGraphData = xn(e, t));
+		let r = this._normalizedConfig, i = X(e);
+		this._normalizedConfig = i, !(n && r.nodes === i.nodes && r.links === i.links) && (this._entityWatchers = Sn(i), this._resolvedGraphData = Tn(i, t));
 	}
 	_handleLayoutChange(e) {
-		this.editMode && (this.config = {
+		if (!this.editMode) return;
+		let t = this.config;
+		this.config = {
 			...this.config,
 			layout: e.detail.layout
-		}, !e.detail.live && gn(this.config));
+		}, !e.detail.live && dt(this.config, this._previewEventScope(t));
 	}
 	_handleLinksChange(e) {
+		let t = this.config;
 		this.config = X({
 			...this.config,
 			links: e.detail.links
-		}), !e.detail.live && gn(this.config);
+		}), !e.detail.live && dt(this.config, this._previewEventScope(t));
 	}
 	_handleNodeLabelChange(e) {
 		var t;
 		if (!this.editMode || !e.detail.nodeId) return;
-		let { labelAngle: n, labelOffsetX: r, labelOffsetY: i, nodeId: a } = e.detail;
+		let { labelAngle: n, labelOffsetX: r, labelOffsetY: i, nodeId: a } = e.detail, o = this.config;
 		this.config = X({
 			...this.config,
 			nodes: ((t = this.config.nodes) == null ? [] : t).map((e) => e.id === a ? {
@@ -3710,13 +3769,16 @@ var Sn = class extends z {
 				label_offset_x: r,
 				label_offset_y: i
 			} : e)
-		}), !e.detail.live && gn(this.config);
+		}), !e.detail.live && dt(this.config, this._previewEventScope(o));
 	}
 	_handleNodeRemove(e) {
-		!this.editMode || !e.detail.nodeId || (this.config = rn(X(this.config), e.detail.nodeId), gn(this.config));
+		if (!this.editMode || !e.detail.nodeId) return;
+		this._selectedNode === e.detail.nodeId && (this._selectedNode = void 0);
+		let t = this.config;
+		this.config = ln(X(this.config), e.detail.nodeId), dt(this.config, this._previewEventScope(t));
 	}
 	_handleNodeSelect(e) {
-		this.editMode && _n(e.detail.nodeId);
+		this.editMode && (this._selectedNode = e.detail.nodeId, ft(e.detail.nodeId, this._previewEventScope()));
 	}
 	_handleEntityMoreInfo(e) {
 		this.editMode || !e.detail.entityId || this._showMoreInfo(e.detail.entityId);
@@ -3753,14 +3815,15 @@ var Sn = class extends z {
 		}));
 	}
 };
-ct = Sn, ct.properties = {
+pt = En, pt.properties = {
 	config: { attribute: !1 },
 	editMode: {
 		type: Boolean,
 		attribute: "edit-mode"
 	},
-	hass: { attribute: !1 }
-}, ct.styles = o`
+	hass: { attribute: !1 },
+	_selectedNode: { state: !0 }
+}, pt.styles = o`
     :host {
       display: block;
       max-width: 100%;
@@ -3859,8 +3922,8 @@ ct = Sn, ct.properties = {
       width: 100%;
       height: 100%;
     }
-  `, customElements.get("home-flow-card") || customElements.define("home-flow-card", Sn), window.customCards = (lt = window.customCards) == null ? [] : lt, window.customCards.some((e) => e.type === "home-flow-card") || window.customCards.push({
-	type: ut,
+  `, customElements.get("home-flow-card") || customElements.define("home-flow-card", En), window.customCards = (mt = window.customCards) == null ? [] : mt, window.customCards.some((e) => e.type === "home-flow-card") || window.customCards.push({
+	type: ht,
 	name: "Home Flow Card",
 	description: "Visual flow map for energy, water, gas and other home resources.",
 	preview: !0,
@@ -3868,17 +3931,17 @@ ct = Sn, ct.properties = {
 });
 //#endregion
 //#region node_modules/lit-html/directive.js
-var Cn = {
+var Dn = {
 	ATTRIBUTE: 1,
 	CHILD: 2,
 	PROPERTY: 3,
 	BOOLEAN_ATTRIBUTE: 4,
 	EVENT: 5,
 	ELEMENT: 6
-}, wn = (e) => (...t) => ({
+}, On = (e) => (...t) => ({
 	_$litDirective$: e,
 	values: t
-}), Tn = class {
+}), kn = class {
 	constructor(e) {}
 	get _$AU() {
 		return this._$AM._$AU;
@@ -3892,9 +3955,9 @@ var Cn = {
 	update(e, t) {
 		return this.render(...t);
 	}
-}, { I: En } = De, Dn = (e) => e, On = () => document.createComment(""), kn = (e, t, n) => {
+}, { I: An } = De, jn = (e) => e, Mn = () => document.createComment(""), Nn = (e, t, n) => {
 	let r = e._$AA.parentNode, i = t === void 0 ? e._$AB : t._$AA;
-	if (n === void 0) n = new En(r.insertBefore(On(), i), r.insertBefore(On(), i), e, e.options);
+	if (n === void 0) n = new An(r.insertBefore(Mn(), i), r.insertBefore(Mn(), i), e, e.options);
 	else {
 		let t = n._$AB.nextSibling, o = n._$AM, s = o !== e;
 		if (s) {
@@ -3905,21 +3968,21 @@ var Cn = {
 		if (t !== i || s) {
 			let e = n._$AA;
 			for (; e !== t;) {
-				let t = Dn(e).nextSibling;
-				Dn(r).insertBefore(e, i), e = t;
+				let t = jn(e).nextSibling;
+				jn(r).insertBefore(e, i), e = t;
 			}
 		}
 	}
 	return n;
-}, An = (e, t, n = e) => (e._$AI(t, n), e), jn = {}, Mn = (e, t = jn) => e._$AH = t, Nn = (e) => e._$AH, Pn = (e) => {
+}, Pn = (e, t, n = e) => (e._$AI(t, n), e), Fn = {}, In = (e, t = Fn) => e._$AH = t, Ln = (e) => e._$AH, Rn = (e) => {
 	e._$AR(), e._$AA.remove();
-}, Fn = (e, t, n) => {
+}, zn = (e, t, n) => {
 	let r = /* @__PURE__ */ new Map();
 	for (let i = t; i <= n; i++) r.set(e[i], i);
 	return r;
-}, In = wn(class extends Tn {
+}, Bn = On(class extends kn {
 	constructor(e) {
-		if (super(e), e.type !== Cn.CHILD) throw Error("repeat() can only be used in text expressions");
+		if (super(e), e.type !== Dn.CHILD) throw Error("repeat() can only be used in text expressions");
 	}
 	dt(e, t, n) {
 		let r;
@@ -3936,35 +3999,35 @@ var Cn = {
 	}
 	update(e, [t, n, r]) {
 		var i;
-		let a = Nn(e), { values: o, keys: s } = this.dt(t, n, r);
+		let a = Ln(e), { values: o, keys: s } = this.dt(t, n, r);
 		if (!Array.isArray(a)) return this.ut = s, o;
 		let c = (i = this.ut) == null ? this.ut = [] : i, l = [], u, d, f = 0, p = a.length - 1, m = 0, h = o.length - 1;
 		for (; f <= p && m <= h;) if (a[f] === null) f++;
 		else if (a[p] === null) p--;
-		else if (c[f] === s[m]) l[m] = An(a[f], o[m]), f++, m++;
-		else if (c[p] === s[h]) l[h] = An(a[p], o[h]), p--, h--;
-		else if (c[f] === s[h]) l[h] = An(a[f], o[h]), kn(e, l[h + 1], a[f]), f++, h--;
-		else if (c[p] === s[m]) l[m] = An(a[p], o[m]), kn(e, a[f], a[p]), p--, m++;
-		else if (u === void 0 && (u = Fn(s, m, h), d = Fn(c, f, p)), u.has(c[f])) if (u.has(c[p])) {
+		else if (c[f] === s[m]) l[m] = Pn(a[f], o[m]), f++, m++;
+		else if (c[p] === s[h]) l[h] = Pn(a[p], o[h]), p--, h--;
+		else if (c[f] === s[h]) l[h] = Pn(a[f], o[h]), Nn(e, l[h + 1], a[f]), f++, h--;
+		else if (c[p] === s[m]) l[m] = Pn(a[p], o[m]), Nn(e, a[f], a[p]), p--, m++;
+		else if (u === void 0 && (u = zn(s, m, h), d = zn(c, f, p)), u.has(c[f])) if (u.has(c[p])) {
 			let t = d.get(s[m]), n = t === void 0 ? null : a[t];
 			if (n === null) {
-				let t = kn(e, a[f]);
-				An(t, o[m]), l[m] = t;
-			} else l[m] = An(n, o[m]), kn(e, a[f], n), a[t] = null;
+				let t = Nn(e, a[f]);
+				Pn(t, o[m]), l[m] = t;
+			} else l[m] = Pn(n, o[m]), Nn(e, a[f], n), a[t] = null;
 			m++;
-		} else Pn(a[p]), p--;
-		else Pn(a[f]), f++;
+		} else Rn(a[p]), p--;
+		else Rn(a[f]), f++;
 		for (; m <= h;) {
-			let t = kn(e, l[h + 1]);
-			An(t, o[m]), l[m++] = t;
+			let t = Nn(e, l[h + 1]);
+			Pn(t, o[m]), l[m++] = t;
 		}
 		for (; f <= p;) {
 			let e = a[f++];
-			e !== null && Pn(e);
+			e !== null && Rn(e);
 		}
-		return this.ut = s, Mn(e, l), F;
+		return this.ut = s, In(e, l), I;
 	}
-}), Ln, Rn = [
+}), Vn, Hn = [
 	{
 		label: "Solar",
 		value: "solar"
@@ -4005,25 +4068,25 @@ var Cn = {
 		label: "Generic",
 		value: "generic"
 	}
-], zn = [{
+], Un = [{
 	label: "Junction",
 	value: "junction"
 }, {
 	label: "Leaf",
 	value: "leaf"
-}], Bn = [{
+}], Wn = [{
 	label: "+ supplies, - consumes",
 	value: "supply"
 }, {
 	label: "+ consumes, - supplies",
 	value: "consume"
-}], Vn = [{
+}], Gn = [{
 	label: "Single signed entity",
 	value: "signed"
 }, {
 	label: "Separate in/out entities",
 	value: "bidirectional"
-}], Hn = [
+}], Kn = [
 	{
 		label: "Both",
 		value: "both"
@@ -4036,7 +4099,7 @@ var Cn = {
 		label: "Consume only",
 		value: "consume"
 	}
-], Un = [
+], qn = [
 	{
 		label: "Pass-through only",
 		value: "junction"
@@ -4049,7 +4112,7 @@ var Cn = {
 		label: "Display only",
 		value: "ignore"
 	}
-], Wn = [
+], Jn = [
 	{
 		label: "More info",
 		value: "more-info"
@@ -4070,13 +4133,13 @@ var Cn = {
 		label: "None",
 		value: "none"
 	}
-], Gn = [{
+], Yn = [{
 	label: "Around circle",
 	value: "curved"
 }, {
 	label: "Straight",
 	value: "straight"
-}], Kn = [
+}], Xn = [
 	{
 		label: "Funnel",
 		value: "funnel"
@@ -4097,7 +4160,7 @@ var Cn = {
 		label: "Radial",
 		value: "radial"
 	}
-], qn = [
+], Zn = [
 	{
 		label: "Native (scroll if needed)",
 		value: "native"
@@ -4114,14 +4177,16 @@ var Cn = {
 		label: "Shrink on narrow screens",
 		value: "shrink"
 	}
-], Jn = class extends z {
+], Qn = class extends z {
 	constructor(...e) {
-		super(...e), this._config = X(void 0), this._nodeSectionOpen = {}, this._handlePreviewConfigChanged = (e) => {
+		super(...e), this._config = X(void 0), this._nodeSectionOpen = {}, this._previewSourceId = ut("editor"), this._handlePreviewConfigChanged = (e) => {
 			let t = e.detail;
-			t != null && t.config && (this._config = X(t.config), hn(this, this._config));
+			t != null && t.config && this._matchesPreviewConfigChangedEvent(t) && (this._config = X(t.config), this._rememberPreviewSource(t.sourceId), bn(this, this._config));
 		}, this._handlePreviewNodeSelected = (e) => {
-			let t = e.detail, n = t == null ? void 0 : t.nodeId;
-			this._selectedNode = n, this._syncSelectedNodeEditor(n);
+			let t = e.detail;
+			if (!this._matchesPreviewNodeSelectedEvent(t)) return;
+			let n = t == null ? void 0 : t.nodeId;
+			this._selectedNode = n, this._rememberPreviewSource(t.sourceId), this._syncSelectedNodeEditor(n);
 		}, this._handleEditorKeydown = (e) => {
 			var t;
 			if (!this._selectedNode || e.key !== "Delete" && e.key !== "Backspace" || e.defaultPrevented || this._isInteractiveEvent(e)) return;
@@ -4164,6 +4229,19 @@ var Cn = {
 	}
 	disconnectedCallback() {
 		window.removeEventListener("home-flow-card-preview-config-changed", this._handlePreviewConfigChanged), window.removeEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), window.removeEventListener("keydown", this._handleEditorKeydown, !0), window.removeEventListener("pointermove", this._handleNodePointerMove, !0), window.removeEventListener("pointerup", this._handleNodePointerUp, !0), window.removeEventListener("pointercancel", this._handleNodePointerUp, !0), super.disconnectedCallback();
+	}
+	_matchesPreviewConfigChangedEvent(e) {
+		if (!e || e.sourceId === this._previewSourceId) return !1;
+		let t = xn(this._config);
+		return e.sourceConfigKey === t || e.configKey === t;
+	}
+	_matchesPreviewNodeSelectedEvent(e) {
+		if (!e || e.sourceId === this._previewSourceId) return !1;
+		let t = xn(this._config);
+		return !e.configKey || e.configKey === t;
+	}
+	_rememberPreviewSource(e) {
+		!e || e === this._previewSourceId || (this._targetPreviewSourceId = e);
 	}
 	_isInteractiveEvent(e) {
 		let t = window.getSelection();
@@ -4209,7 +4287,7 @@ var Cn = {
 	render() {
 		var e, t, n, r, i, a;
 		let o = X(this._config);
-		return N`
+		return P`
       <div class="editor-shell">
         <section class="panel">
           <header>
@@ -4219,10 +4297,10 @@ var Cn = {
           <label>
             <span>Label style</span>
             <select
-              .value=${(e = o.label_style) == null ? ft : e}
+              .value=${(e = o.label_style) == null ? _t : e}
               @change=${(e) => this._patchConfig({ label_style: e.currentTarget.value })}
             >
-              ${Gn.map((e) => N`
+              ${Yn.map((e) => P`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4230,10 +4308,10 @@ var Cn = {
           <label>
             <span>Leaf routing</span>
             <select
-              .value=${(t = o.leaf_routing) == null ? pt : t}
+              .value=${(t = o.leaf_routing) == null ? vt : t}
               @change=${(e) => this._patchConfig({ leaf_routing: e.currentTarget.value })}
             >
-              ${Kn.map((e) => N`
+              ${Xn.map((e) => P`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4241,12 +4319,20 @@ var Cn = {
           <label>
             <span>Scaling mode</span>
             <select
-              .value=${(n = o.scaling_mode) == null ? mt : n}
+              .value=${(n = o.scaling_mode) == null ? yt : n}
               @change=${(e) => this._patchConfig({ scaling_mode: e.currentTarget.value })}
             >
-              ${qn.map((e) => N`
-                  <option value=${e.value}>${e.label}</option>
-                `)}
+              ${Zn.map((e) => {
+			var t;
+			return P`
+                  <option
+                    value=${e.value}
+                    ?selected=${((t = o.scaling_mode) == null ? yt : t) === e.value}
+                  >
+                    ${e.label}
+                  </option>
+                `;
+		})}
             </select>
           </label>
         </section>
@@ -4257,7 +4343,7 @@ var Cn = {
             <p>Junctions can connect to junctions. Leaves connect to junctions.</p>
           </header>
           <div class="button-row">
-            ${zn.map((e) => N`
+            ${Un.map((e) => P`
                 <button
                   type="button"
                   class="add-node-button"
@@ -4276,7 +4362,7 @@ var Cn = {
             <p>${(r = (i = o.nodes) == null ? void 0 : i.length) == null ? 0 : r} configured</p>
           </header>
           <div class="nodes-list">
-            ${In((a = o.nodes) == null ? [] : a, (e) => e.id, (e) => this._nodeEditor(e, o))}
+            ${Bn((a = o.nodes) == null ? [] : a, (e) => e.id, (e) => this._nodeEditor(e, o))}
           </div>
         </section>
       </div>
@@ -4289,8 +4375,8 @@ var Cn = {
 	}
 	_nodeEditor(e, t) {
 		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g;
-		let _ = ((n = e.label) == null ? void 0 : n.trim()) || "Empty", v = (r = e.color) == null ? this._defaultNodeColor(e, t) : r, y = this._selectedNode === e.id, b = (i = e.flow_mode) == null ? "signed" : i, x = b === "bidirectional" ? (a = e.incoming_entity) == null ? e.outgoing_entity : a : e.entity, S = e.icon === null ? void 0 : (o = (s = e.icon) == null ? Wt(this.hass, x) : s) == null ? Zt(e.kind) : o, C = (c = e.primary_action) == null ? "more-info" : c, w = (l = e.secondary_action) == null ? "more-info" : l, T = this._busJunctionIds(e.id, t), ee = `${(u = e.radius) == null ? Qt(e.kind) : u} px`, E = b === "bidirectional" ? "Separate in/out" : "Single signed", te = e.secondary_entity ? "Configured" : "Not set", D = `Applies to ${T.length} junction${T.length === 1 ? "" : "s"}`;
-		return N`
+		let _ = ((n = e.label) == null ? void 0 : n.trim()) || "Empty", v = (r = e.color) == null ? this._defaultNodeColor(e, t) : r, y = this._selectedNode === e.id, b = (i = e.flow_mode) == null ? "signed" : i, x = b === "bidirectional" ? (a = e.incoming_entity) == null ? e.outgoing_entity : a : e.entity, S = e.icon === null ? void 0 : (o = (s = e.icon) == null ? Yt(this.hass, x) : s) == null ? nn(e.kind) : o, C = (c = e.primary_action) == null ? "more-info" : c, w = (l = e.secondary_action) == null ? "more-info" : l, T = this._busJunctionIds(e.id, t), ee = `${(u = e.radius) == null ? rn(e.kind) : u} px`, te = b === "bidirectional" ? "Separate in/out" : "Single signed", ne = e.secondary_entity ? "Configured" : "Not set", E = `Applies to ${T.length} junction${T.length === 1 ? "" : "s"}`;
+		return P`
       <div
         class=${`node-editor-row ${this._draggedNode === e.id ? "dragging" : ""} ${this._dragOverNode === e.id ? "drag-over" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "before" ? "insert-before" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "after" ? "insert-after" : ""}`}
         data-node-id=${e.id}
@@ -4309,8 +4395,8 @@ var Cn = {
           data-node-id=${e.id}
           ?open=${y}
         >
-        ${this._nodeSummary(_)}
-        ${this._renderNodeSubsection(e, "appearance", "Appearance", ee, N`
+        ${this._nodeSummary(_, e.id)}
+        ${this._renderNodeSubsection(e, "appearance", "Appearance", ee, P`
             <div class="form-grid">
               <label>
                 <span>Name</span>
@@ -4329,7 +4415,7 @@ var Cn = {
                   type="number"
                   min=${"20"}
                   max=${"100"}
-                  .value=${String((f = e.radius) == null ? Qt(e.kind) : f)}
+                  .value=${String((f = e.radius) == null ? rn(e.kind) : f)}
                   @change=${(n) => this._updateNode(t, e.id, { radius: Number(n.currentTarget.value) })}
                 />
               </label>
@@ -4349,7 +4435,7 @@ var Cn = {
             </div>
           `, t, { forceOpen: e.kind === "leaf" || e.kind === "junction" })}
 
-        ${this._renderNodeSubsection(e, "flow", "Flow", E, N`
+        ${this._renderNodeSubsection(e, "flow", "Flow", te, P`
             <div class="form-grid">
               <label class="span-all">
                 <span>Flow input</span>
@@ -4357,16 +4443,16 @@ var Cn = {
                   .value=${b}
                   @change=${(n) => this._updateNode(t, e.id, { flow_mode: n.currentTarget.value })}
                 >
-                  ${Vn.map((e) => N`
+                  ${Gn.map((e) => P`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${b === "bidirectional" ? N`
+              ${b === "bidirectional" ? P`
                     <label class="span-all">
                       <span>Inflow entity</span>
                       ${this._entitySelect(e.incoming_entity, (n) => {
-			let r = n ? Wt(this.hass, n) : void 0;
+			let r = n ? Yt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				incoming_entity: n,
 				...r && e.icon === void 0 ? { icon: r } : {}
@@ -4376,18 +4462,18 @@ var Cn = {
                     <label class="span-all">
                       <span>Outflow entity</span>
                       ${this._entitySelect(e.outgoing_entity, (n) => {
-			let r = n ? Wt(this.hass, n) : void 0;
+			let r = n ? Yt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				outgoing_entity: n,
 				...r && e.icon === void 0 ? { icon: r } : {}
 			});
 		})}
                     </label>
-                  ` : N`
+                  ` : P`
                     <label class="span-all">
                       <span>Flow entity</span>
                       ${this._entitySelect(e.entity, (n) => {
-			let r = n ? Wt(this.hass, n) : void 0;
+			let r = n ? Yt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				entity: n,
 				...r ? { icon: r } : {}
@@ -4397,10 +4483,10 @@ var Cn = {
                     <label>
                       <span>Flow direction</span>
                       <select
-                        .value=${(p = e.flowDirection) == null ? $t(e) : p}
+                        .value=${(p = e.flowDirection) == null ? an(e) : p}
                         @change=${(n) => this._updateNode(t, e.id, { flowDirection: n.currentTarget.value })}
                       >
-                        ${Bn.map((e) => N`
+                        ${Wn.map((e) => P`
                             <option value=${e.value}>${e.label}</option>
                           `)}
                       </select>
@@ -4412,7 +4498,7 @@ var Cn = {
                   .value=${(m = e.allowed_flow) == null ? "both" : m}
                   @change=${(n) => this._updateNode(t, e.id, { allowed_flow: n.currentTarget.value })}
                 >
-                  ${Hn.map((e) => N`
+                  ${Kn.map((e) => P`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
@@ -4420,10 +4506,10 @@ var Cn = {
               <label>
                 <span>Balance role</span>
                 <select
-                  .value=${tn(e)}
+                  .value=${sn(e)}
                   @change=${(n) => this._updateNode(t, e.id, { balance_role: n.currentTarget.value })}
                 >
-                  ${Un.map((e) => N`
+                  ${qn.map((e) => P`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
@@ -4434,12 +4520,12 @@ var Cn = {
                   .value=${C}
                   @change=${(n) => this._updateNode(t, e.id, { primary_action: n.currentTarget.value })}
                 >
-                  ${Wn.map((e) => N`
+                  ${Jn.map((e) => P`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${C === "navigate" || C === "url" ? N`
+              ${C === "navigate" || C === "url" ? P`
                     <label class="span-all">
                       <span>${C === "navigate" ? "Primary navigation path" : "Primary URL"}</span>
                       <input
@@ -4449,7 +4535,7 @@ var Cn = {
                         @input=${(n) => this._updateNode(t, e.id, { primary_action_path: n.currentTarget.value })}
                       />
                     </label>
-                  ` : I}
+                  ` : L}
             </div>
             <div class="toggle-grid compact">
               <label class="checkbox-field">
@@ -4487,7 +4573,7 @@ var Cn = {
             </div>
           `, t)}
 
-        ${this._renderNodeSubsection(e, "secondary", "Secondary value", te, N`
+        ${this._renderNodeSubsection(e, "secondary", "Secondary value", ne, P`
             <div class="form-grid">
               <label class="span-all">
                 <span>Secondary entity</span>
@@ -4499,12 +4585,12 @@ var Cn = {
                   .value=${w}
                   @change=${(n) => this._updateNode(t, e.id, { secondary_action: n.currentTarget.value })}
                 >
-                  ${Wn.map((e) => N`
+                  ${Jn.map((e) => P`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${w === "navigate" || w === "url" ? N`
+              ${w === "navigate" || w === "url" ? P`
                     <label class="span-all">
                       <span>${w === "navigate" ? "Secondary navigation path" : "Secondary URL"}</span>
                       <input
@@ -4514,27 +4600,27 @@ var Cn = {
                         @input=${(n) => this._updateNode(t, e.id, { secondary_action_path: n.currentTarget.value })}
                       />
                     </label>
-                  ` : I}
+                  ` : L}
             </div>
           `, t)}
-        ${T.length > 0 ? this._renderNodeSubsection(e, "bus", "Bus options", D, this._busOptionsEditor(e, t, T), t) : I}
+        ${T.length > 0 ? this._renderNodeSubsection(e, "bus", "Bus options", E, this._busOptionsEditor(e, t, T), t) : L}
         </details>
       </div>
     `;
 	}
 	_busOptionsEditor(e, t, n) {
-		return N`
+		return P`
       <p class="subsection-note">
         Applies to ${n.length} junction${n.length === 1 ? "" : "s"} on this bus.
       </p>
       <div class="form-grid compact">
         ${this._numberInput("Show flow from", this._busOptionValue(e.id, t, "flowMinVisibleValue", 10), (n) => this._updateBusOptions(t, e.id, { flowMinVisibleValue: n }))}
-        ${this._numberInput("Full line width at", this._busOptionValue(e.id, t, "flowMaxValue", dt), (n) => this._updateBusOptions(t, e.id, { flowMaxValue: n }))}
+        ${this._numberInput("Full line width at", this._busOptionValue(e.id, t, "flowMaxValue", gt), (n) => this._updateBusOptions(t, e.id, { flowMaxValue: n }))}
       </div>
     `;
 	}
 	_renderNodeSubsection(e, t, n, r, i, a, o = {}) {
-		return N`
+		return P`
       <details
         class="node-subsection"
         ?open=${this._isNodeSectionOpen(e, t, a, o)}
@@ -4550,17 +4636,27 @@ var Cn = {
       </details>
     `;
 	}
-	_nodeSummary(e) {
-		return N`
-      <summary class="node-summary">
+	_nodeSummary(e, t) {
+		return P`
+      <summary
+        class="node-summary"
+        @click=${() => this._selectNodeFromEditor(t)}
+      >
         <div class="node-summary-text">
           <strong>${e}</strong>
         </div>
       </summary>
     `;
 	}
+	_selectNodeFromEditor(e) {
+		this._selectedNode = e, ft(e, {
+			configKey: xn(this._config),
+			sourceId: this._previewSourceId,
+			targetId: this._targetPreviewSourceId
+		});
+	}
 	_entitySelect(e, t, n = !1) {
-		let r = e && !n ? N`
+		let r = e && !n ? P`
             <button
               type="button"
               class="entity-clear"
@@ -4568,8 +4664,8 @@ var Cn = {
             >
               Clear
             </button>
-          ` : I;
-		return this._isHomeAssistantEditor() ? N`
+          ` : L;
+		return this._isHomeAssistantEditor() ? P`
         <div class="entity-picker">
           <ha-selector
             .hass=${this.hass}
@@ -4580,7 +4676,7 @@ var Cn = {
           ></ha-selector>
           ${r}
         </div>
-      ` : N`
+      ` : P`
       <div class="entity-picker">
         <select
           .value=${e == null ? "" : e}
@@ -4588,7 +4684,7 @@ var Cn = {
           @change=${(e) => t(e.currentTarget.value.trim() || void 0)}
         >
           <option value="">Manual</option>
-          ${Ut(this.hass).map((t) => N`
+          ${Jt(this.hass).map((t) => P`
               <option value=${t} ?selected=${t === e}>
                 ${t}
               </option>
@@ -4602,7 +4698,7 @@ var Cn = {
 		t(Z(e.detail.value));
 	}
 	_iconSelect(e, t, n) {
-		let r = n ? N`
+		let r = n ? P`
           <button
             type="button"
             class="field-clear icon-clear"
@@ -4612,8 +4708,8 @@ var Cn = {
           >
             ×
           </button>
-        ` : I;
-		return this._isHomeAssistantEditor() ? N`
+        ` : L;
+		return this._isHomeAssistantEditor() ? P`
         <div class="field-picker icon-picker">
           <ha-selector
             .hass=${this.hass}
@@ -4627,7 +4723,7 @@ var Cn = {
           ></ha-selector>
           ${r}
         </div>
-      ` : N`
+      ` : P`
       <div class="field-picker icon-picker">
         <select
           .value=${e == null ? "" : e}
@@ -4637,7 +4733,7 @@ var Cn = {
 		}}
         >
           <option value="">No icon</option>
-          ${Rn.map((t) => N`
+          ${Hn.map((t) => P`
               <option value=${t.value} ?selected=${t.value === e}>
                 ${t.label}
               </option>
@@ -4651,20 +4747,20 @@ var Cn = {
 		return !!(this.hass && typeof this.hass == "object" && "connection" in this.hass);
 	}
 	_colorInput(e, t, n, r) {
-		return N`
+		return P`
       <label class="color-field">
         <span>${e}</span>
         <div class="color-picker">
           <input
             type="color"
-            .value=${ln(t)}
+            .value=${mn(t)}
             @input=${(e) => n(e.currentTarget.value)}
           />
-          ${r ? N`
+          ${r ? P`
                 <button type="button" class="field-clear" @click=${r}>
                   Reset
                 </button>
-              ` : I}
+              ` : L}
         </div>
       </label>
     `;
@@ -4673,7 +4769,7 @@ var Cn = {
 		var n;
 		if (e.kind === "junction") {
 			var r;
-			return an(e.id, (r = t.nodes) == null ? [] : r);
+			return un(e.id, (r = t.nodes) == null ? [] : r);
 		}
 		let i = ((n = t.links) == null ? [] : n).filter((t) => t.from === e.id || t.to === e.id).map((t) => t.from === e.id ? t.to : t.from).find((e) => {
 			var n, r;
@@ -4682,25 +4778,25 @@ var Cn = {
 		if (i) {
 			var a, o, s;
 			let e = ((a = t.nodes) == null ? [] : a).find((e) => e.id === i);
-			return (o = e == null ? void 0 : e.color) == null ? an(i, (s = t.nodes) == null ? [] : s) : o;
+			return (o = e == null ? void 0 : e.color) == null ? un(i, (s = t.nodes) == null ? [] : s) : o;
 		}
-		return e.icon === "solar" ? yt : e.icon === "battery" ? vt : _t;
+		return e.icon === "solar" ? wt : e.icon === "battery" ? Ct : St;
 	}
 	_nextNodeColor(e, t, n) {
 		var r, i;
 		let a = t.map((e) => {
 			var t;
-			return on((t = e.color) == null ? this._defaultNodeColor(e, n) : t);
-		}).filter((e) => !!e), o = e === "junction" ? St[0] : _t;
+			return dn((t = e.color) == null ? this._defaultNodeColor(e, n) : t);
+		}).filter((e) => !!e), o = e === "junction" ? Dt[0] : St;
 		if (a.length === 0) return o;
-		let s = Ct.filter((e) => !a.includes(e.toLowerCase()));
-		return (r = (i = (s.length > 0 ? s : Ct).map((e) => ({
+		let s = Ot.filter((e) => !a.includes(e.toLowerCase()));
+		return (r = (i = (s.length > 0 ? s : Ot).map((e) => ({
 			color: e,
-			distance: Math.min(...a.map((t) => sn(e, t)))
+			distance: Math.min(...a.map((t) => fn(e, t)))
 		})).sort((e, t) => t.distance - e.distance)[0]) == null ? void 0 : i.color) == null ? o : r;
 	}
 	_numberInput(e, t, n) {
-		return N`
+		return P`
       <label>
         <span>${e}</span>
         <input
@@ -4743,12 +4839,12 @@ var Cn = {
 		let a = X(this._config), o = (t = a.nodes) == null ? [] : t, s = `${e}-${o.length + 1}`, c = {
 			id: s,
 			kind: e,
-			label: (n = (r = zn.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
-			icon: Zt(e),
-			radius: Qt(e),
+			label: (n = (r = Un.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
+			icon: nn(e),
+			radius: rn(e),
 			...e === "junction" ? { color: this._nextNodeColor(e, o, a) } : {},
 			flowDirection: "supply",
-			balance_role: en(e)
+			balance_role: on(e)
 		};
 		this._patchConfig({
 			nodes: [c, ...o],
@@ -4832,7 +4928,7 @@ var Cn = {
 			let t = { ...this._nodeSectionOpen };
 			delete t[e], this._nodeSectionOpen = t;
 		}
-		this._patchConfig(rn(t, e));
+		this._patchConfig(ln(t, e));
 	}
 	_handleNodeSectionToggle(e, t, n) {
 		var r;
@@ -4860,10 +4956,10 @@ var Cn = {
 		this._config = X({
 			...this._config,
 			...e
-		}), hn(this, this._config);
+		}), bn(this, this._config);
 	}
 };
-Ln = Jn, Ln.properties = {
+Vn = Qn, Vn.properties = {
 	config: { attribute: !1 },
 	_config: { state: !0 },
 	_dragInsertSide: { state: !0 },
@@ -4873,7 +4969,7 @@ Ln = Jn, Ln.properties = {
 	_draggedNode: { state: !0 },
 	_selectedNode: { state: !0 },
 	hass: { attribute: !1 }
-}, Ln.styles = o`
+}, Vn.styles = o`
     :host {
       display: block;
       max-width: 100%;
@@ -5046,13 +5142,19 @@ Ln = Jn, Ln.properties = {
       color: var(--home-flow-field-disabled-color);
     }
 
-    .button-row,
     .two-columns,
     .node-grid,
     .form-grid {
       display: grid;
       gap: 8px;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .button-row {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .form-grid.compact {
@@ -5369,5 +5471,5 @@ Ln = Jn, Ln.properties = {
       border-color: #d7aaa3;
       color: #8f3329;
     }
-  `, customElements.get("home-flow-card-editor") || customElements.define("home-flow-card-editor", Jn);
+  `, customElements.get("home-flow-card-editor") || customElements.define("home-flow-card-editor", Qn);
 //#endregion

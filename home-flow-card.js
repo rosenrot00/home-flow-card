@@ -581,17 +581,19 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	"var(--home-flow-junction-4-color, #b85f1a)"
 ], Y = (e, t, n) => Math.min(Math.max(e, t), n), ot = 0, st = class extends z {
 	constructor(...e) {
-		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot, this._htmlIconsReady = !1;
+		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot, this._htmlIconsReady = !1, this._htmlIconLayoutKey = "";
 	}
 	firstUpdated() {
-		this._scheduleHtmlIconViewportUpdate();
+		this._htmlIconLayoutKey = this._htmlIconLayoutKeyForNodes(), this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
 		let e = this.renderRoot.querySelector(".card");
 		!e || typeof ResizeObserver > "u" || (this._resizeObserver = new ResizeObserver(() => {
-			this._scheduleHtmlIconViewportUpdate();
+			this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
 		}), this._resizeObserver.observe(e));
 	}
-	updated() {
-		this._scheduleHtmlIconViewportUpdate();
+	updated(e) {
+		if (!e.has("nodes")) return;
+		let t = this._htmlIconLayoutKeyForNodes(), n = t !== this._htmlIconLayoutKey;
+		this._htmlIconLayoutKey = t, t && (n || !this._htmlIconViewport || !this._htmlIconsReady) && this._scheduleHtmlIconViewportUpdate();
 	}
 	disconnectedCallback() {
 		var e;
@@ -662,21 +664,52 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
     `;
 	}
 	_renderContext(e, t, n = t) {
-		let r = {
+		let r = this._geometryCacheFor(e, n), i = {
 			colors: /* @__PURE__ */ new Map(),
-			joinGeometries: /* @__PURE__ */ new Map(),
+			joinGeometries: r.joinGeometries,
 			maxValues: /* @__PURE__ */ new Map(),
 			minVisibleValues: /* @__PURE__ */ new Map(),
 			nodeColors: /* @__PURE__ */ new Map(),
-			paths: /* @__PURE__ */ new Map(),
+			paths: r.paths,
 			sideNodeIds: /* @__PURE__ */ new Map(),
 			signedValues: /* @__PURE__ */ new Map(),
 			sourceParts: /* @__PURE__ */ new Map()
-		}, i = e.nodes;
+		}, a = e.nodes;
 		return t.forEach((t) => {
-			let a = this._linkSignedValue(t, i, n, r), o = this._linkMinVisibleValue(t, i, n), s = this._linkMaxValue(t, o, i, n), c = this._graphLinkPath(t, i, n, r);
-			r.signedValues.set(t.id, a), r.minVisibleValues.set(t.id, o), r.maxValues.set(t.id, s), r.paths.set(t.id, c), this._shouldShowFlow(Math.abs(a), o) && (r.colors.set(t.id, this._linkColor(t, e, n, a, r)), r.sourceParts.set(t.id, this._linkSourceParts(t, e, n, a, r)));
-		}), r;
+			let r = this._linkSignedValue(t, a, n, i), o = this._linkMinVisibleValue(t, a, n), s = this._linkMaxValue(t, o, a, n);
+			i.paths.has(t.id) || i.paths.set(t.id, this._graphLinkPath(t, a, n, i)), i.signedValues.set(t.id, r), i.minVisibleValues.set(t.id, o), i.maxValues.set(t.id, s), this._shouldShowFlow(Math.abs(r), o) && (i.colors.set(t.id, this._linkColor(t, e, n, r, i)), i.sourceParts.set(t.id, this._linkSourceParts(t, e, n, r, i)));
+		}), i;
+	}
+	_geometryCacheFor(e, t) {
+		var n;
+		let r = this._geometryCacheKey(e, t);
+		return ((n = this._geometryCache) == null ? void 0 : n.key) === r || (this._geometryCache = {
+			joinGeometries: /* @__PURE__ */ new Map(),
+			key: r,
+			paths: /* @__PURE__ */ new Map()
+		}), this._geometryCache;
+	}
+	_geometryCacheKey(e, t) {
+		let n = Object.values(e.nodes).sort((e, t) => e.id.localeCompare(t.id)).map((e) => [
+			e.id,
+			e.kind,
+			Math.round(e.point.x * 100) / 100,
+			Math.round(e.point.y * 100) / 100,
+			e.radius
+		].join(":")).join("|"), r = t.map((e) => {
+			var t, n, r, i, a;
+			return [
+				e.id,
+				e.from,
+				e.to,
+				(t = e.fromAnchor) == null ? "" : t,
+				(n = e.fromAnchorMode) == null ? "" : n,
+				(r = e.toAnchor) == null ? "" : r,
+				(i = e.toAnchorMode) == null ? "" : i,
+				(a = e.junctionJoinId) == null ? "" : a
+			].join(":");
+		}).join("|");
+		return `${this.leafRouting}::${n}::${r}`;
 	}
 	_isJunctionJunctionLink(e, t) {
 		var n, r;
@@ -982,7 +1015,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			return;
 		}
 		let o = [i, a].map((r) => this._junctionJoinGeometryForMiddle(e, r, t, n)).filter((e) => !!e)[0];
-		return r == null || r.joinGeometries.set(e.id, o), o;
+		return r == null || r.joinGeometries.set(e.id, o), o != null && o.busLinkId && (r == null || r.joinGeometries.set(o.busLinkId, o)), o != null && o.branchLinkId && (r == null || r.joinGeometries.set(o.branchLinkId, o)), o;
 	}
 	_junctionJoinGeometryForMiddle(e, t, n, r) {
 		let i = this._linkAnchor(e, t.id), a = e.junctionJoinId;
@@ -1686,15 +1719,25 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		let t = e.flatMap((e) => this._htmlNodeIcons(e));
 		return t.length === 0 ? I : N`<div class="html-icon-layer">${t}</div>`;
 	}
+	_htmlIconLayoutKeyForNodes() {
+		return this.nodes.flatMap((e) => {
+			var t;
+			let n = [e.icon, e.secondaryIcon].filter((e) => this._isHtmlIcon(e));
+			return n.length === 0 ? [] : `${e.id}:${(t = e.radius) == null ? "" : t}:${e.secondary === void 0 ? 0 : 1}:${n.join(",")}`;
+		}).join("|");
+	}
 	_htmlNodeIcons(e) {
 		let t = [e.icon, e.secondaryIcon].filter(Boolean);
-		if (!t.some((e) => e.startsWith("mdi:"))) return [];
+		if (!t.some((e) => this._isHtmlIcon(e))) return [];
 		if (t.length === 1) {
 			let { scale: n, y: r } = this._nodeIconMetrics(e);
-			return t[0].startsWith("mdi:") ? [this._htmlIconAt(t[0], e, 0, r, n)] : [];
+			return this._isHtmlIcon(t[0]) ? [this._htmlIconAt(t[0], e, 0, r, n)] : [];
 		}
 		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
-		return t.slice(0, 2).map((t, a) => t.startsWith("mdi:") ? this._htmlIconAt(t, e, a === 0 ? -i : i, r, n) : I).filter((e) => e !== I);
+		return t.slice(0, 2).map((t, a) => this._isHtmlIcon(t) ? this._htmlIconAt(t, e, a === 0 ? -i : i, r, n) : I).filter((e) => e !== I);
+	}
+	_isHtmlIcon(e) {
+		return !!(e != null && e.startsWith("mdi:"));
 	}
 	_htmlIconAt(e, t, n, r, i) {
 		let a = this._htmlIconViewport;
@@ -1723,7 +1766,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			this._htmlIconsReady || (this._htmlIconsReady = !0, this.requestUpdate());
 			return;
 		}
-		this._htmlIconViewport = a, this._htmlIconsReady = !1, this.requestUpdate();
+		this._htmlIconViewport = a, this._htmlIconsReady = !0, this.requestUpdate();
 	}
 	_scheduleHtmlIconViewportUpdate() {
 		this._htmlIconViewportFrame !== void 0 && cancelAnimationFrame(this._htmlIconViewportFrame), this._htmlIconViewportFrame = requestAnimationFrame(() => {
@@ -3221,7 +3264,7 @@ function X(e) {
 		flow_max_value: i,
 		label_style: t.label_style === "straight" ? "straight" : mt,
 		leaf_routing: t.leaf_routing === "channel" || t.leaf_routing === "radial" || t.leaf_routing === "orthogonal" || t.leaf_routing === "sweep" ? t.leaf_routing : ht,
-		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "grow" || t.scaling_mode === "shrink" ? t.scaling_mode : gt,
+		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "shrink" ? t.scaling_mode : gt,
 		width: gn(t.width, 502),
 		height: gn(t.height, 360)
 	};
@@ -3815,7 +3858,6 @@ wn = En, wn.properties = {
     }
 
     ha-card.scale-fit-width,
-    ha-card.scale-grow,
     ha-card.scale-shrink {
       width: 100%;
     }
@@ -3836,8 +3878,7 @@ wn = En, wn.properties = {
       margin-inline: auto;
     }
 
-    ha-card.scale-native .graph-frame,
-    ha-card.scale-grow .graph-frame {
+    ha-card.scale-native .graph-frame {
       overflow-x: auto;
       overflow-y: hidden;
       scrollbar-width: thin;
@@ -3858,13 +3899,6 @@ wn = En, wn.properties = {
     ha-card.scale-fit-width .graph-canvas {
       width: 100%;
       min-width: 0;
-      height: auto;
-      aspect-ratio: var(--graph-aspect);
-    }
-
-    ha-card.scale-grow .graph-canvas {
-      width: 100%;
-      min-width: calc(var(--graph-width) * 1px);
       height: auto;
       aspect-ratio: var(--graph-aspect);
     }
@@ -4128,10 +4162,6 @@ var Dn = {
 	{
 		label: "Fit width",
 		value: "fit-width"
-	},
-	{
-		label: "Grow on wide screens",
-		value: "grow"
 	},
 	{
 		label: "Shrink on narrow screens",

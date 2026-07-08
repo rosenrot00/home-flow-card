@@ -581,23 +581,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	"var(--home-flow-junction-4-color, #b85f1a)"
 ], Y = (e, t, n) => Math.min(Math.max(e, t), n), ot = 0, st = class extends z {
 	constructor(...e) {
-		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot, this._htmlIconsReady = !1, this._htmlIconLayoutKey = "";
-	}
-	firstUpdated() {
-		this._htmlIconLayoutKey = this._htmlIconLayoutKeyForNodes(), this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
-		let e = this.renderRoot.querySelector(".card");
-		typeof ResizeObserver > "u" || (this._resizeObserver = new ResizeObserver(() => {
-			this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
-		}), this._resizeObserver.observe(this), e && this._resizeObserver.observe(e));
-	}
-	updated(e) {
-		if (!e.has("nodes")) return;
-		let t = this._htmlIconLayoutKeyForNodes(), n = t !== this._htmlIconLayoutKey;
-		this._htmlIconLayoutKey = t, t && (n || !this._htmlIconViewport || !this._htmlIconsReady) && this._scheduleHtmlIconViewportUpdate();
-	}
-	disconnectedCallback() {
-		var e;
-		this._htmlIconViewportFrame !== void 0 && (cancelAnimationFrame(this._htmlIconViewportFrame), this._htmlIconViewportFrame = void 0), (e = this._resizeObserver) == null || e.disconnect(), this._resizeObserver = void 0, super.disconnectedCallback();
+		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot;
 	}
 	render() {
 		let e = this._model(), t = this._normalizedLinks(e.nodes), n = this._visibleNodes(e.nodes), r = t.filter((t) => this._isVisibleLink(t, e.nodes)), i = this._renderContext(e, r, t), a = r.filter((t) => this._isJunctionJunctionLink(t, e.nodes)), o = r.filter((t) => !this._isJunctionJunctionLink(t, e.nodes)), s = this._nodesByZLayer(n);
@@ -625,7 +609,6 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
           ${this.editable ? this._renderPendingLink(n, t) : I}
           ${this.editable ? this._renderAnchorControls(n, r) : I}
         </svg>
-        ${this._renderHtmlIconLayer(s)}
       </section>
     `;
 	}
@@ -1706,81 +1689,35 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		let t = [e.icon, e.secondaryIcon].filter(Boolean);
 		if (t.length === 0) return I;
 		if (t.length === 1) {
-			if (t[0].startsWith("mdi:")) return I;
 			let { scale: n, y: r } = this._nodeIconMetrics(e);
 			return this._renderIconAt(t[0], 0, r, n);
 		}
 		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
 		return P`
-      ${t.slice(0, 2).map((e, t) => e.startsWith("mdi:") ? I : this._renderIconAt(e, t === 0 ? -i : i, r, n))}
+      ${t.slice(0, 2).map((e, t) => this._renderIconAt(e, t === 0 ? -i : i, r, n))}
     `;
-	}
-	_renderHtmlIconLayer(e) {
-		if (!this._htmlIconViewport || !this._htmlIconsReady) return I;
-		let t = e.flatMap((e) => this._htmlNodeIcons(e));
-		return t.length === 0 ? I : N`<div class="html-icon-layer">${t}</div>`;
-	}
-	_htmlIconLayoutKeyForNodes() {
-		return this.nodes.flatMap((e) => {
-			var t;
-			let n = [e.icon, e.secondaryIcon].filter((e) => this._isHtmlIcon(e));
-			return n.length === 0 ? [] : `${e.id}:${(t = e.radius) == null ? "" : t}:${e.secondary === void 0 ? 0 : 1}:${n.join(",")}`;
-		}).join("|");
-	}
-	_htmlNodeIcons(e) {
-		let t = [e.icon, e.secondaryIcon].filter(Boolean);
-		if (!t.some((e) => this._isHtmlIcon(e))) return [];
-		if (t.length === 1) {
-			let { scale: n, y: r } = this._nodeIconMetrics(e);
-			return this._isHtmlIcon(t[0]) ? [this._htmlIconAt(t[0], e, 0, r, n)] : [];
-		}
-		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
-		return t.slice(0, 2).map((t, a) => this._isHtmlIcon(t) ? this._htmlIconAt(t, e, a === 0 ? -i : i, r, n) : I).filter((e) => e !== I);
-	}
-	_isHtmlIcon(e) {
-		return !!(e != null && e.startsWith("mdi:"));
-	}
-	_htmlIconAt(e, t, n, r, i) {
-		let a = this._htmlIconViewport;
-		if (!a) return I;
-		let o = a.scale, s = 68 * i * o, c = a.offsetX + (t.point.x + n) * a.scale, l = a.offsetY + (t.point.y + r) * a.scale;
-		return N`
-      <div
-        class="html-node-icon"
-        style=${`${`left:${c.toFixed(3)}px;top:${l.toFixed(3)}px;`}width:${s.toFixed(3)}px;height:${s.toFixed(3)}px;`}
-      >
-        <ha-icon .icon=${e} icon=${e}></ha-icon>
-      </div>
-    `;
-	}
-	_updateHtmlIconViewport() {
-		let e = this.renderRoot.querySelector(".flow-svg");
-		if (!e) return;
-		let t = e.getBoundingClientRect();
-		if (t.width <= 0 || t.height <= 0) return;
-		let n = Math.min(t.width / Fe, t.height / Ie), r = Fe * n, i = Ie * n, a = {
-			offsetX: (t.width - r) / 2,
-			offsetY: (t.height - i) / 2,
-			scale: n
-		}, o = this._htmlIconViewport;
-		if (o && Math.abs(o.offsetX - a.offsetX) < .05 && Math.abs(o.offsetY - a.offsetY) < .05 && Math.abs(o.scale - a.scale) < 1e-4) {
-			this._htmlIconsReady || (this._htmlIconsReady = !0, this.requestUpdate());
-			return;
-		}
-		this._htmlIconViewport = a, this._htmlIconsReady = !0, this.requestUpdate();
-	}
-	_scheduleHtmlIconViewportUpdate() {
-		this._htmlIconViewportFrame !== void 0 && cancelAnimationFrame(this._htmlIconViewportFrame), this._htmlIconViewportFrame = requestAnimationFrame(() => {
-			this._htmlIconViewportFrame = requestAnimationFrame(() => {
-				this._htmlIconViewportFrame = void 0, this._updateHtmlIconViewport();
-			});
-		});
 	}
 	_renderIconAt(e, t, n, r) {
-		return P`
+		return e.startsWith("mdi:") ? this._renderMdiIconAt(e, t, n, r) : P`
       <g class="node-icon" transform=${`translate(${t} ${n}) scale(${r})`}>
         ${this._iconTemplate(e)}
       </g>
+    `;
+	}
+	_renderMdiIconAt(e, t, n, r) {
+		let i = 68 * r, a = i / 2;
+		return P`
+      <foreignObject
+        class="node-icon-foreign"
+        x=${t - a}
+        y=${n - a}
+        width=${i}
+        height=${i}
+      >
+        <div xmlns="http://www.w3.org/1999/xhtml" class="svg-node-icon">
+          <ha-icon .icon=${e} icon=${e}></ha-icon>
+        </div>
+      </foreignObject>
     `;
 	}
 	_renderNodeFlowArrow(e) {
@@ -2878,23 +2815,23 @@ Pe = st, Pe.properties = {
       touch-action: none;
     }
 
-    .html-icon-layer {
-      inset: 0;
+    .node-icon-foreign {
+      color: var(--primary-text-color, #17211c);
+      overflow: visible;
       pointer-events: none;
-      position: absolute;
     }
 
-    .html-node-icon {
+    .svg-node-icon {
       align-items: center;
       color: var(--primary-text-color, #17211c);
       display: flex;
       justify-content: center;
       pointer-events: none;
-      position: absolute;
-      transform: translate(-50%, -50%);
+      height: 100%;
+      width: 100%;
     }
 
-    .html-node-icon ha-icon {
+    .svg-node-icon ha-icon {
       --mdc-icon-size: 100%;
       color: currentColor;
       display: block;

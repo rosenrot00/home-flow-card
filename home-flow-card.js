@@ -3239,8 +3239,7 @@ var ft = "home-flow-card", pt = 12e3, mt = "curved", ht = "funnel", gt = "fit-wi
 		label: "Heat pump",
 		icon: "heat_pump",
 		radius: 65,
-		flowDirection: "consume",
-		balance_role: "measured"
+		flowDirection: "consume"
 	}
 ], Dt = [{
 	id: "grid->home",
@@ -3311,7 +3310,7 @@ function kt(e, t = !1) {
 			invert: e.invert === !0,
 			flowDirection: jt(e.flowDirection),
 			allowed_flow: Pt(e.allowed_flow),
-			balance_role: (r = Nt(e.balance_role)) == null ? an(a) : r,
+			balance_role: a === "junction" ? (r = Nt(e.balance_role)) == null ? an(a) : r : void 0,
 			junction_display_value: Ft(e.junction_display_value),
 			hide_zero_values: typeof e.hide_zero_values == "boolean" ? e.hide_zero_values : t ? !0 : void 0,
 			hide_if_zero: typeof e.hide_if_zero == "boolean" ? e.hide_if_zero : void 0,
@@ -3566,11 +3565,11 @@ function rn(e) {
 	return (t = e.flowDirection) == null ? "supply" : t;
 }
 function an(e) {
-	return e === "leaf" ? "measured" : "junction";
+	return e === "junction" ? "junction" : "measured";
 }
 function on(e) {
 	var t;
-	return (t = e.balance_role) == null ? an(e.kind) : t;
+	return e.kind === "leaf" ? "measured" : (t = e.balance_role) == null ? an(e.kind) : t;
 }
 function sn(e) {
 	return e === "measured";
@@ -4523,18 +4522,18 @@ var On = {
                     `)}
                 </select>
               </label>
-              <label>
-                <span>Balance role</span>
-                <select
-                  .value=${on(e)}
-                  @change=${(n) => this._updateNode(t, e.id, { balance_role: n.currentTarget.value })}
-                >
-                  ${qn.map((e) => N`
-                      <option value=${e.value}>${e.label}</option>
-                    `)}
-                </select>
-              </label>
               ${e.kind === "junction" ? N`
+                    <label>
+                      <span>Balance role</span>
+                      <select
+                        .value=${on(e)}
+                        @change=${(n) => this._updateNode(t, e.id, { balance_role: n.currentTarget.value })}
+                      >
+                        ${qn.map((e) => N`
+                            <option value=${e.value}>${e.label}</option>
+                          `)}
+                      </select>
+                    </label>
                     <label>
                       <span>Display value</span>
                       <select
@@ -4877,7 +4876,7 @@ var On = {
 			radius: nn(e),
 			...e === "junction" ? { color: this._nextNodeColor(e, o, a) } : {},
 			flowDirection: "supply",
-			balance_role: an(e)
+			...e === "junction" ? { balance_role: an(e) } : {}
 		};
 		this._patchConfig({
 			nodes: [c, ...o],

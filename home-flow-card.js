@@ -58,16 +58,16 @@ var e = globalThis, t = e.ShadowRoot && (e.ShadyCSS === void 0 || e.ShadyCSS.nat
 		}
 		return n;
 	}
-}, C = (e, t) => !d(e, t), w = {
+}, ee = (e, t) => !d(e, t), C = {
 	attribute: !0,
 	type: String,
 	converter: S,
 	reflect: !1,
 	useDefault: !1,
-	hasChanged: C
+	hasChanged: ee
 };
 (l = Symbol).metadata != null || (l.metadata = Symbol("metadata")), _.litPropertyMetadata != null || (_.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
-var T = class extends HTMLElement {
+var w = class extends HTMLElement {
 	static addInitializer(e) {
 		var t;
 		this._$Ei(), ((t = this.l) == null ? this.l = [] : t).push(e);
@@ -75,7 +75,7 @@ var T = class extends HTMLElement {
 	static get observedAttributes() {
 		return this.finalize(), this._$Eh && [...this._$Eh.keys()];
 	}
-	static createProperty(e, t = w) {
+	static createProperty(e, t = C) {
 		if (t.state && (t.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(e) && ((t = Object.create(t)).wrapped = !0), this.elementProperties.set(e, t), !t.noAccessor) {
 			let n = Symbol(), r = this.getPropertyDescriptor(e, n, t);
 			r !== void 0 && f(this.prototype, e, r);
@@ -103,7 +103,7 @@ var T = class extends HTMLElement {
 	}
 	static getPropertyOptions(e) {
 		var t;
-		return (t = this.elementProperties.get(e)) == null ? w : t;
+		return (t = this.elementProperties.get(e)) == null ? C : t;
 	}
 	static _$Ei() {
 		if (this.hasOwnProperty(x("elementProperties"))) return;
@@ -205,7 +205,7 @@ var T = class extends HTMLElement {
 		if (e !== void 0) {
 			var a, o;
 			let s = this.constructor;
-			if (!1 === r && (i = this[e]), n != null || (n = s.getPropertyOptions(e)), !(((a = n.hasChanged) == null ? C : a)(i, t) || n.useDefault && n.reflect && i === ((o = this._$Ej) == null ? void 0 : o.get(e)) && !this.hasAttribute(s._$Eu(e, n)))) return;
+			if (!1 === r && (i = this[e]), n != null || (n = s.getPropertyOptions(e)), !(((a = n.hasChanged) == null ? ee : a)(i, t) || n.useDefault && n.reflect && i === ((o = this._$Ej) == null ? void 0 : o.get(e)) && !this.hasAttribute(s._$Eu(e, n)))) return;
 			this.C(e, t, n);
 		}
 		!1 === this.isUpdatePending && (this._$ES = this._$EP());
@@ -278,10 +278,10 @@ var T = class extends HTMLElement {
 	updated(e) {}
 	firstUpdated(e) {}
 };
-T.elementStyles = [], T.shadowRootOptions = { mode: "open" }, T[x("elementProperties")] = /* @__PURE__ */ new Map(), T[x("finalized")] = /* @__PURE__ */ new Map(), b == null || b({ ReactiveElement: T }), ((u = _.reactiveElementVersions) == null ? _.reactiveElementVersions = [] : u).push("2.1.2");
+w.elementStyles = [], w.shadowRootOptions = { mode: "open" }, w[x("elementProperties")] = /* @__PURE__ */ new Map(), w[x("finalized")] = /* @__PURE__ */ new Map(), b == null || b({ ReactiveElement: w }), ((u = _.reactiveElementVersions) == null ? _.reactiveElementVersions = [] : u).push("2.1.2");
 //#endregion
 //#region node_modules/lit-html/lit-html.js
-var ee, E = globalThis, te = (e) => e, ne = E.trustedTypes, D = ne ? ne.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, O = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, A = "?" + k, re = `<${A}>`, j = document, ie = () => j.createComment(""), ae = (e) => e === null || typeof e != "object" && typeof e != "function", oe = Array.isArray, se = (e) => oe(e) || typeof (e == null ? void 0 : e[Symbol.iterator]) == "function", ce = "[ 	\n\f\r]", le = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ue = /-->/g, de = />/g, M = RegExp(`>|${ce}(?:([^\\s"'>=/]+)(${ce}*=${ce}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), fe = /'/g, pe = /"/g, me = /^(?:script|style|textarea|title)$/i, he = (e) => (t, ...n) => ({
+var T, E = globalThis, te = (e) => e, ne = E.trustedTypes, D = ne ? ne.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, O = "$lit$", k = `lit$${Math.random().toFixed(9).slice(2)}$`, A = "?" + k, re = `<${A}>`, j = document, ie = () => j.createComment(""), ae = (e) => e === null || typeof e != "object" && typeof e != "function", oe = Array.isArray, se = (e) => oe(e) || typeof (e == null ? void 0 : e[Symbol.iterator]) == "function", ce = "[ 	\n\f\r]", le = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ue = /-->/g, de = />/g, M = RegExp(`>|${ce}(?:([^\\s"'>=/]+)(${ce}*=${ce}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), fe = /'/g, pe = /"/g, me = /^(?:script|style|textarea|title)$/i, he = (e) => (t, ...n) => ({
 	_$litType$: e,
 	strings: t,
 	values: n
@@ -526,7 +526,7 @@ var be = class {
 	B: Ce,
 	F: Ee
 }, Oe = E.litHtmlPolyfillSupport;
-Oe == null || Oe(ye, xe), ((ee = E.litHtmlVersions) == null ? E.litHtmlVersions = [] : ee).push("3.3.2");
+Oe == null || Oe(ye, xe), ((T = E.litHtmlVersions) == null ? E.litHtmlVersions = [] : T).push("3.3.2");
 var ke = (e, t, n) => {
 	var r;
 	let i = (r = n == null ? void 0 : n.renderBefore) == null ? t : r, a = i._$litPart$;
@@ -536,7 +536,7 @@ var ke = (e, t, n) => {
 		i._$litPart$ = a = new xe(t.insertBefore(ie(), e), e, void 0, n == null ? {} : n);
 	}
 	return a._$AI(e), a;
-}, Ae, je, Me = globalThis, z = class extends T {
+}, Ae, je, Me = globalThis, z = class extends w {
 	constructor() {
 		super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
 	}
@@ -758,6 +758,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 				hideZeroValues: e.hideZeroValues,
 				hideIfZero: e.hideIfZero,
 				showFlowArrow: e.showFlowArrow,
+				junctionDisplayMode: e.junctionDisplayMode,
 				primaryAction: e.primaryAction,
 				secondaryAction: e.secondaryAction,
 				radius: Y((n = e.radius) == null ? this._defaultNodeRadius(e.kind) : n, ze, Be),
@@ -2682,15 +2683,26 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	}
 	_nodeDisplayValue(e, t, n) {
 		var r;
-		return e.kind !== "junction" || e.hasOwnValue || (r = this._directLeafFlowValue(e.id, t.nodes, n)) == null ? e.value : r;
+		return e.kind !== "junction" || e.hasOwnValue || (r = this._junctionDisplayFlowValue(e, t.nodes, n)) == null ? e.value : r;
 	}
-	_directLeafFlowValue(e, t, n) {
-		let r = 0, i = n.reduce((n, i) => {
-			if (i.from !== e && i.to !== e) return n;
-			let a = t[i.from === e ? i.to : i.from];
-			return !a || a.kind !== "leaf" || !this._nodeContributesToAutoFlow(a) ? n : (r += 1, n + this._nodeFlowValue(a));
-		}, 0);
-		return r > 0 ? i : void 0;
+	_junctionDisplayFlowValue(e, t, n) {
+		var r;
+		let i = 0, a = 0, o = 0;
+		if (n.forEach((r) => {
+			let s = this._linkFlowRelativeToNode(r, e.id, t, n);
+			s !== void 0 && (o += 1, s >= 0 ? i += s : a += Math.abs(s));
+		}), o !== 0) switch ((r = e.junctionDisplayMode) == null ? "incoming" : r) {
+			case "outgoing": return a;
+			case "net": return i - a;
+			default: return i;
+		}
+	}
+	_linkFlowRelativeToNode(e, t, n, r) {
+		if (e.from !== t && e.to !== t) return;
+		let i = n[e.from === t ? e.to : e.from];
+		if ((i == null ? void 0 : i.kind) === "leaf" && !this._nodeContributesToAutoFlow(i)) return;
+		let a = this._linkSignedValue(e, n, r);
+		if (Number.isFinite(a)) return e.to === t ? a : -a;
 	}
 	_hasNodeFlowArrow(e) {
 		return e.showFlowArrow === !0 && Math.abs(this._nodeFlowValue(e)) > q;
@@ -3253,45 +3265,45 @@ var ft = "home-flow-card", pt = 12e3, mt = "curved", ht = "funnel", gt = "fit-wi
 	}
 };
 function X(e) {
-	let t = hn(e) ? e : {}, n = Array.isArray(t.nodes), r = gn(t.flow_min_visible_value, 10), i = Math.max(gn(t.flow_max_value, pt), r + 1), a = t.hide_zero_values === !0;
+	let t = gn(e) ? e : {}, n = Array.isArray(t.nodes), r = _n(t.flow_min_visible_value, 10), i = Math.max(_n(t.flow_max_value, pt), r + 1), a = t.hide_zero_values === !0;
 	return {
 		type: typeof t.type == "string" ? t.type : `custom:${ft}`,
 		title: typeof t.title == "string" ? t.title : void 0,
 		nodes: kt(t.nodes, a),
-		links: Lt(t.links, !n),
-		layout: Rt(t.layout, !n),
+		links: Rt(t.links, !n),
+		layout: zt(t.layout, !n),
 		flow_min_visible_value: r,
 		flow_max_value: i,
 		label_style: t.label_style === "straight" ? "straight" : mt,
 		leaf_routing: t.leaf_routing === "channel" || t.leaf_routing === "radial" || t.leaf_routing === "orthogonal" || t.leaf_routing === "sweep" ? t.leaf_routing : ht,
 		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "shrink" ? t.scaling_mode : gt,
-		width: gn(t.width, 502),
-		height: gn(t.height, 360)
+		width: _n(t.width, 502),
+		height: _n(t.height, 360)
 	};
 }
 function kt(e, t = !1) {
-	return Array.isArray(e) ? e.filter((e) => hn(e)).filter((e) => typeof e.id == "string" && At(e.kind) !== void 0).map((e) => {
+	return Array.isArray(e) ? e.filter((e) => gn(e)).filter((e) => typeof e.id == "string" && At(e.kind) !== void 0).map((e) => {
 		var n, r, i;
 		let a = (n = At(e.kind)) == null ? "leaf" : n;
 		return {
 			id: String(e.id),
 			kind: a,
-			label: typeof e.label == "string" ? e.label : pn(String(e.id)),
+			label: typeof e.label == "string" ? e.label : mn(String(e.id)),
 			label_angle: Q(e.label_angle),
 			label_offset_x: Q(e.label_offset_x),
 			label_offset_y: Q(e.label_offset_y),
 			flow_mode: Mt(e.flow_mode),
-			entity: Wt(e.entity),
+			entity: Gt(e.entity),
 			attribute: Z(e.attribute),
-			incoming_entity: Wt(e.incoming_entity),
+			incoming_entity: Gt(e.incoming_entity),
 			incoming_attribute: Z(e.incoming_attribute),
-			outgoing_entity: Wt(e.outgoing_entity),
+			outgoing_entity: Gt(e.outgoing_entity),
 			outgoing_attribute: Z(e.outgoing_attribute),
-			secondary_entity: Wt(e.secondary_entity),
+			secondary_entity: Gt(e.secondary_entity),
 			secondary_attribute: Z(e.secondary_attribute),
-			primary_action: Ft(e.primary_action),
+			primary_action: It(e.primary_action),
 			primary_action_path: Z(e.primary_action_path),
-			secondary_action: Ft(e.secondary_action),
+			secondary_action: It(e.secondary_action),
 			secondary_action_path: Z(e.secondary_action_path),
 			value: Q(e.value),
 			secondary: Q(e.secondary),
@@ -3299,18 +3311,19 @@ function kt(e, t = !1) {
 			invert: e.invert === !0,
 			flowDirection: jt(e.flowDirection),
 			allowed_flow: Pt(e.allowed_flow),
-			balance_role: (r = Nt(e.balance_role)) == null ? rn(a) : r,
+			balance_role: (r = Nt(e.balance_role)) == null ? an(a) : r,
+			junction_display_value: Ft(e.junction_display_value),
 			hide_zero_values: typeof e.hide_zero_values == "boolean" ? e.hide_zero_values : t ? !0 : void 0,
 			hide_if_zero: typeof e.hide_if_zero == "boolean" ? e.hide_if_zero : void 0,
 			show_flow_arrow: typeof e.show_flow_arrow == "boolean" ? e.show_flow_arrow : void 0,
 			flowMinVisibleValue: Q(e.flowMinVisibleValue),
 			flowMaxValue: Q(e.flowMaxValue),
-			radius: _n((i = Q(e.radius)) == null ? tn(a) : i, 20, 100),
-			icon: It(e.icon),
+			radius: vn((i = Q(e.radius)) == null ? nn(a) : i, 20, 100),
+			icon: Lt(e.icon),
 			unit: Z(e.unit),
 			color: Z(e.color)
 		};
-	}) : mn(Et).map((e) => ({
+	}) : hn(Et).map((e) => ({
 		...e,
 		...t ? { hide_zero_values: !0 } : {}
 	}));
@@ -3331,17 +3344,20 @@ function Pt(e) {
 	if (e === "both" || e === "supply" || e === "consume") return e;
 }
 function Ft(e) {
-	if (e === "more-info" || e === "toggle" || e === "navigate" || e === "url" || e === "none") return e;
+	if (e === "incoming" || e === "outgoing" || e === "net") return e;
 }
 function It(e) {
+	if (e === "more-info" || e === "toggle" || e === "navigate" || e === "url" || e === "none") return e;
+}
+function Lt(e) {
 	return e === null ? null : Z(e);
 }
-function Lt(e, t = !0) {
-	return Array.isArray(e) ? e.filter((e) => hn(e)).filter((e) => typeof e.from == "string" && typeof e.to == "string").map((e) => ({
+function Rt(e, t = !0) {
+	return Array.isArray(e) ? e.filter((e) => gn(e)).filter((e) => typeof e.from == "string" && typeof e.to == "string").map((e) => ({
 		id: typeof e.id == "string" ? e.id : `${String(e.from)}->${String(e.to)}`,
 		from: String(e.from),
 		to: String(e.to),
-		entity: Wt(e.entity),
+		entity: Gt(e.entity),
 		attribute: Z(e.attribute),
 		value: Q(e.value),
 		factor: Q(e.factor),
@@ -3357,20 +3373,20 @@ function Lt(e, t = !0) {
 		junctionJoinId: Z(e.junctionJoinId)
 	})) : t ? Dt.map((e) => ({ ...e })) : [];
 }
-function Rt(e, t = !0) {
-	return hn(e) ? Object.fromEntries(Object.entries(e).filter((e) => {
+function zt(e, t = !0) {
+	return gn(e) ? Object.fromEntries(Object.entries(e).filter((e) => {
 		let t = e[1];
-		return hn(t) && Number.isFinite(t.x) && Number.isFinite(t.y);
+		return gn(t) && Number.isFinite(t.x) && Number.isFinite(t.y);
 	}).map(([e, t]) => [e, {
 		x: Number(t.x),
 		y: Number(t.y)
 	}])) : t ? { ...Ot } : {};
 }
-function zt(e, t) {
+function Bt(e, t) {
 	var n;
-	return ((n = e.nodes) == null ? mn(Et) : n).map((e) => {
-		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _, v, y, b, x, S, C, w, T, ee, E, te, ne;
-		let D = (n = e.flow_mode) == null ? "signed" : n, O = D === "signed" ? Ut(t, e.entity ? {
+	return ((n = e.nodes) == null ? hn(Et) : n).map((e) => {
+		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _, v, y, b, x, S, ee, C, w, T, E, te, ne;
+		let D = (n = e.flow_mode) == null ? "signed" : n, O = D === "signed" ? Wt(t, e.entity ? {
 			entity: e.entity,
 			attribute: e.attribute,
 			factor: e.factor,
@@ -3378,23 +3394,23 @@ function zt(e, t) {
 		} : {
 			value: e.value,
 			unit: e.unit
-		}) : void 0, k = D === "bidirectional" ? Ut(t, {
+		}) : void 0, k = D === "bidirectional" ? Wt(t, {
 			entity: e.incoming_entity,
 			attribute: e.incoming_attribute,
 			unit: e.unit
-		}) : void 0, A = D === "bidirectional" ? Ut(t, {
+		}) : void 0, A = D === "bidirectional" ? Wt(t, {
 			entity: e.outgoing_entity,
 			attribute: e.outgoing_attribute,
 			unit: e.unit
-		}) : void 0, re = e.secondary_entity ? Ut(t, {
+		}) : void 0, re = e.secondary_entity ? Wt(t, {
 			entity: e.secondary_entity,
 			attribute: e.secondary_attribute,
 			value: e.secondary
-		}) : void 0, j = e.value !== void 0 || (D === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = A == null ? void 0 : A.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? O == null ? void 0 : O.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? A == null ? void 0 : A.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? nn(e) : d, le = D === "bidirectional" ? ie : ((f = (p = O == null ? void 0 : O.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), ue = Vt(e.invert === !0 ? -le : le, (m = e.allowed_flow) == null ? "both" : m), de = Math.abs(ue), M = D === "bidirectional" ? ue > St ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : ue < -St ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, fe = Bt((S = e.primary_action) == null ? "more-info" : S, M, e.primary_action_path), pe = Bt((C = e.secondary_action) == null ? "more-info" : C, e.secondary_entity, e.secondary_action_path), me = D === "bidirectional" ? (w = e.incoming_entity) == null ? e.outgoing_entity : w : e.entity, he = e.icon === null ? null : (T = (ee = e.icon) == null ? qt(t, me) : ee) == null ? en(e.kind) : T, N = an(e), P = on(N) || e.kind === "junction" && N !== "ignore" && j;
+		}) : void 0, j = e.value !== void 0 || (D === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = A == null ? void 0 : A.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? O == null ? void 0 : O.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? A == null ? void 0 : A.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? rn(e) : d, le = D === "bidirectional" ? ie : ((f = (p = O == null ? void 0 : O.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), ue = Ht(e.invert === !0 ? -le : le, (m = e.allowed_flow) == null ? "both" : m), de = Math.abs(ue), M = D === "bidirectional" ? ue > St ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : ue < -St ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, fe = Vt((S = e.primary_action) == null ? "more-info" : S, M, e.primary_action_path), pe = Vt((ee = e.secondary_action) == null ? "more-info" : ee, e.secondary_entity, e.secondary_action_path), me = D === "bidirectional" ? (C = e.incoming_entity) == null ? e.outgoing_entity : C : e.entity, he = e.icon === null ? null : (w = (T = e.icon) == null ? Jt(t, me) : T) == null ? tn(e.kind) : w, N = on(e), P = sn(N) || e.kind === "junction" && N !== "ignore" && j;
 		return {
 			id: e.id,
 			kind: e.kind,
-			label: (E = (te = e.label) == null ? Gt(t, e.entity) : te) == null ? pn(e.id) : E,
+			label: (E = (te = e.label) == null ? Kt(t, e.entity) : te) == null ? mn(e.id) : E,
 			labelAngle: e.label_angle,
 			labelOffsetX: e.label_offset_x,
 			labelOffsetY: e.label_offset_y,
@@ -3402,14 +3418,15 @@ function zt(e, t) {
 			flowValue: ue,
 			hasOwnValue: j,
 			contributesToFlow: P,
+			junctionDisplayMode: e.junction_display_value,
 			hideZeroValues: e.hide_zero_values,
 			hideIfZero: e.hide_if_zero === !0,
 			showFlowArrow: e.show_flow_arrow === !0,
 			primaryAction: fe,
 			secondaryAction: pe,
 			secondary: oe,
-			secondaryDisplayValue: oe === void 0 ? void 0 : `${Qt(oe)}${se ? ` ${se}` : ""}`,
-			radius: (ne = e.radius) == null ? tn(e.kind) : ne,
+			secondaryDisplayValue: oe === void 0 ? void 0 : `${$t(oe)}${se ? ` ${se}` : ""}`,
+			radius: (ne = e.radius) == null ? nn(e.kind) : ne,
 			icon: he,
 			secondaryIcon: void 0,
 			unit: ae,
@@ -3419,7 +3436,7 @@ function zt(e, t) {
 		};
 	});
 }
-function Bt(e, t, n) {
+function Vt(e, t, n) {
 	switch (e) {
 		case "none": return;
 		case "more-info":
@@ -3435,26 +3452,26 @@ function Bt(e, t, n) {
 		default: return;
 	}
 }
-function Vt(e, t) {
+function Ht(e, t) {
 	return t === "supply" ? Math.max(e, 0) : t === "consume" ? Math.min(e, 0) : e;
 }
-function Ht(e, t) {
+function Ut(e, t) {
 	var n;
 	return ((n = e.links) == null ? [] : n).map((e) => {
 		var n, r;
-		let i = e.entity ? Ut(t, {
+		let i = e.entity ? Wt(t, {
 			...e,
 			value: void 0
-		}) : Ut(t, e), a = (n = i == null ? void 0 : i.value) == null ? e.value : n, o = (r = e.unit) == null ? i == null ? void 0 : i.unit : r;
+		}) : Wt(t, e), a = (n = i == null ? void 0 : i.value) == null ? e.value : n, o = (r = e.unit) == null ? i == null ? void 0 : i.unit : r;
 		return {
 			...e,
 			value: a,
 			unit: o,
-			displayValue: a === void 0 ? void 0 : $t(a, o)
+			displayValue: a === void 0 ? void 0 : en(a, o)
 		};
 	});
 }
-function Ut(e, t) {
+function Wt(e, t) {
 	var n, r, i;
 	if (!(t != null && t.entity)) return (t == null ? void 0 : t.value) === void 0 ? void 0 : {
 		value: t.value,
@@ -3465,53 +3482,53 @@ function Ut(e, t) {
 		value: t.value,
 		unit: t.unit
 	};
-	let o = Zt(t.attribute ? a.attributes[t.attribute] : a.state);
+	let o = Qt(t.attribute ? a.attributes[t.attribute] : a.state);
 	if (!Number.isFinite(o)) return t.value === void 0 ? void 0 : {
 		value: t.value,
 		unit: t.unit
 	};
-	let s = String((n = a.attributes.unit_of_measurement) == null ? "" : n).trim(), c = (r = t.unit) == null ? s : r, l = Xt(c), u = (i = t.factor) == null ? l : i, d = t.invert ? -1 : 1;
+	let s = String((n = a.attributes.unit_of_measurement) == null ? "" : n).trim(), c = (r = t.unit) == null ? s : r, l = Zt(c), u = (i = t.factor) == null ? l : i, d = t.invert ? -1 : 1;
 	return {
 		value: o * u * d,
 		unit: l === 1 ? c : "W"
 	};
 }
-function Wt(e) {
+function Gt(e) {
 	var t;
 	if (typeof e == "string") return Z(e);
-	if (Array.isArray(e)) return Wt(e[0]);
-	if (hn(e)) return (t = Z(e.entity)) == null ? Z(e.entity_id) : t;
+	if (Array.isArray(e)) return Gt(e[0]);
+	if (gn(e)) return (t = Z(e.entity)) == null ? Z(e.entity_id) : t;
 }
-function Gt(e, t) {
+function Kt(e, t) {
 	var n;
 	if (!t) return;
 	let r = e == null || (n = e.states[t]) == null ? void 0 : n.attributes.friendly_name;
-	return typeof r == "string" ? r : pn(t);
+	return typeof r == "string" ? r : mn(t);
 }
-function Kt(e) {
+function qt(e) {
 	var t;
 	return Object.keys((t = e == null ? void 0 : e.states) == null ? {} : t).sort();
 }
-function qt(e, t) {
+function Jt(e, t) {
 	if (!t) return;
 	let n = e == null ? void 0 : e.states[t], r = n == null ? void 0 : n.attributes.icon;
 	if (typeof r == "string" && r.startsWith("mdi:")) return r;
 	let i = n == null ? void 0 : n.attributes.device_class;
 	if (typeof i == "string") {
-		let e = Jt(i);
+		let e = Yt(i);
 		if (e) return e;
 	}
 	let a = t.split(".")[0];
-	return Yt(a);
+	return Xt(a);
 }
-function Jt(e) {
+function Yt(e) {
 	if (e === "battery") return "battery";
 	if (e === "gas") return "mdi:fire";
 	if (e === "power" || e === "energy") return "mdi:flash";
 	if (e === "temperature") return "mdi:thermometer";
 	if (e === "water") return "water";
 }
-function Yt(e) {
+function Xt(e) {
 	if (e === "battery") return "battery";
 	if (e === "binary_sensor") return "mdi:checkbox-marked-circle-outline";
 	if (e === "climate") return "heat_pump";
@@ -3522,43 +3539,43 @@ function Yt(e) {
 	if (e === "switch") return "mdi:toggle-switch";
 	if (e === "water_heater") return "mdi:water-boiler";
 }
-function Xt(e) {
+function Zt(e) {
 	return e === "kW" ? 1e3 : e === "MW" ? 1e6 : 1;
 }
-function Zt(e) {
+function Qt(e) {
 	if (typeof e == "number") return e;
 	if (typeof e != "string") return NaN;
 	let t = e.trim().replace(",", ".").match(/[-+]?\d+(?:\.\d+)?/);
 	return t ? Number(t[0]) : NaN;
 }
-function Qt(e) {
+function $t(e) {
 	return e.toLocaleString("en-US", { maximumFractionDigits: e >= 100 ? 0 : 1 });
 }
-function $t(e, t) {
+function en(e, t) {
 	let n = Math.abs(e);
-	return !t || t === "W" || t === "kW" || t === "MW" ? n >= 1e3 ? `${Qt(n / 1e3)} kW` : `${Math.round(n).toLocaleString("en-US")} W` : `${Qt(n)} ${t}`;
-}
-function en(e) {
-	return e === "junction" ? "mdi:hub" : "mdi:leaf";
+	return !t || t === "W" || t === "kW" || t === "MW" ? n >= 1e3 ? `${$t(n / 1e3)} kW` : `${Math.round(n).toLocaleString("en-US")} W` : `${$t(n)} ${t}`;
 }
 function tn(e) {
-	return e === "junction" ? 90 : 65;
+	return e === "junction" ? "mdi:hub" : "mdi:leaf";
 }
 function nn(e) {
+	return e === "junction" ? 90 : 65;
+}
+function rn(e) {
 	var t;
 	return (t = e.flowDirection) == null ? "supply" : t;
 }
-function rn(e) {
+function an(e) {
 	return e === "leaf" ? "measured" : "junction";
 }
-function an(e) {
-	var t;
-	return (t = e.balance_role) == null ? rn(e.kind) : t;
-}
 function on(e) {
+	var t;
+	return (t = e.balance_role) == null ? an(e.kind) : t;
+}
+function sn(e) {
 	return e === "measured";
 }
-function sn(e, t) {
+function cn(e, t) {
 	var n, r, i;
 	let { [t]: a, ...o } = (n = e.layout) == null ? {} : n;
 	return X({
@@ -3568,58 +3585,58 @@ function sn(e, t) {
 		layout: o
 	});
 }
-function cn(e, t) {
+function ln(e, t) {
 	let n = t.filter((e) => e.kind === "junction");
 	return wt[Math.max(0, n.findIndex((t) => t.id === e)) % wt.length];
 }
-function ln(e) {
+function un(e) {
 	let t = /^#?([0-9a-f]{6})$/i.exec(e == null ? "" : e);
 	return t ? `#${t[1].toLowerCase()}` : void 0;
 }
-function un(e, t) {
-	let n = dn(e), r = dn(t);
+function dn(e, t) {
+	let n = fn(e), r = fn(t);
 	return !n || !r ? 0 : Math.hypot(n.r - r.r, n.g - r.g, n.b - r.b);
 }
-function dn(e) {
-	let t = ln(e);
+function fn(e) {
+	let t = un(e);
 	if (t) return {
 		r: Number.parseInt(t.slice(1, 3), 16),
 		g: Number.parseInt(t.slice(3, 5), 16),
 		b: Number.parseInt(t.slice(5, 7), 16)
 	};
 }
-function fn(e) {
+function pn(e) {
 	return /^#[0-9a-f]{6}$/i.test(e == null ? "" : e) ? e : yt;
 }
-function pn(e) {
+function mn(e) {
 	return (e.includes(".") ? e.split(".").slice(1).join(".") : e).replace(/[_-]+/g, " ").replace(/\b\w/g, (e) => e.toUpperCase());
 }
-function mn(e) {
+function hn(e) {
 	return e.map((e) => ({ ...e }));
 }
-function hn(e) {
+function gn(e) {
 	return !!(e && typeof e == "object" && !Array.isArray(e));
 }
 function Z(e) {
 	return typeof e == "string" && e.trim() ? e.trim() : void 0;
 }
-function gn(e, t) {
+function _n(e, t) {
 	return Number.isFinite(e) ? Number(e) : t;
 }
 function Q(e) {
 	return Number.isFinite(e) ? Number(e) : void 0;
 }
-function _n(e, t, n) {
+function vn(e, t, n) {
 	return Math.min(Math.max(e, t), n);
 }
-function vn(e, t) {
+function yn(e, t) {
 	e.dispatchEvent(new CustomEvent("config-changed", {
 		bubbles: !0,
 		composed: !0,
 		detail: { config: t }
 	}));
 }
-function yn(e) {
+function bn(e) {
 	var t, n;
 	let r = X(e);
 	return JSON.stringify({
@@ -3635,7 +3652,7 @@ function yn(e) {
 		type: r.type
 	});
 }
-function bn(e) {
+function xn(e) {
 	var t, n;
 	let r = /* @__PURE__ */ new Map(), i = (e, t) => {
 		var n;
@@ -3650,23 +3667,23 @@ function bn(e) {
 		entityId: e
 	}));
 }
-function xn(e, t, n) {
-	return e.some((e) => Sn(e, t == null ? void 0 : t.states[e.entityId], n == null ? void 0 : n.states[e.entityId]));
-}
 function Sn(e, t, n) {
+	return e.some((e) => Cn(e, t == null ? void 0 : t.states[e.entityId], n == null ? void 0 : n.states[e.entityId]));
+}
+function Cn(e, t, n) {
 	return t === n ? !1 : !t || !n ? t !== n : t.state === n.state ? e.attributes.some((e) => t.attributes[e] !== n.attributes[e]) : !0;
 }
-function Cn(e, t) {
+function wn(e, t) {
 	return {
-		links: Ht(e, t),
-		nodes: zt(e, t)
+		links: Ut(e, t),
+		nodes: Bt(e, t)
 	};
 }
 //#endregion
 //#region src/home-flow-card.ts
-var wn, Tn, En = class extends z {
+var Tn, En, Dn = class extends z {
 	constructor(...e) {
-		super(...e), this.config = X(void 0), this.editMode = !1, this._previewSourceId = lt("preview"), this._entityWatchers = bn(this.config), this._normalizedConfig = this.config, this._resolvedGraphData = Cn(this.config, void 0), this._handlePreviewNodeSelected = (e) => {
+		super(...e), this.config = X(void 0), this.editMode = !1, this._previewSourceId = lt("preview"), this._entityWatchers = xn(this.config), this._normalizedConfig = this.config, this._resolvedGraphData = wn(this.config, void 0), this._handlePreviewNodeSelected = (e) => {
 			if (!this.editMode) return;
 			let t = e.detail;
 			this._matchesPreviewNodeSelectedEvent(t) && (this._selectedNode = t == null ? void 0 : t.nodeId);
@@ -3679,12 +3696,12 @@ var wn, Tn, En = class extends z {
 		window.removeEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), super.disconnectedCallback();
 	}
 	_matchesPreviewNodeSelectedEvent(e) {
-		return !e || e.sourceId === this._previewSourceId ? !1 : e.targetId ? e.targetId === this._previewSourceId : !e.configKey || e.configKey === yn(this.config);
+		return !e || e.sourceId === this._previewSourceId ? !1 : e.targetId ? e.targetId === this._previewSourceId : !e.configKey || e.configKey === bn(this.config);
 	}
 	_previewEventScope(e = this.config) {
 		return {
-			configKey: yn(this.config),
-			sourceConfigKey: yn(e),
+			configKey: bn(this.config),
+			sourceConfigKey: bn(e),
 			sourceId: this._previewSourceId
 		};
 	}
@@ -3705,7 +3722,7 @@ var wn, Tn, En = class extends z {
 		if (e.has("config")) return this._syncGraphCache(this.config, this.hass, e.get("config")), !0;
 		if (e.has("hass")) {
 			let t = e.get("hass");
-			return xn(this._entityWatchers, t, this.hass) ? (this._resolvedGraphData = Cn(this._normalizedConfig, this.hass), !0) : !1;
+			return Sn(this._entityWatchers, t, this.hass) ? (this._resolvedGraphData = wn(this._normalizedConfig, this.hass), !0) : !1;
 		}
 		return !0;
 	}
@@ -3743,7 +3760,7 @@ var wn, Tn, En = class extends z {
 	}
 	_syncGraphCache(e, t, n) {
 		let r = this._normalizedConfig, i = X(e);
-		this._normalizedConfig = i, !(n && r.nodes === i.nodes && r.links === i.links) && (this._entityWatchers = bn(i), this._resolvedGraphData = Cn(i, t));
+		this._normalizedConfig = i, !(n && r.nodes === i.nodes && r.links === i.links) && (this._entityWatchers = xn(i), this._resolvedGraphData = wn(i, t));
 	}
 	_handleLayoutChange(e) {
 		if (!this.editMode) return;
@@ -3778,7 +3795,7 @@ var wn, Tn, En = class extends z {
 		if (!this.editMode || !e.detail.nodeId) return;
 		this._selectedNode === e.detail.nodeId && (this._selectedNode = void 0);
 		let t = this.config;
-		this.config = sn(X(this.config), e.detail.nodeId), ut(this.config, this._previewEventScope(t));
+		this.config = cn(X(this.config), e.detail.nodeId), ut(this.config, this._previewEventScope(t));
 	}
 	_handleNodeSelect(e) {
 		this.editMode && (this._selectedNode = e.detail.nodeId, dt(e.detail.nodeId, this._previewEventScope()));
@@ -3818,7 +3835,7 @@ var wn, Tn, En = class extends z {
 		}));
 	}
 };
-wn = En, wn.properties = {
+Tn = Dn, Tn.properties = {
 	config: { attribute: !1 },
 	editMode: {
 		type: Boolean,
@@ -3826,7 +3843,7 @@ wn = En, wn.properties = {
 	},
 	hass: { attribute: !1 },
 	_selectedNode: { state: !0 }
-}, wn.styles = o`
+}, Tn.styles = o`
     :host {
       display: block;
       max-width: 100%;
@@ -3916,7 +3933,7 @@ wn = En, wn.properties = {
       width: 100%;
       height: 100%;
     }
-  `, customElements.get("home-flow-card") || customElements.define("home-flow-card", En), window.customCards = (Tn = window.customCards) == null ? [] : Tn, window.customCards.some((e) => e.type === "home-flow-card") || window.customCards.push({
+  `, customElements.get("home-flow-card") || customElements.define("home-flow-card", Dn), window.customCards = (En = window.customCards) == null ? [] : En, window.customCards.some((e) => e.type === "home-flow-card") || window.customCards.push({
 	type: ft,
 	name: "Home Flow Card",
 	description: "Visual flow map for energy, water, gas and other home resources.",
@@ -3925,17 +3942,17 @@ wn = En, wn.properties = {
 });
 //#endregion
 //#region node_modules/lit-html/directive.js
-var Dn = {
+var On = {
 	ATTRIBUTE: 1,
 	CHILD: 2,
 	PROPERTY: 3,
 	BOOLEAN_ATTRIBUTE: 4,
 	EVENT: 5,
 	ELEMENT: 6
-}, On = (e) => (...t) => ({
+}, kn = (e) => (...t) => ({
 	_$litDirective$: e,
 	values: t
-}), kn = class {
+}), An = class {
 	constructor(e) {}
 	get _$AU() {
 		return this._$AM._$AU;
@@ -3949,9 +3966,9 @@ var Dn = {
 	update(e, t) {
 		return this.render(...t);
 	}
-}, { I: An } = De, jn = (e) => e, Mn = () => document.createComment(""), Nn = (e, t, n) => {
+}, { I: jn } = De, Mn = (e) => e, Nn = () => document.createComment(""), Pn = (e, t, n) => {
 	let r = e._$AA.parentNode, i = t === void 0 ? e._$AB : t._$AA;
-	if (n === void 0) n = new An(r.insertBefore(Mn(), i), r.insertBefore(Mn(), i), e, e.options);
+	if (n === void 0) n = new jn(r.insertBefore(Nn(), i), r.insertBefore(Nn(), i), e, e.options);
 	else {
 		let t = n._$AB.nextSibling, o = n._$AM, s = o !== e;
 		if (s) {
@@ -3962,21 +3979,21 @@ var Dn = {
 		if (t !== i || s) {
 			let e = n._$AA;
 			for (; e !== t;) {
-				let t = jn(e).nextSibling;
-				jn(r).insertBefore(e, i), e = t;
+				let t = Mn(e).nextSibling;
+				Mn(r).insertBefore(e, i), e = t;
 			}
 		}
 	}
 	return n;
-}, $ = (e, t, n = e) => (e._$AI(t, n), e), Pn = {}, Fn = (e, t = Pn) => e._$AH = t, In = (e) => e._$AH, Ln = (e) => {
+}, $ = (e, t, n = e) => (e._$AI(t, n), e), Fn = {}, In = (e, t = Fn) => e._$AH = t, Ln = (e) => e._$AH, Rn = (e) => {
 	e._$AR(), e._$AA.remove();
-}, Rn = (e, t, n) => {
+}, zn = (e, t, n) => {
 	let r = /* @__PURE__ */ new Map();
 	for (let i = t; i <= n; i++) r.set(e[i], i);
 	return r;
-}, zn = On(class extends kn {
+}, Bn = kn(class extends An {
 	constructor(e) {
-		if (super(e), e.type !== Dn.CHILD) throw Error("repeat() can only be used in text expressions");
+		if (super(e), e.type !== On.CHILD) throw Error("repeat() can only be used in text expressions");
 	}
 	dt(e, t, n) {
 		let r;
@@ -3993,35 +4010,35 @@ var Dn = {
 	}
 	update(e, [t, n, r]) {
 		var i;
-		let a = In(e), { values: o, keys: s } = this.dt(t, n, r);
+		let a = Ln(e), { values: o, keys: s } = this.dt(t, n, r);
 		if (!Array.isArray(a)) return this.ut = s, o;
 		let c = (i = this.ut) == null ? this.ut = [] : i, l = [], u, d, f = 0, p = a.length - 1, m = 0, h = o.length - 1;
 		for (; f <= p && m <= h;) if (a[f] === null) f++;
 		else if (a[p] === null) p--;
 		else if (c[f] === s[m]) l[m] = $(a[f], o[m]), f++, m++;
 		else if (c[p] === s[h]) l[h] = $(a[p], o[h]), p--, h--;
-		else if (c[f] === s[h]) l[h] = $(a[f], o[h]), Nn(e, l[h + 1], a[f]), f++, h--;
-		else if (c[p] === s[m]) l[m] = $(a[p], o[m]), Nn(e, a[f], a[p]), p--, m++;
-		else if (u === void 0 && (u = Rn(s, m, h), d = Rn(c, f, p)), u.has(c[f])) if (u.has(c[p])) {
+		else if (c[f] === s[h]) l[h] = $(a[f], o[h]), Pn(e, l[h + 1], a[f]), f++, h--;
+		else if (c[p] === s[m]) l[m] = $(a[p], o[m]), Pn(e, a[f], a[p]), p--, m++;
+		else if (u === void 0 && (u = zn(s, m, h), d = zn(c, f, p)), u.has(c[f])) if (u.has(c[p])) {
 			let t = d.get(s[m]), n = t === void 0 ? null : a[t];
 			if (n === null) {
-				let t = Nn(e, a[f]);
+				let t = Pn(e, a[f]);
 				$(t, o[m]), l[m] = t;
-			} else l[m] = $(n, o[m]), Nn(e, a[f], n), a[t] = null;
+			} else l[m] = $(n, o[m]), Pn(e, a[f], n), a[t] = null;
 			m++;
-		} else Ln(a[p]), p--;
-		else Ln(a[f]), f++;
+		} else Rn(a[p]), p--;
+		else Rn(a[f]), f++;
 		for (; m <= h;) {
-			let t = Nn(e, l[h + 1]);
+			let t = Pn(e, l[h + 1]);
 			$(t, o[m]), l[m++] = t;
 		}
 		for (; f <= p;) {
 			let e = a[f++];
-			e !== null && Ln(e);
+			e !== null && Rn(e);
 		}
-		return this.ut = s, Fn(e, l), F;
+		return this.ut = s, In(e, l), F;
 	}
-}), Bn, Vn = [
+}), Vn, Hn = [
 	{
 		label: "Solar",
 		value: "solar"
@@ -4062,25 +4079,25 @@ var Dn = {
 		label: "Generic",
 		value: "generic"
 	}
-], Hn = [{
+], Un = [{
 	label: "Junction",
 	value: "junction"
 }, {
 	label: "Leaf",
 	value: "leaf"
-}], Un = [{
+}], Wn = [{
 	label: "+ supplies, - consumes",
 	value: "supply"
 }, {
 	label: "+ consumes, - supplies",
 	value: "consume"
-}], Wn = [{
+}], Gn = [{
 	label: "Single signed entity",
 	value: "signed"
 }, {
 	label: "Separate in/out entities",
 	value: "bidirectional"
-}], Gn = [
+}], Kn = [
 	{
 		label: "Both",
 		value: "both"
@@ -4093,7 +4110,7 @@ var Dn = {
 		label: "Consume only",
 		value: "consume"
 	}
-], Kn = [
+], qn = [
 	{
 		label: "Pass-through only",
 		value: "junction"
@@ -4106,7 +4123,20 @@ var Dn = {
 		label: "Display only",
 		value: "ignore"
 	}
-], qn = [
+], Jn = [
+	{
+		label: "Incoming flow",
+		value: "incoming"
+	},
+	{
+		label: "Outgoing flow",
+		value: "outgoing"
+	},
+	{
+		label: "Net flow",
+		value: "net"
+	}
+], Yn = [
 	{
 		label: "More info",
 		value: "more-info"
@@ -4127,13 +4157,13 @@ var Dn = {
 		label: "None",
 		value: "none"
 	}
-], Jn = [{
+], Xn = [{
 	label: "Around circle",
 	value: "curved"
 }, {
 	label: "Straight",
 	value: "straight"
-}], Yn = [
+}], Zn = [
 	{
 		label: "Funnel",
 		value: "funnel"
@@ -4154,7 +4184,7 @@ var Dn = {
 		label: "Radial",
 		value: "radial"
 	}
-], Xn = [
+], Qn = [
 	{
 		label: "Native (scroll if needed)",
 		value: "native"
@@ -4167,11 +4197,11 @@ var Dn = {
 		label: "Shrink on narrow screens",
 		value: "shrink"
 	}
-], Zn = class extends z {
+], $n = class extends z {
 	constructor(...e) {
 		super(...e), this._config = X(void 0), this._nodeSectionOpen = {}, this._previewSourceId = lt("editor"), this._handlePreviewConfigChanged = (e) => {
 			let t = e.detail;
-			t != null && t.config && this._matchesPreviewConfigChangedEvent(t) && (this._config = X(t.config), this._rememberPreviewSource(t.sourceId), vn(this, this._config));
+			t != null && t.config && this._matchesPreviewConfigChangedEvent(t) && (this._config = X(t.config), this._rememberPreviewSource(t.sourceId), yn(this, this._config));
 		}, this._handlePreviewNodeSelected = (e) => {
 			let t = e.detail;
 			if (!this._matchesPreviewNodeSelectedEvent(t)) return;
@@ -4222,12 +4252,12 @@ var Dn = {
 	}
 	_matchesPreviewConfigChangedEvent(e) {
 		if (!e || e.sourceId === this._previewSourceId) return !1;
-		let t = yn(this._config);
+		let t = bn(this._config);
 		return e.sourceConfigKey === t || e.configKey === t;
 	}
 	_matchesPreviewNodeSelectedEvent(e) {
 		if (!e || e.sourceId === this._previewSourceId) return !1;
-		let t = yn(this._config);
+		let t = bn(this._config);
 		return !e.configKey || e.configKey === t;
 	}
 	_rememberPreviewSource(e) {
@@ -4290,7 +4320,7 @@ var Dn = {
               .value=${(e = o.label_style) == null ? mt : e}
               @change=${(e) => this._patchConfig({ label_style: e.currentTarget.value })}
             >
-              ${Jn.map((e) => N`
+              ${Xn.map((e) => N`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4301,7 +4331,7 @@ var Dn = {
               .value=${(t = o.leaf_routing) == null ? ht : t}
               @change=${(e) => this._patchConfig({ leaf_routing: e.currentTarget.value })}
             >
-              ${Yn.map((e) => N`
+              ${Zn.map((e) => N`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4312,7 +4342,7 @@ var Dn = {
               .value=${(n = o.scaling_mode) == null ? gt : n}
               @change=${(e) => this._patchConfig({ scaling_mode: e.currentTarget.value })}
             >
-              ${Xn.map((e) => {
+              ${Qn.map((e) => {
 			var t;
 			return N`
                   <option
@@ -4333,7 +4363,7 @@ var Dn = {
             <p>Junctions can connect to junctions. Leaves connect to junctions.</p>
           </header>
           <div class="button-row">
-            ${Hn.map((e) => N`
+            ${Un.map((e) => N`
                 <button
                   type="button"
                   class="add-node-button"
@@ -4352,7 +4382,7 @@ var Dn = {
             <p>${(r = (i = o.nodes) == null ? void 0 : i.length) == null ? 0 : r} configured</p>
           </header>
           <div class="nodes-list">
-            ${zn((a = o.nodes) == null ? [] : a, (e) => e.id, (e) => this._nodeEditor(e, o))}
+            ${Bn((a = o.nodes) == null ? [] : a, (e) => e.id, (e) => this._nodeEditor(e, o))}
           </div>
         </section>
       </div>
@@ -4364,8 +4394,8 @@ var Dn = {
 		return a >= 0 ? a : i.length;
 	}
 	_nodeEditor(e, t) {
-		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g;
-		let _ = ((n = e.label) == null ? void 0 : n.trim()) || "Empty", v = (r = e.color) == null ? this._defaultNodeColor(e, t) : r, y = this._selectedNode === e.id, b = (i = e.flow_mode) == null ? "signed" : i, x = b === "bidirectional" ? (a = e.incoming_entity) == null ? e.outgoing_entity : a : e.entity, S = e.icon === null ? void 0 : (o = (s = e.icon) == null ? qt(this.hass, x) : s) == null ? en(e.kind) : o, C = (c = e.primary_action) == null ? "more-info" : c, w = (l = e.secondary_action) == null ? "more-info" : l, T = this._busJunctionIds(e.id, t), ee = `${(u = e.radius) == null ? tn(e.kind) : u} px`, E = b === "bidirectional" ? "Separate in/out" : "Single signed", te = e.secondary_entity ? "Configured" : "Not set", ne = `Applies to ${T.length} junction${T.length === 1 ? "" : "s"}`;
+		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _;
+		let v = ((n = e.label) == null ? void 0 : n.trim()) || "Empty", y = (r = e.color) == null ? this._defaultNodeColor(e, t) : r, b = this._selectedNode === e.id, x = (i = e.flow_mode) == null ? "signed" : i, S = x === "bidirectional" ? (a = e.incoming_entity) == null ? e.outgoing_entity : a : e.entity, ee = e.icon === null ? void 0 : (o = (s = e.icon) == null ? Jt(this.hass, S) : s) == null ? tn(e.kind) : o, C = (c = e.primary_action) == null ? "more-info" : c, w = (l = e.secondary_action) == null ? "more-info" : l, T = this._busJunctionIds(e.id, t), E = `${(u = e.radius) == null ? nn(e.kind) : u} px`, te = x === "bidirectional" ? "Separate in/out" : "Single signed", ne = e.secondary_entity ? "Configured" : "Not set", D = `Applies to ${T.length} junction${T.length === 1 ? "" : "s"}`;
 		return N`
       <div
         class=${`node-editor-row ${this._draggedNode === e.id ? "dragging" : ""} ${this._dragOverNode === e.id ? "drag-over" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "before" ? "insert-before" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "after" ? "insert-after" : ""}`}
@@ -4381,12 +4411,12 @@ var Dn = {
           <ha-icon icon="mdi:drag-vertical"></ha-icon>
         </div>
         <details
-          class=${`node-editor ${y ? "editor-selected" : ""}`}
+          class=${`node-editor ${b ? "editor-selected" : ""}`}
           data-node-id=${e.id}
-          ?open=${y}
+          ?open=${b}
         >
-        ${this._nodeSummary(_, e.id)}
-        ${this._renderNodeSubsection(e, "appearance", "Appearance", ee, N`
+        ${this._nodeSummary(v, e.id)}
+        ${this._renderNodeSubsection(e, "appearance", "Appearance", E, N`
             <div class="form-grid">
               <label>
                 <span>Name</span>
@@ -4397,7 +4427,7 @@ var Dn = {
               </label>
               <label>
                 <span>Icon</span>
-                ${this._iconSelect(S, (n) => this._updateNode(t, e.id, { icon: n }), e.icon === null ? void 0 : () => this._updateNode(t, e.id, { icon: null }))}
+                ${this._iconSelect(ee, (n) => this._updateNode(t, e.id, { icon: n }), e.icon === null ? void 0 : () => this._updateNode(t, e.id, { icon: null }))}
               </label>
               <label>
                 <span>Radius</span>
@@ -4405,11 +4435,11 @@ var Dn = {
                   type="number"
                   min=${"20"}
                   max=${"100"}
-                  .value=${String((f = e.radius) == null ? tn(e.kind) : f)}
+                  .value=${String((f = e.radius) == null ? nn(e.kind) : f)}
                   @change=${(n) => this._updateNode(t, e.id, { radius: Number(n.currentTarget.value) })}
                 />
               </label>
-              ${this._colorInput("Color", v, (n) => this._updateNode(t, e.id, { color: n }), e.color ? () => this._updateNode(t, e.id, { color: void 0 }) : void 0)}
+              ${this._colorInput("Color", y, (n) => this._updateNode(t, e.id, { color: n }), e.color ? () => this._updateNode(t, e.id, { color: void 0 }) : void 0)}
             </div>
             <div class="node-actions inline-actions">
               <button type="button" @click=${() => this._duplicateNode(e.id)}>
@@ -4425,24 +4455,24 @@ var Dn = {
             </div>
           `, t, { forceOpen: e.kind === "leaf" || e.kind === "junction" })}
 
-        ${this._renderNodeSubsection(e, "flow", "Flow", E, N`
+        ${this._renderNodeSubsection(e, "flow", "Flow", te, N`
             <div class="form-grid">
               <label class="span-all">
                 <span>Flow input</span>
                 <select
-                  .value=${b}
+                  .value=${x}
                   @change=${(n) => this._updateNode(t, e.id, { flow_mode: n.currentTarget.value })}
                 >
-                  ${Wn.map((e) => N`
+                  ${Gn.map((e) => N`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${b === "bidirectional" ? N`
+              ${x === "bidirectional" ? N`
                     <label class="span-all">
                       <span>Inflow entity</span>
                       ${this._entitySelect(e.incoming_entity, (n) => {
-			let r = n ? qt(this.hass, n) : void 0;
+			let r = n ? Jt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				incoming_entity: n,
 				...r && e.icon === void 0 ? { icon: r } : {}
@@ -4452,7 +4482,7 @@ var Dn = {
                     <label class="span-all">
                       <span>Outflow entity</span>
                       ${this._entitySelect(e.outgoing_entity, (n) => {
-			let r = n ? qt(this.hass, n) : void 0;
+			let r = n ? Jt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				outgoing_entity: n,
 				...r && e.icon === void 0 ? { icon: r } : {}
@@ -4463,7 +4493,7 @@ var Dn = {
                     <label class="span-all">
                       <span>Flow entity</span>
                       ${this._entitySelect(e.entity, (n) => {
-			let r = n ? qt(this.hass, n) : void 0;
+			let r = n ? Jt(this.hass, n) : void 0;
 			this._updateNode(t, e.id, {
 				entity: n,
 				...r ? { icon: r } : {}
@@ -4473,10 +4503,10 @@ var Dn = {
                     <label>
                       <span>Flow direction</span>
                       <select
-                        .value=${(p = e.flowDirection) == null ? nn(e) : p}
+                        .value=${(p = e.flowDirection) == null ? rn(e) : p}
                         @change=${(n) => this._updateNode(t, e.id, { flowDirection: n.currentTarget.value })}
                       >
-                        ${Un.map((e) => N`
+                        ${Wn.map((e) => N`
                             <option value=${e.value}>${e.label}</option>
                           `)}
                       </select>
@@ -4488,7 +4518,7 @@ var Dn = {
                   .value=${(m = e.allowed_flow) == null ? "both" : m}
                   @change=${(n) => this._updateNode(t, e.id, { allowed_flow: n.currentTarget.value })}
                 >
-                  ${Gn.map((e) => N`
+                  ${Kn.map((e) => N`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
@@ -4496,21 +4526,34 @@ var Dn = {
               <label>
                 <span>Balance role</span>
                 <select
-                  .value=${an(e)}
+                  .value=${on(e)}
                   @change=${(n) => this._updateNode(t, e.id, { balance_role: n.currentTarget.value })}
                 >
-                  ${Kn.map((e) => N`
+                  ${qn.map((e) => N`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
+              ${e.kind === "junction" ? N`
+                    <label>
+                      <span>Display value</span>
+                      <select
+                        .value=${(h = e.junction_display_value) == null ? "incoming" : h}
+                        @change=${(n) => this._updateNode(t, e.id, { junction_display_value: n.currentTarget.value })}
+                      >
+                        ${Jn.map((e) => N`
+                            <option value=${e.value}>${e.label}</option>
+                          `)}
+                      </select>
+                    </label>
+                  ` : I}
               <label>
                 <span>Primary click action</span>
                 <select
                   .value=${C}
                   @change=${(n) => this._updateNode(t, e.id, { primary_action: n.currentTarget.value })}
                 >
-                  ${qn.map((e) => N`
+                  ${Yn.map((e) => N`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
@@ -4520,7 +4563,7 @@ var Dn = {
                       <span>${C === "navigate" ? "Primary navigation path" : "Primary URL"}</span>
                       <input
                         type="text"
-                        .value=${(h = e.primary_action_path) == null ? "" : h}
+                        .value=${(g = e.primary_action_path) == null ? "" : g}
                         placeholder=${C === "navigate" ? "/lovelace/0" : "https://example.com"}
                         @input=${(n) => this._updateNode(t, e.id, { primary_action_path: n.currentTarget.value })}
                       />
@@ -4563,7 +4606,7 @@ var Dn = {
             </div>
           `, t)}
 
-        ${this._renderNodeSubsection(e, "secondary", "Secondary value", te, N`
+        ${this._renderNodeSubsection(e, "secondary", "Secondary value", ne, N`
             <div class="form-grid">
               <label class="span-all">
                 <span>Secondary entity</span>
@@ -4575,7 +4618,7 @@ var Dn = {
                   .value=${w}
                   @change=${(n) => this._updateNode(t, e.id, { secondary_action: n.currentTarget.value })}
                 >
-                  ${qn.map((e) => N`
+                  ${Yn.map((e) => N`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
@@ -4585,7 +4628,7 @@ var Dn = {
                       <span>${w === "navigate" ? "Secondary navigation path" : "Secondary URL"}</span>
                       <input
                         type="text"
-                        .value=${(g = e.secondary_action_path) == null ? "" : g}
+                        .value=${(_ = e.secondary_action_path) == null ? "" : _}
                         placeholder=${w === "navigate" ? "/lovelace/0" : "https://example.com"}
                         @input=${(n) => this._updateNode(t, e.id, { secondary_action_path: n.currentTarget.value })}
                       />
@@ -4593,7 +4636,7 @@ var Dn = {
                   ` : I}
             </div>
           `, t)}
-        ${T.length > 0 ? this._renderNodeSubsection(e, "bus", "Bus options", ne, this._busOptionsEditor(e, t, T), t) : I}
+        ${T.length > 0 ? this._renderNodeSubsection(e, "bus", "Bus options", D, this._busOptionsEditor(e, t, T), t) : I}
         </details>
       </div>
     `;
@@ -4640,7 +4683,7 @@ var Dn = {
 	}
 	_selectNodeFromEditor(e) {
 		this._selectedNode = e, dt(e, {
-			configKey: yn(this._config),
+			configKey: bn(this._config),
 			sourceId: this._previewSourceId,
 			targetId: this._targetPreviewSourceId
 		});
@@ -4674,7 +4717,7 @@ var Dn = {
           @change=${(e) => t(e.currentTarget.value.trim() || void 0)}
         >
           <option value="">Manual</option>
-          ${Kt(this.hass).map((t) => N`
+          ${qt(this.hass).map((t) => N`
               <option value=${t} ?selected=${t === e}>
                 ${t}
               </option>
@@ -4685,7 +4728,7 @@ var Dn = {
     `;
 	}
 	_handleEntityValueChanged(e, t) {
-		t(Wt(e.detail.value));
+		t(Gt(e.detail.value));
 	}
 	_iconSelect(e, t, n) {
 		let r = n ? N`
@@ -4723,7 +4766,7 @@ var Dn = {
 		}}
         >
           <option value="">No icon</option>
-          ${Vn.map((t) => N`
+          ${Hn.map((t) => N`
               <option value=${t.value} ?selected=${t.value === e}>
                 ${t.label}
               </option>
@@ -4743,7 +4786,7 @@ var Dn = {
         <div class="color-picker">
           <input
             type="color"
-            .value=${fn(t)}
+            .value=${pn(t)}
             @input=${(e) => n(e.currentTarget.value)}
           />
           ${r ? N`
@@ -4759,7 +4802,7 @@ var Dn = {
 		var n;
 		if (e.kind === "junction") {
 			var r;
-			return cn(e.id, (r = t.nodes) == null ? [] : r);
+			return ln(e.id, (r = t.nodes) == null ? [] : r);
 		}
 		let i = ((n = t.links) == null ? [] : n).filter((t) => t.from === e.id || t.to === e.id).map((t) => t.from === e.id ? t.to : t.from).find((e) => {
 			var n, r;
@@ -4768,7 +4811,7 @@ var Dn = {
 		if (i) {
 			var a, o, s;
 			let e = ((a = t.nodes) == null ? [] : a).find((e) => e.id === i);
-			return (o = e == null ? void 0 : e.color) == null ? cn(i, (s = t.nodes) == null ? [] : s) : o;
+			return (o = e == null ? void 0 : e.color) == null ? ln(i, (s = t.nodes) == null ? [] : s) : o;
 		}
 		return e.icon === "solar" ? xt : e.icon === "battery" ? bt : yt;
 	}
@@ -4776,13 +4819,13 @@ var Dn = {
 		var r, i;
 		let a = t.map((e) => {
 			var t;
-			return ln((t = e.color) == null ? this._defaultNodeColor(e, n) : t);
+			return un((t = e.color) == null ? this._defaultNodeColor(e, n) : t);
 		}).filter((e) => !!e), o = e === "junction" ? wt[0] : yt;
 		if (a.length === 0) return o;
 		let s = Tt.filter((e) => !a.includes(e.toLowerCase()));
 		return (r = (i = (s.length > 0 ? s : Tt).map((e) => ({
 			color: e,
-			distance: Math.min(...a.map((t) => un(e, t)))
+			distance: Math.min(...a.map((t) => dn(e, t)))
 		})).sort((e, t) => t.distance - e.distance)[0]) == null ? void 0 : i.color) == null ? o : r;
 	}
 	_numberInput(e, t, n) {
@@ -4829,12 +4872,12 @@ var Dn = {
 		let a = X(this._config), o = (t = a.nodes) == null ? [] : t, s = `${e}-${o.length + 1}`, c = {
 			id: s,
 			kind: e,
-			label: (n = (r = Hn.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
-			icon: en(e),
-			radius: tn(e),
+			label: (n = (r = Un.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
+			icon: tn(e),
+			radius: nn(e),
 			...e === "junction" ? { color: this._nextNodeColor(e, o, a) } : {},
 			flowDirection: "supply",
-			balance_role: rn(e)
+			balance_role: an(e)
 		};
 		this._patchConfig({
 			nodes: [c, ...o],
@@ -4918,7 +4961,7 @@ var Dn = {
 			let t = { ...this._nodeSectionOpen };
 			delete t[e], this._nodeSectionOpen = t;
 		}
-		this._patchConfig(sn(t, e));
+		this._patchConfig(cn(t, e));
 	}
 	_handleNodeSectionToggle(e, t, n) {
 		var r;
@@ -4946,10 +4989,10 @@ var Dn = {
 		this._config = X({
 			...this._config,
 			...e
-		}), vn(this, this._config);
+		}), yn(this, this._config);
 	}
 };
-Bn = Zn, Bn.properties = {
+Vn = $n, Vn.properties = {
 	config: { attribute: !1 },
 	_config: { state: !0 },
 	_dragInsertSide: { state: !0 },
@@ -4959,7 +5002,7 @@ Bn = Zn, Bn.properties = {
 	_draggedNode: { state: !0 },
 	_selectedNode: { state: !0 },
 	hass: { attribute: !1 }
-}, Bn.styles = o`
+}, Vn.styles = o`
     :host {
       display: block;
       max-width: 100%;
@@ -5461,5 +5504,5 @@ Bn = Zn, Bn.properties = {
       border-color: #d7aaa3;
       color: #8f3329;
     }
-  `, customElements.get("home-flow-card-editor") || customElements.define("home-flow-card-editor", Zn);
+  `, customElements.get("home-flow-card-editor") || customElements.define("home-flow-card-editor", $n);
 //#endregion

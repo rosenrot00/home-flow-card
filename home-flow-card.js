@@ -586,9 +586,9 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	firstUpdated() {
 		this._htmlIconLayoutKey = this._htmlIconLayoutKeyForNodes(), this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
 		let e = this.renderRoot.querySelector(".card");
-		!e || typeof ResizeObserver > "u" || (this._resizeObserver = new ResizeObserver(() => {
+		typeof ResizeObserver > "u" || (this._resizeObserver = new ResizeObserver(() => {
 			this._htmlIconLayoutKey && this._scheduleHtmlIconViewportUpdate();
-		}), this._resizeObserver.observe(e));
+		}), this._resizeObserver.observe(this), e && this._resizeObserver.observe(e));
 	}
 	updated(e) {
 		if (!e.has("nodes")) return;
@@ -1743,11 +1743,11 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_htmlIconAt(e, t, n, r, i) {
 		let a = this._htmlIconViewport;
 		if (!a) return I;
-		let o = a.scale, s = Math.round(68 * i * o);
+		let o = a.scale, s = 68 * i * o, c = a.offsetX + (t.point.x + n) * a.scale, l = a.offsetY + (t.point.y + r) * a.scale;
 		return N`
       <div
         class="html-node-icon"
-        style=${`${`left:${a.offsetX + (t.point.x + n) * a.scale}px;top:${a.offsetY + (t.point.y + r) * a.scale}px;`}width:${s}px;height:${s}px;`}
+        style=${`${`left:${c.toFixed(3)}px;top:${l.toFixed(3)}px;`}width:${s.toFixed(3)}px;height:${s.toFixed(3)}px;`}
       >
         <ha-icon .icon=${e} icon=${e}></ha-icon>
       </div>
@@ -1763,7 +1763,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 			offsetY: (t.height - i) / 2,
 			scale: n
 		}, o = this._htmlIconViewport;
-		if (o && Math.abs(o.offsetX - a.offsetX) < .5 && Math.abs(o.offsetY - a.offsetY) < .5 && Math.abs(o.scale - a.scale) < .001) {
+		if (o && Math.abs(o.offsetX - a.offsetX) < .05 && Math.abs(o.offsetY - a.offsetY) < .05 && Math.abs(o.scale - a.scale) < 1e-4) {
 			this._htmlIconsReady || (this._htmlIconsReady = !0, this.requestUpdate());
 			return;
 		}

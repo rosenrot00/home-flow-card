@@ -584,7 +584,7 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 		super(...e), this.editable = !0, this.flowMaxValue = $e, this.flowMinVisibleValue = Qe, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++ot;
 	}
 	render() {
-		let e = this._model(), t = this._normalizedLinks(e.nodes), n = this._visibleNodes(e.nodes), r = t.filter((t) => this._isVisibleLink(t, e.nodes)), i = this._renderContext(e, r, t), a = r.filter((t) => this._isJunctionJunctionLink(t, e.nodes)), o = r.filter((t) => !this._isJunctionJunctionLink(t, e.nodes)), s = this._nodesByZLayer(n);
+		let e = this._model(), t = this._normalizedLinks(e.nodes), n = this._hiddenNodeIds(e.nodes, t), r = this._visibleNodes(e.nodes, n), i = t.filter((t) => this._isVisibleLink(t, e.nodes, n)), a = this._renderContext(e, i, t), o = i.filter((t) => this._isJunctionJunctionLink(t, e.nodes)), s = i.filter((t) => !this._isJunctionJunctionLink(t, e.nodes)), c = this._nodesByZLayer(r);
 		return N`
       <section
         class=${`card ${this.editable ? "editable" : "readonly"}`}
@@ -603,11 +603,11 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
           @keydown=${this.editable ? this._handleKeydown : void 0}
         >
           ${this.editable ? this._renderEditorGrid() : I}
-          ${o.map((n) => this._renderGraphLink(n, e, t, i))}
-          ${a.map((n) => this._renderGraphLink(n, e, t, i))}
-          ${s.map((n) => this._renderNodeLayer(n, e, r, t, i))}
-          ${this.editable ? this._renderPendingLink(n, t) : I}
-          ${this.editable ? this._renderAnchorControls(n, r) : I}
+          ${s.map((n) => this._renderGraphLink(n, e, t, a))}
+          ${o.map((n) => this._renderGraphLink(n, e, t, a))}
+          ${c.map((n) => this._renderNodeLayer(n, e, i, t, a))}
+          ${this.editable ? this._renderPendingLink(r, t) : I}
+          ${this.editable ? this._renderAnchorControls(r, i) : I}
         </svg>
       </section>
     `;
@@ -701,15 +701,20 @@ var Pe, Fe = 986, Ie = 730, Le = 90, Re = 65, ze = 20, Be = 100, B = 10, V = 0, 
 	_model() {
 		return { nodes: Object.fromEntries(this._positionedNodes().map((e) => [e.id, e])) };
 	}
-	_visibleNodes(e) {
-		return Object.fromEntries(Object.entries(e).filter(([, e]) => !this._isHiddenByZero(e)));
+	_visibleNodes(e, t) {
+		return Object.fromEntries(Object.entries(e).filter(([e]) => !t.has(e)));
 	}
-	_isVisibleLink(e, t) {
-		let n = t[e.from], r = t[e.to];
-		return !!(n && r && !this._isHiddenByZero(n) && !this._isHiddenByZero(r));
+	_hiddenNodeIds(e, t) {
+		return new Set(Object.values(e).filter((n) => this._isHiddenByZero(n, e, t)).map((e) => e.id));
 	}
-	_isHiddenByZero(e) {
-		return e.hideIfZero === !0 && Math.abs(e.value) <= q;
+	_isVisibleLink(e, t, n) {
+		let r = t[e.from], i = t[e.to];
+		return !!(r && i && !n.has(r.id) && !n.has(i.id));
+	}
+	_isHiddenByZero(e, t, n) {
+		if (e.hideIfZero !== !0) return !1;
+		let r = this._nodeDisplayValue(e, { nodes: t }, n);
+		return Math.abs(r) <= q;
 	}
 	_nodesByZLayer(e) {
 		return Object.values(e).sort((e, t) => {
@@ -3342,7 +3347,7 @@ function Bt(e, t) {
 			entity: e.secondary_entity,
 			attribute: e.secondary_attribute,
 			value: e.secondary
-		}) : void 0, j = e.value !== void 0 || (D === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = A == null ? void 0 : A.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? O == null ? void 0 : O.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? A == null ? void 0 : A.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? rn(e) : d, le = D === "bidirectional" ? ie : ((f = (p = O == null ? void 0 : O.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), ue = Ht(e.invert === !0 ? -le : le, (m = e.allowed_flow) == null ? "both" : m), de = Math.abs(ue), M = D === "bidirectional" ? ue > St ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : ue < -St ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, fe = Vt((S = e.primary_action) == null ? "more-info" : S, M, e.primary_action_path), pe = Vt((ee = e.secondary_action) == null ? "more-info" : ee, e.secondary_entity, e.secondary_action_path), me = D === "bidirectional" ? (C = e.incoming_entity) == null ? e.outgoing_entity : C : e.entity, he = e.icon === null ? null : (w = (T = e.icon) == null ? Jt(t, me) : T) == null ? tn(e.kind) : w, N = on(e), P = sn(N) || e.kind === "junction" && N !== "ignore" && j;
+		}) : void 0, j = e.value !== void 0 || (D === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = k == null ? void 0 : k.value) == null ? 0 : r) - ((i = A == null ? void 0 : A.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? O == null ? void 0 : O.unit : s) == null ? k == null ? void 0 : k.unit : o) == null ? A == null ? void 0 : A.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? rn(e) : d, le = D === "bidirectional" ? ie : ((f = (p = O == null ? void 0 : O.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), ue = Ht(e.invert === !0 ? -le : le, (m = e.allowed_flow) == null ? "both" : m), de = Math.abs(ue), M = D === "bidirectional" ? ue > St ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : ue < -St ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, fe = Vt((S = e.primary_action) == null ? "more-info" : S, M, e.primary_action_path), pe = Vt((ee = e.secondary_action) == null ? "more-info" : ee, e.secondary_entity, e.secondary_action_path), me = D === "bidirectional" ? (C = e.incoming_entity) == null ? e.outgoing_entity : C : e.entity, he = e.icon === null ? null : (w = (T = e.icon) == null ? Jt(t, me) : T) == null ? tn(e.kind) : w, N = sn(on(e));
 		return {
 			id: e.id,
 			kind: e.kind,
@@ -3353,7 +3358,7 @@ function Bt(e, t) {
 			value: de,
 			flowValue: ue,
 			hasOwnValue: j,
-			contributesToFlow: P,
+			contributesToFlow: N,
 			junctionDisplayMode: e.junction_display_value,
 			hideZeroValues: e.hide_zero_values,
 			hideIfZero: e.hide_if_zero === !0,
@@ -3695,8 +3700,8 @@ var Tn, En, Dn = class extends z {
     `;
 	}
 	_syncGraphCache(e, t, n) {
-		let r = this._normalizedConfig, i = X(e);
-		this._normalizedConfig = i, !(n && r.nodes === i.nodes && r.links === i.links) && (this._entityWatchers = xn(i), this._resolvedGraphData = wn(i, t));
+		let r = !!(n && n.nodes === e.nodes && n.links === e.links && n.hide_zero_values === e.hide_zero_values), i = X(e);
+		this._normalizedConfig = i, !r && (this._entityWatchers = xn(i), this._resolvedGraphData = wn(i, t));
 	}
 	_handleLayoutChange(e) {
 		if (!this.editMode) return;
@@ -4805,7 +4810,7 @@ var On = {
 	}
 	_addNode(e) {
 		var t, n, r, i;
-		let a = X(this._config), o = (t = a.nodes) == null ? [] : t, s = `${e}-${o.length + 1}`, c = {
+		let a = X(this._config), o = (t = a.nodes) == null ? [] : t, s = this._uniqueNodeId(e, o), c = {
 			id: s,
 			kind: e,
 			label: (n = (r = Un.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
@@ -4822,6 +4827,11 @@ var On = {
 				[s]: this._initialPoint(e, o.filter((t) => t.kind === e).length)
 			}
 		});
+	}
+	_uniqueNodeId(e, t) {
+		let n = new Set(t.map((e) => e.id)), r = 1;
+		for (; n.has(`${e}-${r}`);) r += 1;
+		return `${e}-${r}`;
 	}
 	_initialPoint(e, t) {
 		return e === "junction" ? {

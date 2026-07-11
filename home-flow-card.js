@@ -566,7 +566,7 @@ var Ne = Me.litElementPolyfillSupport;
 Ne == null || Ne({ LitElement: z }), ((je = Me.litElementVersions) == null ? Me.litElementVersions = [] : je).push("4.2.2");
 //#endregion
 //#region src/home-flow-graph-card.ts
-var Pe, Fe = "2026-07-11 07:40Z", Ie = 986, Le = 730, Re = 90, ze = 65, Be = 20, Ve = 100, B = 10, V = 0, H = 0, U = 12, He = 4, Ue = 4, W = 32, We = 3.2, Ge = 7, Ke = 15, qe = 21, Je = 7, G = 18, K = 40, Ye = 1.8, q = .5, Xe = 1, Ze = 28, Qe = 14, $e = 10, et = 12e3, tt = 2.4, nt = 14, rt = 1.15, it = 72, J = {
+var Pe, Fe = "2026-07-11 07:45Z", Ie = 986, Le = 730, Re = 90, ze = 65, Be = 20, Ve = 100, B = 10, V = 0, H = 0, U = 12, He = 4, Ue = 4, W = 32, We = 3.2, Ge = 7, Ke = 15, qe = 21, Je = 7, G = 18, K = 40, Ye = 1.8, q = .5, Xe = 1, Ze = 28, Qe = 14, $e = 10, et = 12e3, tt = 2.4, nt = 14, rt = 1.15, it = 72, J = {
 	minX: 70,
 	maxX: 916,
 	minY: 62,
@@ -2086,7 +2086,11 @@ var ft = class extends z {
 		var n;
 		if (!this.editable || this.pendingLink) return;
 		let r = this._eventPoint(e);
-		r && (this.selectedNode = t.id, this.selectedLink = void 0, this._emitNodeSelect(t.id), (n = this.renderRoot.querySelector(".flow-svg")) == null || n.focus(), this._drag = {
+		if (!r) return;
+		this.selectedNode = t.id, this.selectedLink = void 0, this._emitNodeSelect(t.id), (n = this.renderRoot.querySelector(".flow-svg")) == null || n.focus();
+		let i = this._model();
+		this._drag = {
+			attachedLeaves: t.kind === "junction" ? this._overlappingUnlinkedLeaves(t, i) : void 0,
 			id: t.id,
 			pointerId: e.pointerId,
 			startX: r.x,
@@ -2094,7 +2098,7 @@ var ft = class extends z {
 			offsetX: r.x - t.point.x,
 			offsetY: r.y - t.point.y,
 			moved: !1
-		}, this.activeNode = t.id, this._capturePointer(e), e.stopPropagation(), e.preventDefault());
+		}, this.activeNode = t.id, this._capturePointer(e), e.stopPropagation(), e.preventDefault();
 	}
 	_startLabelDrag(e, t, n, r) {
 		var i;
@@ -2117,56 +2121,70 @@ var ft = class extends z {
 		}, this._capturePointer(e), e.stopPropagation(), e.preventDefault();
 	}
 	_handlePointerMove(e) {
+		var t;
 		if (!this.editable) return;
-		let t = this._eventPoint(e);
-		if (!t) return;
-		let n = this._anchorDrag;
-		if (n && e.pointerId === n.pointerId) {
-			let e = this._model().nodes[n.nodeId];
-			if (!e) return;
-			this._setLinkEndAnchor(n.linkId, n.end, this._nearestAnchorIndex(e, t), !0, !0);
-			return;
-		}
-		let r = this._labelDrag;
+		let n = this._eventPoint(e);
+		if (!n) return;
+		let r = this._anchorDrag;
 		if (r && e.pointerId === r.pointerId) {
 			let e = this._model().nodes[r.nodeId];
 			if (!e) return;
-			if (r.mode === "curved") this._emitNodeLabelChange({
+			this._setLinkEndAnchor(r.linkId, r.end, this._nearestAnchorIndex(e, n), !0, !0);
+			return;
+		}
+		let i = this._labelDrag;
+		if (i && e.pointerId === i.pointerId) {
+			let e = this._model().nodes[i.nodeId];
+			if (!e) return;
+			if (i.mode === "curved") this._emitNodeLabelChange({
 				nodeId: e.id,
-				labelAngle: Math.atan2(t.y - e.point.y, t.x - e.point.x),
+				labelAngle: Math.atan2(n.y - e.point.y, n.x - e.point.x),
 				labelOffsetX: e.labelOffsetX,
 				labelOffsetY: e.labelOffsetY
 			}, !0);
 			else {
-				let n = t.x - r.dragOffsetX, i = t.y - r.dragOffsetY;
+				let t = n.x - i.dragOffsetX, r = n.y - i.dragOffsetY;
 				this._emitNodeLabelChange({
 					nodeId: e.id,
 					labelAngle: e.labelAngle,
-					labelOffsetX: n - e.point.x,
-					labelOffsetY: i - e.point.y
+					labelOffsetX: t - e.point.x,
+					labelOffsetY: r - e.point.y
 				}, !0);
 			}
 			return;
 		}
 		if (this.pendingLink) {
-			var i;
+			var a;
 			let e = this._model();
-			this.pointerPoint = t, this.hoverTarget = (i = this._nearestCompatibleTarget(e.nodes[this.pendingLink.from], t, e.nodes)) == null ? void 0 : i.id;
+			this.pointerPoint = n, this.hoverTarget = (a = this._nearestCompatibleTarget(e.nodes[this.pendingLink.from], n, e.nodes)) == null ? void 0 : a.id;
 			return;
 		}
-		let a = this._drag;
-		if (!(!a || e.pointerId !== a.pointerId)) {
-			if (!a.moved) {
-				if (Math.hypot(t.x - a.startX, t.y - a.startY) < Ue) return;
-				a.moved = !0;
-				let e = this._autoAnchorLinksForNode(a.id);
-				e !== this.links && (a.anchorsChanged = !0, this.links = e, this._emitLinksChange(e, !0));
-			}
-			this.layout = this._nextLayout(a.id, {
-				x: t.x - a.offsetX,
-				y: t.y - a.offsetY
-			}), this._emitLayoutChange(this.layout, !0);
+		let o = this._drag;
+		if (!o || e.pointerId !== o.pointerId) return;
+		if (!o.moved) {
+			if (Math.hypot(n.x - o.startX, n.y - o.startY) < Ue) return;
+			o.moved = !0;
+			let e = this._autoAnchorLinksForNode(o.id);
+			e !== this.links && (o.anchorsChanged = !0, this.links = e, this._emitLinksChange(e, !0));
 		}
+		let s = this._clampedPoint({
+			x: n.x - o.offsetX,
+			y: n.y - o.offsetY
+		}), c = this._model().nodes[o.id] ? {
+			x: o.startX - o.offsetX,
+			y: o.startY - o.offsetY
+		} : s, l = {
+			x: s.x - c.x,
+			y: s.y - c.y
+		}, u = Object.fromEntries(((t = o.attachedLeaves) == null ? [] : t).map((e) => [e.id, this._clampedPoint({
+			x: e.point.x + l.x,
+			y: e.point.y + l.y
+		})]));
+		this.layout = {
+			...this.layout,
+			...u,
+			[o.id]: s
+		}, this._emitLayoutChange(this.layout, !0);
 	}
 	_handlePointerUp(e) {
 		var t;
@@ -2238,6 +2256,12 @@ var ft = class extends z {
 			...this.layout,
 			[e]: this._clampedPoint(t)
 		};
+	}
+	_overlappingUnlinkedLeaves(e, t) {
+		return Object.values(t.nodes).filter((e) => e.kind === "leaf").filter((t) => Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y) < t.radius + e.radius).filter((e) => !this.links.some((t) => t.from === e.id || t.to === e.id)).map((e) => ({
+			id: e.id,
+			point: { ...e.point }
+		}));
 	}
 	_normalizedLinks(e) {
 		return this.links.filter((t) => {

@@ -566,7 +566,7 @@ var Ne = Me.litElementPolyfillSupport;
 Ne == null || Ne({ LitElement: z }), ((je = Me.litElementVersions) == null ? Me.litElementVersions = [] : je).push("4.2.2");
 //#endregion
 //#region src/home-flow-graph-card.ts
-var Pe, Fe = "2026-07-11 07:45Z", Ie = 986, Le = 730, Re = 90, ze = 65, Be = 20, Ve = 100, B = 10, V = 0, H = 0, U = 12, He = 4, Ue = 4, W = 32, We = 3.2, Ge = 7, Ke = 15, qe = 21, Je = 7, G = 18, K = 40, Ye = 1.8, q = .5, Xe = 1, Ze = 28, Qe = 14, $e = 10, et = 12e3, tt = 2.4, nt = 14, rt = 1.15, it = 72, J = {
+var Pe, Fe = "2026-07-11 07:49Z", Ie = 986, Le = 730, Re = 90, ze = 65, Be = 20, Ve = 100, B = 10, V = 0, H = 0, U = 12, He = 4, Ue = 4, W = 32, We = 3.2, Ge = 7, Ke = 15, qe = 21, Je = 7, G = 18, K = 40, Ye = 1.8, q = .5, Xe = 1, Ze = 28, Qe = 14, $e = 10, et = 12e3, tt = 2.4, nt = 14, rt = 1.15, it = 72, J = {
 	minX: 70,
 	maxX: 916,
 	minY: 62,
@@ -2090,7 +2090,7 @@ var ft = class extends z {
 		this.selectedNode = t.id, this.selectedLink = void 0, this._emitNodeSelect(t.id), (n = this.renderRoot.querySelector(".flow-svg")) == null || n.focus();
 		let i = this._model();
 		this._drag = {
-			attachedLeaves: t.kind === "junction" ? this._overlappingUnlinkedLeaves(t, i) : void 0,
+			attachedLeaves: this._overlappingUnlinkedLeaves(t, i),
 			id: t.id,
 			pointerId: e.pointerId,
 			startX: r.x,
@@ -2258,7 +2258,7 @@ var ft = class extends z {
 		};
 	}
 	_overlappingUnlinkedLeaves(e, t) {
-		return Object.values(t.nodes).filter((e) => e.kind === "leaf").filter((t) => Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y) < t.radius + e.radius).filter((e) => !this.links.some((t) => t.from === e.id || t.to === e.id)).map((e) => ({
+		return Object.values(t.nodes).filter((t) => t.kind === "leaf" && t.id !== e.id).filter((t) => Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y) < t.radius + e.radius).filter((e) => !this.links.some((t) => t.from === e.id || t.to === e.id)).map((e) => ({
 			id: e.id,
 			point: { ...e.point }
 		}));

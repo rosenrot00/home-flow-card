@@ -1,2880 +1,4 @@
-//#region node_modules/@lit/reactive-element/css-tag.js
-var e = globalThis, t = e.ShadowRoot && (e.ShadyCSS === void 0 || e.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, n = Symbol(), r = /* @__PURE__ */ new WeakMap(), i = class {
-	constructor(e, t, r) {
-		if (this._$cssResult$ = !0, r !== n) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
-		this.cssText = e, this.t = t;
-	}
-	get styleSheet() {
-		let e = this.o, n = this.t;
-		if (t && e === void 0) {
-			let t = n !== void 0 && n.length === 1;
-			t && (e = r.get(n)), e === void 0 && ((this.o = e = new CSSStyleSheet()).replaceSync(this.cssText), t && r.set(n, e));
-		}
-		return e;
-	}
-	toString() {
-		return this.cssText;
-	}
-}, a = (e) => new i(typeof e == "string" ? e : e + "", void 0, n), o = (e, ...t) => new i(e.length === 1 ? e[0] : t.reduce((t, n, r) => t + ((e) => {
-	if (!0 === e._$cssResult$) return e.cssText;
-	if (typeof e == "number") return e;
-	throw Error("Value passed to 'css' function must be a 'css' function result: " + e + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
-})(n) + e[r + 1], e[0]), e, n), s = (n, r) => {
-	if (t) n.adoptedStyleSheets = r.map((e) => e instanceof CSSStyleSheet ? e : e.styleSheet);
-	else for (let t of r) {
-		let r = document.createElement("style"), i = e.litNonce;
-		i !== void 0 && r.setAttribute("nonce", i), r.textContent = t.cssText, n.appendChild(r);
-	}
-}, c = t ? (e) => e : (e) => e instanceof CSSStyleSheet ? ((e) => {
-	let t = "";
-	for (let n of e.cssRules) t += n.cssText;
-	return a(t);
-})(e) : e, l, u, { is: d, defineProperty: f, getOwnPropertyDescriptor: p, getOwnPropertyNames: m, getOwnPropertySymbols: h, getPrototypeOf: g } = Object, _ = globalThis, v = _.trustedTypes, y = v ? v.emptyScript : "", b = _.reactiveElementPolyfillSupport, x = (e, t) => e, S = {
-	toAttribute(e, t) {
-		switch (t) {
-			case Boolean:
-				e = e ? y : null;
-				break;
-			case Object:
-			case Array: e = e == null ? e : JSON.stringify(e);
-		}
-		return e;
-	},
-	fromAttribute(e, t) {
-		let n = e;
-		switch (t) {
-			case Boolean:
-				n = e !== null;
-				break;
-			case Number:
-				n = e === null ? null : Number(e);
-				break;
-			case Object:
-			case Array: try {
-				n = JSON.parse(e);
-			} catch {
-				n = null;
-			}
-		}
-		return n;
-	}
-}, ee = (e, t) => !d(e, t), C = {
-	attribute: !0,
-	type: String,
-	converter: S,
-	reflect: !1,
-	useDefault: !1,
-	hasChanged: ee
-};
-(l = Symbol).metadata != null || (l.metadata = Symbol("metadata")), _.litPropertyMetadata != null || (_.litPropertyMetadata = /* @__PURE__ */ new WeakMap());
-var w = class extends HTMLElement {
-	static addInitializer(e) {
-		var t;
-		this._$Ei(), ((t = this.l) == null ? this.l = [] : t).push(e);
-	}
-	static get observedAttributes() {
-		return this.finalize(), this._$Eh && [...this._$Eh.keys()];
-	}
-	static createProperty(e, t = C) {
-		if (t.state && (t.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(e) && ((t = Object.create(t)).wrapped = !0), this.elementProperties.set(e, t), !t.noAccessor) {
-			let n = Symbol(), r = this.getPropertyDescriptor(e, n, t);
-			r !== void 0 && f(this.prototype, e, r);
-		}
-	}
-	static getPropertyDescriptor(e, t, n) {
-		var r;
-		let { get: i, set: a } = (r = p(this.prototype, e)) == null ? {
-			get() {
-				return this[t];
-			},
-			set(e) {
-				this[t] = e;
-			}
-		} : r;
-		return {
-			get: i,
-			set(t) {
-				let r = i == null ? void 0 : i.call(this);
-				a == null || a.call(this, t), this.requestUpdate(e, r, n);
-			},
-			configurable: !0,
-			enumerable: !0
-		};
-	}
-	static getPropertyOptions(e) {
-		var t;
-		return (t = this.elementProperties.get(e)) == null ? C : t;
-	}
-	static _$Ei() {
-		if (this.hasOwnProperty(x("elementProperties"))) return;
-		let e = g(this);
-		e.finalize(), e.l !== void 0 && (this.l = [...e.l]), this.elementProperties = new Map(e.elementProperties);
-	}
-	static finalize() {
-		if (this.hasOwnProperty(x("finalized"))) return;
-		if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(x("properties"))) {
-			let e = this.properties, t = [...m(e), ...h(e)];
-			for (let n of t) this.createProperty(n, e[n]);
-		}
-		let e = this[Symbol.metadata];
-		if (e !== null) {
-			let t = litPropertyMetadata.get(e);
-			if (t !== void 0) for (let [e, n] of t) this.elementProperties.set(e, n);
-		}
-		this._$Eh = /* @__PURE__ */ new Map();
-		for (let [e, t] of this.elementProperties) {
-			let n = this._$Eu(e, t);
-			n !== void 0 && this._$Eh.set(n, e);
-		}
-		this.elementStyles = this.finalizeStyles(this.styles);
-	}
-	static finalizeStyles(e) {
-		let t = [];
-		if (Array.isArray(e)) {
-			let n = new Set(e.flat(Infinity).reverse());
-			for (let e of n) t.unshift(c(e));
-		} else e !== void 0 && t.push(c(e));
-		return t;
-	}
-	static _$Eu(e, t) {
-		let n = t.attribute;
-		return !1 === n ? void 0 : typeof n == "string" ? n : typeof e == "string" ? e.toLowerCase() : void 0;
-	}
-	constructor() {
-		super(), this._$Ep = void 0, this.isUpdatePending = !1, this.hasUpdated = !1, this._$Em = null, this._$Ev();
-	}
-	_$Ev() {
-		var e;
-		this._$ES = new Promise((e) => this.enableUpdating = e), this._$AL = /* @__PURE__ */ new Map(), this._$E_(), this.requestUpdate(), (e = this.constructor.l) == null || e.forEach((e) => e(this));
-	}
-	addController(e) {
-		var t, n;
-		((t = this._$EO) == null ? this._$EO = /* @__PURE__ */ new Set() : t).add(e), this.renderRoot !== void 0 && this.isConnected && ((n = e.hostConnected) == null || n.call(e));
-	}
-	removeController(e) {
-		var t;
-		(t = this._$EO) == null || t.delete(e);
-	}
-	_$E_() {
-		let e = /* @__PURE__ */ new Map(), t = this.constructor.elementProperties;
-		for (let n of t.keys()) this.hasOwnProperty(n) && (e.set(n, this[n]), delete this[n]);
-		e.size > 0 && (this._$Ep = e);
-	}
-	createRenderRoot() {
-		var e;
-		let t = (e = this.shadowRoot) == null ? this.attachShadow(this.constructor.shadowRootOptions) : e;
-		return s(t, this.constructor.elementStyles), t;
-	}
-	connectedCallback() {
-		var e;
-		this.renderRoot != null || (this.renderRoot = this.createRenderRoot()), this.enableUpdating(!0), (e = this._$EO) == null || e.forEach((e) => {
-			var t;
-			return (t = e.hostConnected) == null ? void 0 : t.call(e);
-		});
-	}
-	enableUpdating(e) {}
-	disconnectedCallback() {
-		var e;
-		(e = this._$EO) == null || e.forEach((e) => {
-			var t;
-			return (t = e.hostDisconnected) == null ? void 0 : t.call(e);
-		});
-	}
-	attributeChangedCallback(e, t, n) {
-		this._$AK(e, n);
-	}
-	_$ET(e, t) {
-		let n = this.constructor.elementProperties.get(e), r = this.constructor._$Eu(e, n);
-		if (r !== void 0 && !0 === n.reflect) {
-			var i;
-			let a = (((i = n.converter) == null ? void 0 : i.toAttribute) === void 0 ? S : n.converter).toAttribute(t, n.type);
-			this._$Em = e, a == null ? this.removeAttribute(r) : this.setAttribute(r, a), this._$Em = null;
-		}
-	}
-	_$AK(e, t) {
-		let n = this.constructor, r = n._$Eh.get(e);
-		if (r !== void 0 && this._$Em !== r) {
-			var i, a, o;
-			let e = n.getPropertyOptions(r), s = typeof e.converter == "function" ? { fromAttribute: e.converter } : ((i = e.converter) == null ? void 0 : i.fromAttribute) === void 0 ? S : e.converter;
-			this._$Em = r;
-			let c = s.fromAttribute(t, e.type);
-			this[r] = (a = c == null ? (o = this._$Ej) == null ? void 0 : o.get(r) : c) == null ? c : a, this._$Em = null;
-		}
-	}
-	requestUpdate(e, t, n, r = !1, i) {
-		if (e !== void 0) {
-			var a, o;
-			let s = this.constructor;
-			if (!1 === r && (i = this[e]), n != null || (n = s.getPropertyOptions(e)), !(((a = n.hasChanged) == null ? ee : a)(i, t) || n.useDefault && n.reflect && i === ((o = this._$Ej) == null ? void 0 : o.get(e)) && !this.hasAttribute(s._$Eu(e, n)))) return;
-			this.C(e, t, n);
-		}
-		!1 === this.isUpdatePending && (this._$ES = this._$EP());
-	}
-	C(e, t, { useDefault: n, reflect: r, wrapped: i }, a) {
-		var o, s, c;
-		n && !((o = this._$Ej) == null ? this._$Ej = /* @__PURE__ */ new Map() : o).has(e) && (this._$Ej.set(e, (s = a == null ? t : a) == null ? this[e] : s), !0 !== i || a !== void 0) || (this._$AL.has(e) || (this.hasUpdated || n || (t = void 0), this._$AL.set(e, t)), !0 === r && this._$Em !== e && ((c = this._$Eq) == null ? this._$Eq = /* @__PURE__ */ new Set() : c).add(e));
-	}
-	async _$EP() {
-		this.isUpdatePending = !0;
-		try {
-			await this._$ES;
-		} catch (e) {
-			Promise.reject(e);
-		}
-		let e = this.scheduleUpdate();
-		return e != null && await e, !this.isUpdatePending;
-	}
-	scheduleUpdate() {
-		return this.performUpdate();
-	}
-	performUpdate() {
-		if (!this.isUpdatePending) return;
-		if (!this.hasUpdated) {
-			if (this.renderRoot != null || (this.renderRoot = this.createRenderRoot()), this._$Ep) {
-				for (let [e, t] of this._$Ep) this[e] = t;
-				this._$Ep = void 0;
-			}
-			let e = this.constructor.elementProperties;
-			if (e.size > 0) for (let [t, n] of e) {
-				let { wrapped: e } = n, r = this[t];
-				!0 !== e || this._$AL.has(t) || r === void 0 || this.C(t, void 0, n, r);
-			}
-		}
-		let e = !1, t = this._$AL;
-		try {
-			var n;
-			e = this.shouldUpdate(t), e ? (this.willUpdate(t), (n = this._$EO) == null || n.forEach((e) => {
-				var t;
-				return (t = e.hostUpdate) == null ? void 0 : t.call(e);
-			}), this.update(t)) : this._$EM();
-		} catch (t) {
-			throw e = !1, this._$EM(), t;
-		}
-		e && this._$AE(t);
-	}
-	willUpdate(e) {}
-	_$AE(e) {
-		var t;
-		(t = this._$EO) == null || t.forEach((e) => {
-			var t;
-			return (t = e.hostUpdated) == null ? void 0 : t.call(e);
-		}), this.hasUpdated || (this.hasUpdated = !0, this.firstUpdated(e)), this.updated(e);
-	}
-	_$EM() {
-		this._$AL = /* @__PURE__ */ new Map(), this.isUpdatePending = !1;
-	}
-	get updateComplete() {
-		return this.getUpdateComplete();
-	}
-	getUpdateComplete() {
-		return this._$ES;
-	}
-	shouldUpdate(e) {
-		return !0;
-	}
-	update(e) {
-		this._$Eq && (this._$Eq = this._$Eq.forEach((e) => this._$ET(e, this[e]))), this._$EM();
-	}
-	updated(e) {}
-	firstUpdated(e) {}
-};
-w.elementStyles = [], w.shadowRootOptions = { mode: "open" }, w[x("elementProperties")] = /* @__PURE__ */ new Map(), w[x("finalized")] = /* @__PURE__ */ new Map(), b == null || b({ ReactiveElement: w }), ((u = _.reactiveElementVersions) == null ? _.reactiveElementVersions = [] : u).push("2.1.2");
-//#endregion
-//#region node_modules/lit-html/lit-html.js
-var T, E = globalThis, te = (e) => e, D = E.trustedTypes, O = D ? D.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, k = "$lit$", A = `lit$${Math.random().toFixed(9).slice(2)}$`, ne = "?" + A, re = `<${ne}>`, j = document, ie = () => j.createComment(""), ae = (e) => e === null || typeof e != "object" && typeof e != "function", oe = Array.isArray, se = (e) => oe(e) || typeof (e == null ? void 0 : e[Symbol.iterator]) == "function", ce = "[ 	\n\f\r]", M = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, le = /-->/g, ue = />/g, N = RegExp(`>|${ce}(?:([^\\s"'>=/]+)(${ce}*=${ce}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, "g"), de = /'/g, fe = /"/g, pe = /^(?:script|style|textarea|title)$/i, me = (e) => (t, ...n) => ({
-	_$litType$: e,
-	strings: t,
-	values: n
-}), P = me(1), F = me(2), I = Symbol.for("lit-noChange"), L = Symbol.for("lit-nothing"), he = /* @__PURE__ */ new WeakMap(), ge = j.createTreeWalker(j, 129);
-function _e(e, t) {
-	if (!oe(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
-	return O === void 0 ? t : O.createHTML(t);
-}
-var ve = (e, t) => {
-	let n = e.length - 1, r = [], i, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = M;
-	for (let t = 0; t < n; t++) {
-		var s;
-		let n = e[t], c, l, u = -1, d = 0;
-		for (; d < n.length && (o.lastIndex = d, l = o.exec(n), l !== null);) d = o.lastIndex, o === M ? l[1] === "!--" ? o = le : l[1] === void 0 ? l[2] === void 0 ? l[3] !== void 0 && (o = N) : (pe.test(l[2]) && (i = RegExp("</" + l[2], "g")), o = N) : o = ue : o === N ? l[0] === ">" ? (o = (s = i) == null ? M : s, u = -1) : l[1] === void 0 ? u = -2 : (u = o.lastIndex - l[2].length, c = l[1], o = l[3] === void 0 ? N : l[3] === "\"" ? fe : de) : o === fe || o === de ? o = N : o === le || o === ue ? o = M : (o = N, i = void 0);
-		let f = o === N && e[t + 1].startsWith("/>") ? " " : "";
-		a += o === M ? n + re : u >= 0 ? (r.push(c), n.slice(0, u) + k + n.slice(u) + A + f) : n + A + (u === -2 ? t : f);
-	}
-	return [_e(e, a + (e[n] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), r];
-}, ye = class e {
-	constructor({ strings: t, _$litType$: n }, r) {
-		let i;
-		this.parts = [];
-		let a = 0, o = 0, s = t.length - 1, c = this.parts, [l, u] = ve(t, n);
-		if (this.el = e.createElement(l, r), ge.currentNode = this.el.content, n === 2 || n === 3) {
-			let e = this.el.content.firstChild;
-			e.replaceWith(...e.childNodes);
-		}
-		for (; (i = ge.nextNode()) !== null && c.length < s;) {
-			if (i.nodeType === 1) {
-				if (i.hasAttributes()) for (let e of i.getAttributeNames()) if (e.endsWith(k)) {
-					let t = u[o++], n = i.getAttribute(e).split(A), r = /([.?@])?(.*)/.exec(t);
-					c.push({
-						type: 1,
-						index: a,
-						name: r[2],
-						strings: n,
-						ctor: r[1] === "." ? Ce : r[1] === "?" ? we : r[1] === "@" ? Te : Se
-					}), i.removeAttribute(e);
-				} else e.startsWith(A) && (c.push({
-					type: 6,
-					index: a
-				}), i.removeAttribute(e));
-				if (pe.test(i.tagName)) {
-					let e = i.textContent.split(A), t = e.length - 1;
-					if (t > 0) {
-						i.textContent = D ? D.emptyScript : "";
-						for (let n = 0; n < t; n++) i.append(e[n], ie()), ge.nextNode(), c.push({
-							type: 2,
-							index: ++a
-						});
-						i.append(e[t], ie());
-					}
-				}
-			} else if (i.nodeType === 8) if (i.data === ne) c.push({
-				type: 2,
-				index: a
-			});
-			else {
-				let e = -1;
-				for (; (e = i.data.indexOf(A, e + 1)) !== -1;) c.push({
-					type: 7,
-					index: a
-				}), e += A.length - 1;
-			}
-			a++;
-		}
-	}
-	static createElement(e, t) {
-		let n = j.createElement("template");
-		return n.innerHTML = e, n;
-	}
-};
-function R(e, t, n = e, r) {
-	var i, a, o;
-	if (t === I) return t;
-	let s = r === void 0 ? n._$Cl : (i = n._$Co) == null ? void 0 : i[r], c = ae(t) ? void 0 : t._$litDirective$;
-	return (s == null ? void 0 : s.constructor) !== c && (s == null || (a = s._$AO) == null || a.call(s, !1), c === void 0 ? s = void 0 : (s = new c(e), s._$AT(e, n, r)), r === void 0 ? n._$Cl = s : ((o = n._$Co) == null ? n._$Co = [] : o)[r] = s), s !== void 0 && (t = R(e, s._$AS(e, t.values), s, r)), t;
-}
-var be = class {
-	constructor(e, t) {
-		this._$AV = [], this._$AN = void 0, this._$AD = e, this._$AM = t;
-	}
-	get parentNode() {
-		return this._$AM.parentNode;
-	}
-	get _$AU() {
-		return this._$AM._$AU;
-	}
-	u(e) {
-		var t;
-		let { el: { content: n }, parts: r } = this._$AD, i = ((t = e == null ? void 0 : e.creationScope) == null ? j : t).importNode(n, !0);
-		ge.currentNode = i;
-		let a = ge.nextNode(), o = 0, s = 0, c = r[0];
-		for (; c !== void 0;) {
-			if (o === c.index) {
-				let t;
-				c.type === 2 ? t = new xe(a, a.nextSibling, this, e) : c.type === 1 ? t = new c.ctor(a, c.name, c.strings, this, e) : c.type === 6 && (t = new Ee(a, this, e)), this._$AV.push(t), c = r[++s];
-			}
-			o !== (c == null ? void 0 : c.index) && (a = ge.nextNode(), o++);
-		}
-		return ge.currentNode = j, i;
-	}
-	p(e) {
-		let t = 0;
-		for (let n of this._$AV) n !== void 0 && (n.strings === void 0 ? n._$AI(e[t]) : (n._$AI(e, n, t), t += n.strings.length - 2)), t++;
-	}
-}, xe = class e {
-	get _$AU() {
-		var e, t;
-		return (e = (t = this._$AM) == null ? void 0 : t._$AU) == null ? this._$Cv : e;
-	}
-	constructor(e, t, n, r) {
-		var i;
-		this.type = 2, this._$AH = L, this._$AN = void 0, this._$AA = e, this._$AB = t, this._$AM = n, this.options = r, this._$Cv = (i = r == null ? void 0 : r.isConnected) == null ? !0 : i;
-	}
-	get parentNode() {
-		let e = this._$AA.parentNode, t = this._$AM;
-		return t !== void 0 && (e == null ? void 0 : e.nodeType) === 11 && (e = t.parentNode), e;
-	}
-	get startNode() {
-		return this._$AA;
-	}
-	get endNode() {
-		return this._$AB;
-	}
-	_$AI(e, t = this) {
-		e = R(this, e, t), ae(e) ? e === L || e == null || e === "" ? (this._$AH !== L && this._$AR(), this._$AH = L) : e !== this._$AH && e !== I && this._(e) : e._$litType$ === void 0 ? e.nodeType === void 0 ? se(e) ? this.k(e) : this._(e) : this.T(e) : this.$(e);
-	}
-	O(e) {
-		return this._$AA.parentNode.insertBefore(e, this._$AB);
-	}
-	T(e) {
-		this._$AH !== e && (this._$AR(), this._$AH = this.O(e));
-	}
-	_(e) {
-		this._$AH !== L && ae(this._$AH) ? this._$AA.nextSibling.data = e : this.T(j.createTextNode(e)), this._$AH = e;
-	}
-	$(e) {
-		var t;
-		let { values: n, _$litType$: r } = e, i = typeof r == "number" ? this._$AC(e) : (r.el === void 0 && (r.el = ye.createElement(_e(r.h, r.h[0]), this.options)), r);
-		if (((t = this._$AH) == null ? void 0 : t._$AD) === i) this._$AH.p(n);
-		else {
-			let e = new be(i, this), t = e.u(this.options);
-			e.p(n), this.T(t), this._$AH = e;
-		}
-	}
-	_$AC(e) {
-		let t = he.get(e.strings);
-		return t === void 0 && he.set(e.strings, t = new ye(e)), t;
-	}
-	k(t) {
-		oe(this._$AH) || (this._$AH = [], this._$AR());
-		let n = this._$AH, r, i = 0;
-		for (let a of t) i === n.length ? n.push(r = new e(this.O(ie()), this.O(ie()), this, this.options)) : r = n[i], r._$AI(a), i++;
-		i < n.length && (this._$AR(r && r._$AB.nextSibling, i), n.length = i);
-	}
-	_$AR(e = this._$AA.nextSibling, t) {
-		var n;
-		for ((n = this._$AP) == null || n.call(this, !1, !0, t); e !== this._$AB;) {
-			let t = te(e).nextSibling;
-			te(e).remove(), e = t;
-		}
-	}
-	setConnected(e) {
-		var t;
-		this._$AM === void 0 && (this._$Cv = e, (t = this._$AP) == null || t.call(this, e));
-	}
-}, Se = class {
-	get tagName() {
-		return this.element.tagName;
-	}
-	get _$AU() {
-		return this._$AM._$AU;
-	}
-	constructor(e, t, n, r, i) {
-		this.type = 1, this._$AH = L, this._$AN = void 0, this.element = e, this.name = t, this._$AM = r, this.options = i, n.length > 2 || n[0] !== "" || n[1] !== "" ? (this._$AH = Array(n.length - 1).fill(/* @__PURE__ */ new String()), this.strings = n) : this._$AH = L;
-	}
-	_$AI(e, t = this, n, r) {
-		let i = this.strings, a = !1;
-		if (i === void 0) e = R(this, e, t, 0), a = !ae(e) || e !== this._$AH && e !== I, a && (this._$AH = e);
-		else {
-			var o;
-			let r = e, s, c;
-			for (e = i[0], s = 0; s < i.length - 1; s++) c = R(this, r[n + s], t, s), c === I && (c = this._$AH[s]), a || (a = !ae(c) || c !== this._$AH[s]), c === L ? e = L : e !== L && (e += ((o = c) == null ? "" : o) + i[s + 1]), this._$AH[s] = c;
-		}
-		a && !r && this.j(e);
-	}
-	j(e) {
-		e === L ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, e == null ? "" : e);
-	}
-}, Ce = class extends Se {
-	constructor() {
-		super(...arguments), this.type = 3;
-	}
-	j(e) {
-		this.element[this.name] = e === L ? void 0 : e;
-	}
-}, we = class extends Se {
-	constructor() {
-		super(...arguments), this.type = 4;
-	}
-	j(e) {
-		this.element.toggleAttribute(this.name, !!e && e !== L);
-	}
-}, Te = class extends Se {
-	constructor(e, t, n, r, i) {
-		super(e, t, n, r, i), this.type = 5;
-	}
-	_$AI(e, t = this) {
-		var n;
-		if ((e = (n = R(this, e, t, 0)) == null ? L : n) === I) return;
-		let r = this._$AH, i = e === L && r !== L || e.capture !== r.capture || e.once !== r.once || e.passive !== r.passive, a = e !== L && (r === L || i);
-		i && this.element.removeEventListener(this.name, this, r), a && this.element.addEventListener(this.name, this, e), this._$AH = e;
-	}
-	handleEvent(e) {
-		var t, n;
-		typeof this._$AH == "function" ? this._$AH.call((t = (n = this.options) == null ? void 0 : n.host) == null ? this.element : t, e) : this._$AH.handleEvent(e);
-	}
-}, Ee = class {
-	constructor(e, t, n) {
-		this.element = e, this.type = 6, this._$AN = void 0, this._$AM = t, this.options = n;
-	}
-	get _$AU() {
-		return this._$AM._$AU;
-	}
-	_$AI(e) {
-		R(this, e);
-	}
-}, De = {
-	M: k,
-	P: A,
-	A: ne,
-	C: 1,
-	L: ve,
-	R: be,
-	D: se,
-	V: R,
-	I: xe,
-	H: Se,
-	N: we,
-	U: Te,
-	B: Ce,
-	F: Ee
-}, Oe = E.litHtmlPolyfillSupport;
-Oe == null || Oe(ye, xe), ((T = E.litHtmlVersions) == null ? E.litHtmlVersions = [] : T).push("3.3.2");
-var ke = (e, t, n) => {
-	var r;
-	let i = (r = n == null ? void 0 : n.renderBefore) == null ? t : r, a = i._$litPart$;
-	if (a === void 0) {
-		var o;
-		let e = (o = n == null ? void 0 : n.renderBefore) == null ? null : o;
-		i._$litPart$ = a = new xe(t.insertBefore(ie(), e), e, void 0, n == null ? {} : n);
-	}
-	return a._$AI(e), a;
-}, Ae, je, Me = globalThis, z = class extends w {
-	constructor() {
-		super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
-	}
-	createRenderRoot() {
-		var e;
-		let t = super.createRenderRoot();
-		return (e = this.renderOptions).renderBefore != null || (e.renderBefore = t.firstChild), t;
-	}
-	update(e) {
-		let t = this.render();
-		this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(e), this._$Do = ke(t, this.renderRoot, this.renderOptions);
-	}
-	connectedCallback() {
-		var e;
-		super.connectedCallback(), (e = this._$Do) == null || e.setConnected(!0);
-	}
-	disconnectedCallback() {
-		var e;
-		super.disconnectedCallback(), (e = this._$Do) == null || e.setConnected(!1);
-	}
-	render() {
-		return I;
-	}
-};
-z._$litElement$ = !0, z.finalized = !0, (Ae = Me.litElementHydrateSupport) == null || Ae.call(Me, { LitElement: z });
-var Ne = Me.litElementPolyfillSupport;
-Ne == null || Ne({ LitElement: z }), ((je = Me.litElementVersions) == null ? Me.litElementVersions = [] : je).push("4.2.2");
-//#endregion
-//#region src/home-flow-graph-card.ts
-var Pe, Fe = "2026-07-11 11:53Z", Ie = 986, Le = 730, Re = 90, ze = 65, Be = 20, Ve = 100, B = 10, V = 0, H = 0, U = 12, He = 4, Ue = 4, W = 32, We = 3.2, Ge = 7, Ke = 15, qe = 21, Je = 7, G = 18, K = 40, Ye = 1.8, q = .5, Xe = 1, Ze = 28, Qe = 14, $e = 10, et = 12e3, tt = 2.4, nt = 14, rt = 1.15, it = 72, J = {
-	minX: 70,
-	maxX: 916,
-	minY: 62,
-	maxY: 658
-}, at = {
-	leaf: "var(--home-flow-leaf-color, #c65b4a)",
-	junction: "var(--home-flow-junction-1-color, #f6b73c)"
-}, ot = [
-	"var(--home-flow-junction-1-color, #f6b73c)",
-	"var(--home-flow-junction-2-color, #ef6c00)",
-	"var(--home-flow-junction-3-color, #f4a340)",
-	"var(--home-flow-junction-4-color, #b85f1a)"
-], Y = (e, t, n) => Math.min(Math.max(e, t), n), st = 0, ct = /* @__PURE__ */ new Map(), lt = /* @__PURE__ */ new Map(), ut = (e) => new Promise((t) => window.setTimeout(t, e));
-async function dt(e) {
-	if (ct.has(e)) {
-		var t;
-		return (t = ct.get(e)) == null ? null : t;
-	}
-	let n = lt.get(e);
-	if (n) return n;
-	let r = (async () => {
-		let t = performance.now() + 3e3;
-		for (; !customElements.get("ha-icon");) {
-			if (performance.now() >= t) return null;
-			await ut(25);
-		}
-		let n = document.createElement("ha-icon");
-		n.icon = e, n.setAttribute("icon", e), Object.assign(n.style, {
-			height: "24px",
-			left: "-10000px",
-			pointerEvents: "none",
-			position: "fixed",
-			top: "-10000px",
-			visibility: "hidden",
-			width: "24px"
-		}), document.body.append(n);
-		try {
-			let e = performance.now() + 5e3;
-			for (; performance.now() < e;) {
-				var r, i;
-				await n.updateComplete;
-				let e = (r = n.shadowRoot) == null ? void 0 : r.querySelector("ha-svg-icon"), t = (i = e == null ? void 0 : e.path) == null ? n._path : i;
-				if (t) {
-					var a, o, s, c;
-					return {
-						path: t,
-						secondaryPath: (a = (o = e == null ? void 0 : e.secondaryPath) == null ? n._secondaryPath : o) == null ? void 0 : a,
-						viewBox: (s = (c = e == null ? void 0 : e.viewBox) == null ? n._viewBox : c) == null ? "0 0 24 24" : s
-					};
-				}
-				await ut(25);
-			}
-			return null;
-		} finally {
-			n.remove();
-		}
-	})();
-	lt.set(e, r);
-	let i = await r;
-	return lt.delete(e), ct.set(e, i), i;
-}
-var ft = class extends z {
-	constructor(...e) {
-		super(...e), this.editable = !0, this.flowMaxValue = et, this.flowMinVisibleValue = $e, this.hideZeroValues = !1, this.labelStyle = "curved", this.leafRouting = "funnel", this.layout = {}, this.links = [], this.nodes = [], this.graphInstanceId = ++st, this.requestedExternalIcons = /* @__PURE__ */ new Set(), this._labelWidthCache = /* @__PURE__ */ new Map();
-	}
-	render() {
-		let e = this._model(), t = this._normalizedLinks(e.nodes), n = this._hiddenNodeIds(e.nodes, t), r = this._visibleNodes(e.nodes, n), i = t.filter((t) => this._isVisibleLink(t, e.nodes, n)), a = this._renderContext(e, i, t), o = i.filter((t) => this._isJunctionJunctionLink(t, e.nodes)), s = i.filter((t) => !this._isJunctionJunctionLink(t, e.nodes)), c = this._nodesByZLayer(r);
-		return P`
-      <section
-        class=${`card ${this.editable ? "editable" : "readonly"}`}
-        aria-label="Flow graph"
-      >
-        <svg
-          class="flow-svg"
-          viewBox=${`0 0 ${Ie} ${Le}`}
-          role="group"
-          aria-label="Flow graph"
-          tabindex=${this.editable ? 0 : -1}
-          @pointerdown=${this.editable ? this._clearInteraction : void 0}
-          @pointermove=${this.editable ? this._handlePointerMove : void 0}
-          @pointerup=${this.editable ? this._handlePointerUp : void 0}
-          @pointercancel=${this.editable ? this._handlePointerUp : void 0}
-          @keydown=${this.editable ? this._handleKeydown : void 0}
-        >
-          ${this.editable ? this._renderEditorGrid() : L}
-          ${s.map((n) => this._renderGraphLink(n, e, t, a))}
-          ${o.map((n) => this._renderGraphLink(n, e, t, a))}
-          ${c.map((n) => this._renderNodeLayer(n, e, i, t, a))}
-          ${this.editable ? this._renderPendingLink(r, t) : L}
-          ${this.editable ? this._renderAnchorControls(r, i) : L}
-          ${this.editable ? F`
-                <text
-                  class="graph-build-version"
-                  x=${Ie - 14}
-                  y=${Le - 12}
-                  text-anchor="end"
-                  aria-hidden="true"
-                >${Fe}</text>
-              ` : L}
-        </svg>
-      </section>
-    `;
-	}
-	_renderEditorGrid() {
-		let e = `home-flow-grid-minor-${this.graphInstanceId}`, t = `home-flow-grid-major-${this.graphInstanceId}`, n = U * He;
-		return F`
-      <defs>
-        <pattern
-          id=${e}
-          width=${U}
-          height=${U}
-          patternUnits="userSpaceOnUse"
-          patternTransform=${`translate(${J.minX} ${J.minY})`}
-        >
-          <circle class="editor-grid-dot" cx="0" cy="0" r="0.85" />
-        </pattern>
-        <pattern
-          id=${t}
-          width=${n}
-          height=${n}
-          patternUnits="userSpaceOnUse"
-          patternTransform=${`translate(${J.minX} ${J.minY})`}
-        >
-          <rect width="100%" height="100%" fill=${`url(#${e})`} />
-          <circle class="editor-grid-dot major" cx="0" cy="0" r="1.15" />
-        </pattern>
-      </defs>
-      <rect
-        class="editor-grid"
-        x="0"
-        y="0"
-        width=${Ie}
-        height=${Le}
-        fill=${`url(#${t})`}
-      />
-    `;
-	}
-	_renderContext(e, t, n = t) {
-		let r = this._geometryCacheFor(e, n), i = {
-			colors: /* @__PURE__ */ new Map(),
-			joinGeometries: r.joinGeometries,
-			maxValues: /* @__PURE__ */ new Map(),
-			minVisibleValues: /* @__PURE__ */ new Map(),
-			nodeColors: /* @__PURE__ */ new Map(),
-			paths: r.paths,
-			sideNodeIds: /* @__PURE__ */ new Map(),
-			signedValues: /* @__PURE__ */ new Map(),
-			sourceParts: /* @__PURE__ */ new Map()
-		}, a = e.nodes;
-		return t.forEach((t) => {
-			let r = this._linkSignedValue(t, a, n, i), o = this._linkMinVisibleValue(t, a, n), s = this._linkMaxValue(t, o, a, n);
-			i.paths.has(t.id) || i.paths.set(t.id, this._graphLinkPath(t, a, n, i)), i.signedValues.set(t.id, r), i.minVisibleValues.set(t.id, o), i.maxValues.set(t.id, s), this._shouldShowFlow(Math.abs(r), o) && (i.colors.set(t.id, this._linkColor(t, e, n, r, i)), i.sourceParts.set(t.id, this._linkSourceParts(t, e, n, r, i)));
-		}), i;
-	}
-	_geometryCacheFor(e, t) {
-		var n;
-		let r = this._geometryCacheKey(e, t);
-		return ((n = this._geometryCache) == null ? void 0 : n.key) === r || (this._geometryCache = {
-			joinGeometries: /* @__PURE__ */ new Map(),
-			key: r,
-			paths: /* @__PURE__ */ new Map()
-		}), this._geometryCache;
-	}
-	_geometryCacheKey(e, t) {
-		let n = Object.values(e.nodes).sort((e, t) => e.id.localeCompare(t.id)).map((e) => [
-			e.id,
-			e.kind,
-			Math.round(e.point.x * 100) / 100,
-			Math.round(e.point.y * 100) / 100,
-			e.radius
-		].join(":")).join("|"), r = t.map((e) => {
-			var t, n, r, i, a;
-			return [
-				e.id,
-				e.from,
-				e.to,
-				(t = e.fromAnchor) == null ? "" : t,
-				(n = e.fromAnchorMode) == null ? "" : n,
-				(r = e.toAnchor) == null ? "" : r,
-				(i = e.toAnchorMode) == null ? "" : i,
-				(a = e.junctionJoinId) == null ? "" : a
-			].join(":");
-		}).join("|");
-		return `${this.leafRouting}::${n}::${r}`;
-	}
-	_isJunctionJunctionLink(e, t) {
-		var n, r;
-		return ((n = t[e.from]) == null ? void 0 : n.kind) === "junction" && ((r = t[e.to]) == null ? void 0 : r.kind) === "junction";
-	}
-	_model() {
-		return { nodes: Object.fromEntries(this._positionedNodes().map((e) => [e.id, e])) };
-	}
-	_visibleNodes(e, t) {
-		return Object.fromEntries(Object.entries(e).filter(([e]) => !t.has(e)));
-	}
-	_hiddenNodeIds(e, t) {
-		return new Set(Object.values(e).filter((n) => this._isHiddenByZero(n, e, t)).map((e) => e.id));
-	}
-	_isVisibleLink(e, t, n) {
-		let r = t[e.from], i = t[e.to];
-		return !!(r && i && !n.has(r.id) && !n.has(i.id));
-	}
-	_isHiddenByZero(e, t, n) {
-		if (e.hideIfZero !== !0) return !1;
-		let r = this._nodeDisplayValue(e, { nodes: t }, n);
-		return Math.abs(r) <= q;
-	}
-	_nodesByZLayer(e) {
-		return Object.values(e).sort((e, t) => {
-			let n = t.stackIndex - e.stackIndex;
-			return n === 0 ? e.id.localeCompare(t.id) : n;
-		});
-	}
-	_defaultNodeRadius(e) {
-		return e === "junction" ? Re : ze;
-	}
-	_positionedNodes() {
-		return this.nodes.map((e, t) => {
-			var n, r, i;
-			return {
-				id: e.id,
-				kind: e.kind,
-				stackIndex: t,
-				label: e.label,
-				labelAngle: Number.isFinite(e.labelAngle) ? e.labelAngle : void 0,
-				labelOffsetX: Number.isFinite(e.labelOffsetX) ? e.labelOffsetX : void 0,
-				labelOffsetY: Number.isFinite(e.labelOffsetY) ? e.labelOffsetY : void 0,
-				value: Number.isFinite(e.value) ? e.value : 0,
-				flowValue: Number.isFinite(e.flowValue) ? e.flowValue : void 0,
-				hasOwnValue: e.hasOwnValue,
-				contributesToFlow: e.contributesToFlow,
-				secondary: e.secondary,
-				secondaryDisplayValue: e.secondaryDisplayValue,
-				displayValue: e.displayValue,
-				hideZeroValues: e.hideZeroValues,
-				hideIfZero: e.hideIfZero,
-				showFlowArrow: e.showFlowArrow,
-				junctionDisplayMode: e.junctionDisplayMode,
-				primaryAction: e.primaryAction,
-				secondaryAction: e.secondaryAction,
-				radius: Y((n = e.radius) == null ? this._defaultNodeRadius(e.kind) : n, Be, Ve),
-				point: this._clampedPoint((r = this.layout[e.id]) == null ? this._fallbackPoint(e.kind, t) : r),
-				icon: e.icon === null ? void 0 : (i = e.icon) == null ? this._defaultIcon(e.kind) : i,
-				secondaryIcon: e.secondaryIcon === null ? void 0 : e.secondaryIcon,
-				unit: e.unit,
-				color: e.color,
-				flowMinVisibleValue: e.flowMinVisibleValue,
-				flowMaxValue: e.flowMaxValue
-			};
-		});
-	}
-	_fallbackPoint(e, t) {
-		return e === "junction" ? {
-			x: 350 + t % 3 * 150,
-			y: 330 + Math.floor(t / 3) * 110
-		} : e === "leaf" ? {
-			x: 270 + t % 4 * 130,
-			y: 100 + Math.floor(t / 4) * 88
-		} : {
-			x: 770 + t % 2 * 110,
-			y: 360 + Math.floor(t / 2) * 108
-		};
-	}
-	_renderGraphLink(e, t, n, r) {
-		var i, a, o, s, c;
-		let l = t.nodes, u = l[e.from], d = l[e.to];
-		if (!u || !d) return L;
-		let f = (i = r.signedValues.get(e.id)) == null ? this._linkSignedValue(e, l, n, r) : i, p = Math.abs(f), m = (a = r.paths.get(e.id)) == null ? this._graphLinkPath(e, l, n, r) : a;
-		if (!m) return L;
-		let h = this.selectedLink === e.id, g = (o = r.minVisibleValues.get(e.id)) == null ? this._linkMinVisibleValue(e, l, n) : o, _ = (s = r.maxValues.get(e.id)) == null ? this._linkMaxValue(e, g, l, n) : s, v = this._shouldShowFlow(p, g), y = v ? this._flowWidth(p, g, _) : tt, b = v ? (c = r.colors.get(e.id)) == null ? this._linkColor(e, t, n, f, r) : c : at.junction, x = v ? r.sourceParts.has(e.id) ? r.sourceParts.get(e.id) : this._linkSourceParts(e, t, n, f, r) : void 0, S = this._junctionConnectionMarker(e, t, n, r);
-		return F`
-      <path class=${`connector base ${h ? "selected" : ""}`} d=${m} />
-      ${v ? this._renderFlowPath(e, m, f, b, y, x) : L}
-      ${S ? this._renderJunctionConnectionMarker(S, h) : L}
-      ${this.editable || e.entity ? F`
-            <path
-              class=${`connector-hit ${h ? "selected" : ""}`}
-              d=${m}
-              @pointerdown=${this.editable ? (t) => this._selectLink(t, e.id) : void 0}
-              @click=${!this.editable && e.entity ? (t) => this._emitEntityMoreInfo(e.entity, t) : void 0}
-            />
-          ` : L}
-    `;
-	}
-	_renderFlowPath(e, t, n, r, i, a) {
-		let o = a && a.length > 0 ? a : [{
-			color: r,
-			key: `${e.id}-fallback`,
-			length: G,
-			start: 0
-		}];
-		if (o.length === 1) return F`
-        <path
-          class="connector flow source-single"
-          d=${t}
-          stroke=${o[0].color}
-          stroke-width=${i}
-          stroke-dasharray=${`${G} ${K - G}`}
-        >
-          ${this._renderFlowAnimation(n)}
-        </path>
-      `;
-		let [s, ...c] = o, l = this._splitFlowMaskId(e);
-		return F`
-      <mask
-        id=${l}
-        class="source-flow-mask"
-        maskUnits="userSpaceOnUse"
-        maskContentUnits="userSpaceOnUse"
-        x="-24"
-        y="-24"
-        width=${Ie + 48}
-        height=${Le + 48}
-      >
-        <path
-          class="connector flow source-mask"
-          d=${t}
-          stroke="#fff"
-          stroke-width=${i}
-          stroke-dasharray=${`${G} ${K - G}`}
-        >
-          ${this._renderFlowAnimation(n)}
-        </path>
-      </mask>
-      <g mask=${`url(#${l})`}>
-        <path
-          class="connector flow split-flow source-fill"
-          d=${t}
-          stroke=${s.color}
-          stroke-width=${i}
-          stroke-dasharray=${`${G} ${K - G}`}
-        >
-          ${this._renderFlowAnimation(n)}
-        </path>
-        ${c.map((e) => {
-			let r = this._sourceTailOffset(e), a = this._sourceTailVisibleLength(e);
-			return F`
-            <path
-              class="connector flow split-flow source-split"
-              d=${t}
-              stroke=${e.color}
-              stroke-width=${i}
-              stroke-dasharray=${`${a} ${K - a}`}
-              stroke-dashoffset=${r}
-            >
-              ${this._renderFlowAnimation(n, r)}
-            </path>
-          `;
-		})}
-      </g>
-    `;
-	}
-	_renderFlowAnimation(e, t = 0) {
-		let n = e >= 0 ? t - K : t + K;
-		return F`
-      <animate
-        attributeName="stroke-dashoffset"
-        begin="0s"
-        dur=${`${Ye}s`}
-        from=${t}
-        to=${n}
-        repeatCount="indefinite"
-      />
-    `;
-	}
-	_sourceTailOffset(e) {
-		return -e.start;
-	}
-	_sourceTailVisibleLength(e) {
-		return Y(G - e.start, 0, K);
-	}
-	_splitFlowMaskId(e) {
-		return `home-flow-split-${this.graphInstanceId}-${e.id.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
-	}
-	_junctionConnectionMarker(e, t, n, r) {
-		if (!this._isJunctionJunctionLink(e, t.nodes)) return;
-		let i = this._junctionJoinGeometry(e, t.nodes, n, r);
-		if (!(!(i != null && i.tap) || i.branchLinkId !== e.id)) return i.tap;
-	}
-	_renderJunctionConnectionMarker(e, t) {
-		return F`
-      <circle
-        class=${`bus-tap ${t ? "selected" : ""}`}
-        cx=${e.x}
-        cy=${e.y}
-        r="6"
-        aria-hidden="true"
-      />
-    `;
-	}
-	_junctionFlowColor(e, t) {
-		var n;
-		let r = t == null || (n = t[e]) == null ? void 0 : n.color;
-		if (r) return r;
-		let i = Object.values(t == null ? {} : t).filter((e) => e.kind === "junction");
-		return ot[Math.max(0, i.findIndex((t) => t.id === e)) % ot.length];
-	}
-	_graphLinkPath(e, t, n, r) {
-		let i = t[e.from], a = t[e.to];
-		if (!i || !a) return "";
-		let o = [i, a].find((e) => e.kind === "junction"), s = [i, a].find((e) => e.kind === "leaf");
-		if (s && o) {
-			let r = this._linkedLeafNodes(o.id, t, n), i = this._sortedLaneNodes(r.filter((e) => e.point.y <= o.point.y - o.radius), "x"), a = this._sortedLaneNodes(r.filter((e) => e.point.y >= o.point.y + o.radius), "x"), c = this._sortedLaneNodes(r.filter((e) => e.point.x <= o.point.x), "y"), l = this._sortedLaneNodes(r.filter((e) => e.point.x >= o.point.x), "y"), u = {
-				from: this._linkAnchor(e, s.id),
-				to: this._linkAnchor(e, o.id)
-			};
-			if (this.leafRouting === "radial") return this._radialConnectorPath(s, o, u);
-			if (this.leafRouting === "sweep") return this._defaultConnectorPath(s, o, u);
-			switch (this._leafConnectorSide(s, o)) {
-				case "upper": return this.leafRouting === "channel" ? this._upperLeafChannelPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u) : this.leafRouting === "orthogonal" ? this._upperLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u) : this._upperLeafConnectorPath(s, o, this._laneSlotForNode(s.id, i).index, Math.max(1, i.length), u);
-				case "lower": return this.leafRouting === "channel" ? this._lowerLeafChannelPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u) : this.leafRouting === "orthogonal" ? this._lowerLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u) : this._lowerLeafConnectorPath(s, o, this._laneSlotForNode(s.id, a).index, Math.max(1, a.length), u);
-				case "left": return this.leafRouting === "channel" ? this._leftLeafChannelPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u) : this.leafRouting === "orthogonal" ? this._leftLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u) : this._leftLeafConnectorPath(s, o, this._laneSlotForNode(s.id, c).index, Math.max(1, c.length), u);
-				case "right": return this.leafRouting === "channel" ? this._rightLeafChannelPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u) : this.leafRouting === "orthogonal" ? this._rightLeafOrthogonalPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u) : this._rightLeafConnectorPath(s, o, this._laneSlotForNode(s.id, l).index, Math.max(1, l.length), u);
-				default: return this._radialConnectorPath(s, o, u);
-			}
-		}
-		return i.kind === "junction" && a.kind === "junction" ? this._junctionJoinedConnectionPath(e, t, n, r) || this._junctionConnectorPath(i, a, t, {
-			from: this._linkAnchor(e, i.id),
-			to: this._linkAnchor(e, a.id)
-		}) : this._defaultConnectorPath(i, a, {
-			from: this._linkAnchor(e, i.id),
-			to: this._linkAnchor(e, a.id)
-		});
-	}
-	_junctionConnectorPath(e, t, n, r = {}) {
-		let i = this._connectionPoint(e, t, r.from, V), a = this._connectionPoint(t, e, r.to, V), o = this._junctionLineDetours(i, a, e, t, n);
-		if (o.length === 0) return `M${i.x} ${i.y} L${a.x} ${a.y}`;
-		let s = [`M${i.x} ${i.y}`], c = 0;
-		return o.forEach((e) => {
-			e.beforeDistance > c + .5 && s.push(`L${e.entry.x} ${e.entry.y}`), s.push(`A${e.radius} ${e.radius} 0 0 ${e.sweepFlag} ${e.exit.x} ${e.exit.y}`), c = e.afterDistance;
-		}), s.push(`L${a.x} ${a.y}`), s.join(" ");
-	}
-	_leafConnectorSide(e, t) {
-		let n = e.point.x - t.point.x, r = e.point.y - t.point.y, i = Math.max(0, Math.abs(n) - t.radius), a = Math.max(0, Math.abs(r) - t.radius);
-		return i <= 0 && a <= 0 ? "radial" : a >= i ? r <= 0 ? "upper" : "lower" : n <= 0 ? "left" : "right";
-	}
-	_junctionLineDetours(e, t, n, r, i) {
-		return Object.values(i).filter((e) => e.kind === "junction" && e.id !== n.id && e.id !== r.id).map((n) => this._junctionLineDetour(e, t, n)).filter((e) => !!e).sort((e, t) => e.beforeDistance - t.beforeDistance);
-	}
-	_junctionLineDetour(e, t, n, r = 0) {
-		let i = t.x - e.x, a = t.y - e.y, o = Math.hypot(i, a);
-		if (o < 1) return;
-		let s = {
-			x: i / o,
-			y: a / o
-		}, c = {
-			x: -s.y,
-			y: s.x
-		}, l = {
-			x: n.point.x - e.x,
-			y: n.point.y - e.y
-		}, u = l.x * s.x + l.y * s.y, d = l.x * c.x + l.y * c.y, f = n.radius + B, p = f + Math.max(0, r), m = Math.max(18, n.radius - 8), h = Math.min(f, Math.max(34, n.radius * .55));
-		if (u <= h || u >= o - h || Math.abs(d) > p) return;
-		let g = Math.abs(d) < m ? m : Math.abs(d) > f ? p : f, _ = Math.sqrt(Math.max(0, g ** 2 - d ** 2)), v = Math.max(0, u - _), y = Math.min(o, u + _), b = +(d >= 0), x = b === 1 ? -1 : 1, S = {
-			x: Math.round(n.point.x + c.x * x * g),
-			y: Math.round(n.point.y + c.y * x * g)
-		};
-		return {
-			afterDistance: y,
-			beforeDistance: v,
-			entry: {
-				x: e.x + s.x * v,
-				y: e.y + s.y * v
-			},
-			exit: {
-				x: e.x + s.x * y,
-				y: e.y + s.y * y
-			},
-			nodeId: n.id,
-			radius: g,
-			signedDistance: d,
-			sweepFlag: b,
-			tap: S,
-			tapAnchor: this._nearestAnchorIndex(n, S)
-		};
-	}
-	_junctionJoinedConnectionPath(e, t, n, r) {
-		var i;
-		let a = this._junctionJoinGeometry(e, t, n, r);
-		if (!a) return;
-		let o = (i = a.pathsByLinkId) == null ? void 0 : i[e.id];
-		if (o) return o;
-		if (e.from === a.firstOuterId && e.to === a.middleId) return a.beforePath;
-		if (e.from === a.middleId && e.to === a.firstOuterId) return a.beforeReversePath;
-		if (e.from === a.middleId && e.to === a.secondOuterId) return a.afterPath;
-		if (e.from === a.secondOuterId && e.to === a.middleId) return a.afterReversePath;
-	}
-	_junctionJoinGeometry(e, t, n, r) {
-		if (r != null && r.joinGeometries.has(e.id)) return r.joinGeometries.get(e.id);
-		let i = t[e.from], a = t[e.to];
-		if (!i || !a || i.kind !== "junction" || a.kind !== "junction") {
-			r == null || r.joinGeometries.set(e.id, void 0);
-			return;
-		}
-		let o = [i, a].map((r) => this._junctionJoinGeometryForMiddle(e, r, t, n)).filter((e) => !!e)[0];
-		return r == null || r.joinGeometries.set(e.id, o), o != null && o.busLinkId && (r == null || r.joinGeometries.set(o.busLinkId, o)), o != null && o.branchLinkId && (r == null || r.joinGeometries.set(o.branchLinkId, o)), o;
-	}
-	_junctionJoinGeometryForMiddle(e, t, n, r) {
-		let i = this._linkAnchor(e, t.id), a = e.junctionJoinId;
-		if (i === void 0 && !a) return;
-		let o = n[e.from === t.id ? e.to : e.from];
-		if (!o || o.kind !== "junction") return;
-		let s = r.find((r) => {
-			if (r.id === e.id || r.from !== t.id && r.to !== t.id) return !1;
-			let o = n[r.from === t.id ? r.to : r.from];
-			return (o == null ? void 0 : o.kind) === "junction" && (a && r.junctionJoinId === a || i !== void 0 && this._linkAnchor(r, t.id) === i);
-		});
-		if (!s) return;
-		let c = n[s.from === t.id ? s.to : s.from];
-		if (!c || c.kind !== "junction") return;
-		let [l, u] = this._orderedJoinOuters(o, c), d = this._linkBetweenNodes(e, s, l.id, t.id), f = this._linkBetweenNodes(e, s, u.id, t.id);
-		if (!d || !f) return;
-		let p = this._connectionPoint(l, u, this._linkAnchor(d, l.id), V), m = this._connectionPoint(u, l, this._linkAnchor(f, u.id), V), h = this._junctionLineDetour(p, m, t, a ? Qe : 0);
-		return h ? {
-			afterPath: this._junctionJoinAfterPath(h.tap, h, m),
-			afterReversePath: this._junctionJoinAfterReversePath(m, h, h.tap),
-			beforePath: this._junctionJoinBeforePath(p, h, h.tap),
-			beforeReversePath: this._junctionJoinBeforeReversePath(h.tap, h, p),
-			branchLinkId: f.id,
-			busLinkId: d.id,
-			firstOuterId: l.id,
-			middleId: t.id,
-			secondOuterId: u.id,
-			tap: h.tap
-		} : this._junctionBranchJoinGeometry(t, l, u, d, f, n);
-	}
-	_junctionBranchJoinGeometry(e, t, n, r, i, a) {
-		let o = this._connectionPoint(t, n, this._linkAnchor(r, t.id), V), s = this._connectionPoint(n, t, this._linkAnchor(i, n.id), V), c = this._closestPointOnSegment(e.point, o, s).point, l = this._guideNode(`${e.id}-bus-tap`, c), u = {
-			...a,
-			[l.id]: l
-		}, d = this._junctionConnectorPath(t, l, u, { from: this._linkAnchor(r, t.id) }), f = this._junctionConnectorPath(l, t, u, { to: this._linkAnchor(r, t.id) }), p = this._junctionConnectorPath(l, n, u, { to: this._linkAnchor(i, n.id) }), m = this._junctionConnectorPath(n, l, u, { from: this._linkAnchor(i, n.id) }), h = this._junctionBranchToBusPath(e, c), g = this._junctionBranchFromBusPath(e, c), _ = this._joinPaths(h, p), v = this._joinPaths(m, g), y = r, b = i;
-		return {
-			afterPath: _,
-			afterReversePath: v,
-			beforePath: d,
-			beforeReversePath: f,
-			branchLinkId: b.id,
-			busLinkId: y.id,
-			firstOuterId: t.id,
-			middleId: e.id,
-			pathsByLinkId: {
-				[y.id]: y.from === t.id || y.to === e.id ? d : f,
-				[b.id]: b.from === e.id || b.to === n.id ? _ : v
-			},
-			secondOuterId: n.id,
-			tap: c
-		};
-	}
-	_joinPaths(e, t) {
-		let n = t.replace(/^M\s*-?\d+(?:\.\d+)?(?:e[-+]?\d+)?\s+-?\d+(?:\.\d+)?(?:e[-+]?\d+)?\s*/i, "").trim();
-		return n ? `${e} ${n}` : e;
-	}
-	_junctionBranchToBusPath(e, t) {
-		let n = this._guideNode(`${e.id}-bus-tap`, t);
-		return this._defaultConnectorPath(e, n, { from: this._nearestAnchorIndex(e, t) });
-	}
-	_junctionBranchFromBusPath(e, t) {
-		let n = this._guideNode(`${e.id}-bus-tap`, t);
-		return this._defaultConnectorPath(n, e, { to: this._nearestAnchorIndex(e, t) });
-	}
-	_orderedJoinOuters(e, t) {
-		return e.point.x === t.point.x ? e.point.y <= t.point.y ? [e, t] : [t, e] : e.point.x < t.point.x ? [e, t] : [t, e];
-	}
-	_linkBetweenNodes(e, t, n, r) {
-		if (this._sameLinkEnds(e, n, r)) return e;
-		if (this._sameLinkEnds(t, n, r)) return t;
-	}
-	_junctionJoinBeforePath(e, t, n) {
-		let r = [`M${e.x} ${e.y}`];
-		return Math.hypot(t.entry.x - e.x, t.entry.y - e.y) > .5 && r.push(`L${t.entry.x} ${t.entry.y}`), r.push(`A${t.radius} ${t.radius} 0 0 ${t.sweepFlag} ${n.x} ${n.y}`), r.join(" ");
-	}
-	_junctionJoinBeforeReversePath(e, t, n) {
-		let r = [`M${e.x} ${e.y}`, `A${t.radius} ${t.radius} 0 0 ${this._oppositeSweep(t.sweepFlag)} ${t.entry.x} ${t.entry.y}`];
-		return Math.hypot(t.entry.x - n.x, t.entry.y - n.y) > .5 && r.push(`L${n.x} ${n.y}`), r.join(" ");
-	}
-	_junctionJoinAfterPath(e, t, n) {
-		let r = [`M${e.x} ${e.y}`, `A${t.radius} ${t.radius} 0 0 ${t.sweepFlag} ${t.exit.x} ${t.exit.y}`];
-		return Math.hypot(n.x - t.exit.x, n.y - t.exit.y) > .5 && r.push(`L${n.x} ${n.y}`), r.join(" ");
-	}
-	_junctionJoinAfterReversePath(e, t, n) {
-		let r = [`M${e.x} ${e.y}`];
-		return Math.hypot(e.x - t.exit.x, e.y - t.exit.y) > .5 && r.push(`L${t.exit.x} ${t.exit.y}`), r.push(`A${t.radius} ${t.radius} 0 0 ${this._oppositeSweep(t.sweepFlag)} ${n.x} ${n.y}`), r.join(" ");
-	}
-	_oppositeSweep(e) {
-		return e === 1 ? 0 : 1;
-	}
-	_upperLeafConnectorPath(e, t, n, r, i = {}) {
-		if (e.point.y >= t.point.y - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 22)), o = t.point.y - t.radius - B - 16, s = this._guideNode(`${e.id}-upper-drop`, {
-			x: t.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-upper-neck`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H), d = Math.max(0, u.y - l.y);
-		if (Math.abs(l.x - u.x) < 3) return `M${l.x} ${l.y} L${u.x} ${u.y}`;
-		let f = l.y + Y(d * .42, 38, 72), p = Y((f - l.y) * .35, 16, 28);
-		return [
-			`M${l.x} ${l.y}`,
-			`C${l.x} ${l.y + p} ${u.x} ${f - p} ${u.x} ${f}`,
-			`L${u.x} ${u.y}`
-		].join(" ");
-	}
-	_lowerLeafConnectorPath(e, t, n, r, i = {}) {
-		if (e.point.y <= t.point.y + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 22)), o = t.point.y + t.radius + B + 16, s = this._guideNode(`${e.id}-lower-drop`, {
-			x: e.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-lower-neck`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H), d = Math.max(0, l.y - u.y);
-		if (Math.abs(l.x - u.x) < 3) return `M${l.x} ${l.y} L${u.x} ${u.y}`;
-		let f = u.y + Y(d * .58, 44, 76), p = Y((l.y - f) * .35, 16, 28);
-		return [
-			`M${l.x} ${l.y}`,
-			`C${l.x} ${l.y - p} ${u.x} ${f + p} ${u.x} ${f}`,
-			`L${u.x} ${u.y}`
-		].join(" ");
-	}
-	_leftLeafConnectorPath(e, t, n, r, i = {}) {
-		if (e.point.x >= t.point.x - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 22)), o = t.point.x - t.radius - B - 16, s = this._guideNode(`${e.id}-left-spread`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-left-neck`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H), d = Math.max(0, u.x - l.x);
-		if (Math.abs(l.y - u.y) < 3) return `M${l.x} ${l.y} L${u.x} ${u.y}`;
-		let f = l.x + Y(d * .42, 38, 72), p = Y((f - l.x) * .35, 16, 28);
-		return [
-			`M${l.x} ${l.y}`,
-			`C${l.x + p} ${l.y} ${f - p} ${u.y} ${f} ${u.y}`,
-			`L${u.x} ${u.y}`
-		].join(" ");
-	}
-	_rightLeafConnectorPath(e, t, n, r, i = {}) {
-		if (e.point.x <= t.point.x + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 22)), o = t.point.x + t.radius + B + 16, s = this._guideNode(`${e.id}-right-spread`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-right-neck`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H), d = Math.max(0, l.x - u.x);
-		if (Math.abs(l.y - u.y) < 3) return `M${l.x} ${l.y} L${u.x} ${u.y}`;
-		let f = l.x - Y(d * .42, 38, 72), p = Y((l.x - f) * .35, 16, 28);
-		return [
-			`M${l.x} ${l.y}`,
-			`C${l.x - p} ${l.y} ${f + p} ${u.y} ${f} ${u.y}`,
-			`L${u.x} ${u.y}`
-		].join(" ");
-	}
-	_upperLeafChannelPath(e, t, n, r, i = {}) {
-		if (e.point.y >= t.point.y - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 18)), o = t.point.y - t.radius - B - 18, s = this._guideNode(`${e.id}-upper-channel`, {
-			x: e.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-upper-channel`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._channelVerticalPath(l, u, "down");
-	}
-	_lowerLeafChannelPath(e, t, n, r, i = {}) {
-		if (e.point.y <= t.point.y + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 18)), o = t.point.y + t.radius + B + 18, s = this._guideNode(`${e.id}-lower-channel`, {
-			x: e.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-lower-channel`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._channelVerticalPath(l, u, "up");
-	}
-	_leftLeafChannelPath(e, t, n, r, i = {}) {
-		if (e.point.x >= t.point.x - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 18)), o = t.point.x - t.radius - B - 18, s = this._guideNode(`${e.id}-left-channel`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-left-channel`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._channelHorizontalPath(l, u, "right");
-	}
-	_rightLeafChannelPath(e, t, n, r, i = {}) {
-		if (e.point.x <= t.point.x + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 18)), o = t.point.x + t.radius + B + 18, s = this._guideNode(`${e.id}-right-channel`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-right-channel`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._channelHorizontalPath(l, u, "left");
-	}
-	_upperLeafAnchorReferencePoint(e, t, n, r) {
-		return this.leafRouting === "channel" || this.leafRouting === "orthogonal" ? {
-			x: e.point.x,
-			y: t.point.y - t.radius - B - 18
-		} : {
-			x: t.point.x,
-			y: t.point.y - t.radius - B - 16
-		};
-	}
-	_lowerLeafAnchorReferencePoint(e, t, n, r) {
-		return this.leafRouting === "channel" || this.leafRouting === "orthogonal" ? {
-			x: e.point.x,
-			y: t.point.y + t.radius + B + 18
-		} : {
-			x: e.point.x,
-			y: t.point.y + t.radius + B + 16
-		};
-	}
-	_leftLeafAnchorReferencePoint(e, t, n, r) {
-		return this.leafRouting === "channel" || this.leafRouting === "orthogonal" ? {
-			x: t.point.x - t.radius - B - 18,
-			y: e.point.y
-		} : {
-			x: t.point.x - t.radius - B - 16,
-			y: e.point.y
-		};
-	}
-	_rightLeafAnchorReferencePoint(e, t, n, r) {
-		return this.leafRouting === "channel" || this.leafRouting === "orthogonal" ? {
-			x: t.point.x + t.radius + B + 18,
-			y: e.point.y
-		} : {
-			x: t.point.x + t.radius + B + 16,
-			y: e.point.y
-		};
-	}
-	_upperLeafOrthogonalPath(e, t, n, r, i = {}) {
-		if (e.point.y >= t.point.y - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 18)), o = t.point.y - t.radius - B - 18, s = this._guideNode(`${e.id}-upper-orthogonal`, {
-			x: e.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-upper-orthogonal`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._orthogonalVerticalPath(l, u, o);
-	}
-	_lowerLeafOrthogonalPath(e, t, n, r, i = {}) {
-		if (e.point.y <= t.point.y + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.x, t.point.x, n, r, Math.max(0, t.radius - 18)), o = t.point.y + t.radius + B + 18, s = this._guideNode(`${e.id}-lower-orthogonal`, {
-			x: e.point.x,
-			y: o
-		}), c = this._guideNode(`${t.id}-lower-orthogonal`, {
-			x: a,
-			y: o
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._orthogonalVerticalPath(l, u, o);
-	}
-	_leftLeafOrthogonalPath(e, t, n, r, i = {}) {
-		if (e.point.x >= t.point.x - t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 18)), o = t.point.x - t.radius - B - 18, s = this._guideNode(`${e.id}-left-orthogonal`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-left-orthogonal`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._orthogonalHorizontalPath(l, u, o);
-	}
-	_rightLeafOrthogonalPath(e, t, n, r, i = {}) {
-		if (e.point.x <= t.point.x + t.radius) return this._radialConnectorPath(e, t, i);
-		let a = this._funnelLaneCoordinate(e.point.y, t.point.y, n, r, Math.max(0, t.radius - 18)), o = t.point.x + t.radius + B + 18, s = this._guideNode(`${e.id}-right-orthogonal`, {
-			x: o,
-			y: e.point.y
-		}), c = this._guideNode(`${t.id}-right-orthogonal`, {
-			x: o,
-			y: a
-		}), l = this._connectionPoint(e, s, i.from), u = this._connectionPoint(t, c, i.to, H);
-		return this._orthogonalHorizontalPath(l, u, o);
-	}
-	_orthogonalVerticalPath(e, t, n) {
-		return Math.abs(e.x - t.x) < 3 ? `M${e.x} ${e.y} L${t.x} ${t.y}` : [
-			`M${e.x} ${e.y}`,
-			`L${e.x} ${n}`,
-			`L${t.x} ${n}`,
-			`L${t.x} ${t.y}`
-		].join(" ");
-	}
-	_orthogonalHorizontalPath(e, t, n) {
-		return Math.abs(e.y - t.y) < 3 ? `M${e.x} ${e.y} L${t.x} ${t.y}` : [
-			`M${e.x} ${e.y}`,
-			`L${n} ${e.y}`,
-			`L${n} ${t.y}`,
-			`L${t.x} ${t.y}`
-		].join(" ");
-	}
-	_channelVerticalPath(e, t, n) {
-		let r = Math.abs(t.y - e.y), i = Y(r * .26, 18, 36), a = Y(r * .22, 16, 30), o = n === "down" ? e.y + i : e.y - i, s = n === "down" ? t.y - i : t.y + i;
-		return Math.abs(e.x - t.x) < 3 || Math.abs(s - o) < 6 ? `M${e.x} ${e.y} L${t.x} ${t.y}` : [
-			`M${e.x} ${e.y}`,
-			`L${e.x} ${o}`,
-			`C${e.x} ${n === "down" ? o + a : o - a} ${t.x} ${n === "down" ? s - a : s + a} ${t.x} ${s}`,
-			`L${t.x} ${t.y}`
-		].join(" ");
-	}
-	_channelHorizontalPath(e, t, n) {
-		let r = Math.abs(t.x - e.x), i = Y(r * .26, 18, 36), a = Y(r * .22, 16, 30), o = n === "right" ? e.x + i : e.x - i, s = n === "right" ? t.x - i : t.x + i;
-		return Math.abs(e.y - t.y) < 3 || Math.abs(s - o) < 6 ? `M${e.x} ${e.y} L${t.x} ${t.y}` : [
-			`M${e.x} ${e.y}`,
-			`L${o} ${e.y}`,
-			`C${n === "right" ? o + a : o - a} ${e.y} ${n === "right" ? s - a : s + a} ${t.y} ${s} ${t.y}`,
-			`L${t.x} ${t.y}`
-		].join(" ");
-	}
-	_defaultConnectorPath(e, t, n = {}) {
-		let r = this._connectionPoint(e, t, n.from, e.kind === "junction" && t.kind === "leaf" ? H : void 0), i = this._connectionPoint(t, e, n.to, t.kind === "junction" && e.kind === "leaf" ? H : void 0), a = i.x - r.x, o = i.y - r.y;
-		if (Math.abs(a) >= Math.abs(o)) {
-			let e = a * .38;
-			return `M${r.x} ${r.y} C${r.x + e} ${r.y} ${i.x - e} ${i.y} ${i.x} ${i.y}`;
-		}
-		let s = o * .38;
-		return `M${r.x} ${r.y} C${r.x} ${r.y + s} ${i.x} ${i.y - s} ${i.x} ${i.y}`;
-	}
-	_radialConnectorPath(e, t, n = {}) {
-		let r = this._connectionPoint(e, t, n.from, e.kind === "junction" && t.kind === "leaf" ? H : void 0), i = this._connectionPoint(t, e, n.to, t.kind === "junction" && e.kind === "leaf" ? H : void 0), a = t.point.x - e.point.x, o = t.point.y - e.point.y, s = Math.hypot(a, o) || 1, c = {
-			x: a / s,
-			y: o / s
-		}, l = Y(s * .32, 46, 120);
-		return [
-			`M${r.x} ${r.y}`,
-			`C${r.x + c.x * l} ${r.y + c.y * l}`,
-			`${i.x - c.x * l} ${i.y - c.y * l}`,
-			`${i.x} ${i.y}`
-		].join(" ");
-	}
-	_linkedLeafNodes(e, t, n) {
-		return this._uniqueNodes(n.map((n) => {
-			if (n.from !== e && n.to !== e) return;
-			let r = t[n.from === e ? n.to : n.from];
-			return (r == null ? void 0 : r.kind) === "leaf" ? r : void 0;
-		}).filter((e) => !!e));
-	}
-	_uniqueNodes(e) {
-		return Array.from(new Map(e.map((e) => [e.id, e])).values());
-	}
-	_sortedLaneNodes(e, t) {
-		return [...e].sort((e, n) => {
-			let r = e.point[t] - n.point[t];
-			return Math.abs(r) > .1 ? r : e.id.localeCompare(n.id);
-		});
-	}
-	_laneSlotForNode(e, t) {
-		let n = t.findIndex((t) => t.id === e);
-		return {
-			index: Math.max(0, n),
-			count: Math.max(1, t.length)
-		};
-	}
-	_funnelLaneCoordinate(e, t, n, r, i) {
-		if (i <= 0) return t;
-		let a = Y(e - t, -i, i);
-		if (r <= 1) return t + a;
-		let o = this._laneOffset(n, r, it, i);
-		return t + Y(a * .75 + o * .25, -i, i);
-	}
-	_laneOffset(e, t, n, r) {
-		if (t <= 1 || r <= 0) return 0;
-		let i = (e - (t - 1) / 2) * n, a = (t - 1) / 2 * n;
-		return i * (a > r ? r / a : 1);
-	}
-	_linkAnchor(e, t) {
-		if (e.from === t && e.fromAnchorMode === "manual") return e.fromAnchor;
-		if (e.to === t && e.toAnchorMode === "manual") return e.toAnchor;
-	}
-	_guideNode(e, t) {
-		return {
-			id: e,
-			kind: "junction",
-			stackIndex: -1,
-			label: "",
-			value: 0,
-			radius: 0,
-			point: t,
-			icon: "mdi:circle-small"
-		};
-	}
-	_renderNodeLayer(e, t, n, r, i) {
-		return F`
-      ${this._renderNodeShell(e, t, r, i)}
-      ${this._renderNodeBusCover(e, t, n, r, i)}
-      ${this._renderNodeOverlay(e, t, r)}
-    `;
-	}
-	_renderNodeOverlay(e, t, n) {
-		return F`
-      ${this._renderNodeContent(e, t, n)}
-      ${this._renderNodeLabel(e, t, n)}
-      ${this._renderLabelHandle(e, t, n)}
-      ${this.editable ? F`
-            <g
-              class="node-hit-layer"
-              transform=${`translate(${e.point.x} ${e.point.y})`}
-            >
-              <circle
-                class="hit-area node-hit-proxy"
-                r=${e.radius + 18}
-                @pointerdown=${(t) => this._startNodeDrag(t, e)}
-              />
-            </g>
-          ` : L}
-    `;
-	}
-	_renderNodeBusCover(e, t, n, r, i) {
-		return this._shouldBusStayBehindNode(e, n, t.nodes, i) ? F`
-      <g
-        class="node-bus-cover"
-        transform=${`translate(${e.point.x} ${e.point.y})`}
-        aria-hidden="true"
-      >
-        <circle
-          class="node-bg bus-cover"
-          r=${e.radius}
-          stroke=${this._nodeColorCached(e, t, r, i)}
-          stroke-width=${e.kind === "junction" ? 4 : 2.5}
-        />
-      </g>
-    ` : L;
-	}
-	_shouldBusStayBehindNode(e, t, n, r) {
-		return e.kind !== "junction" || this._isWrappedJunction(e, t, n, r) ? !1 : t.filter((t) => (t.from === e.id || t.to === e.id) && this._isJunctionJunctionLink(t, n)).length <= 1;
-	}
-	_isWrappedJunction(e, t, n, r) {
-		return t.some((i) => {
-			if (!this._isJunctionJunctionLink(i, n)) return !1;
-			let a = this._junctionJoinGeometry(i, n, t, r);
-			return (a == null ? void 0 : a.middleId) === e.id;
-		});
-	}
-	_renderNodeShell(e, t, n, r) {
-		return F`
-      <g
-        class=${`node ${e.kind}-node ${!this.editable && e.primaryAction ? "actionable" : ""} ${this.activeNode === e.id ? "dragging" : ""} ${this.selectedNode === e.id ? "selected" : ""}`}
-        transform=${`translate(${e.point.x} ${e.point.y})`}
-        tabindex=${this.editable || e.primaryAction ? 0 : -1}
-        role=${!this.editable && e.primaryAction ? "button" : L}
-        aria-label=${!this.editable && e.primaryAction ? `${e.label} ${this._nodeActionLabel(e.primaryAction)}` : e.label}
-        @pointerdown=${this.editable ? (t) => this._startNodeDrag(t, e) : void 0}
-        @click=${!this.editable && e.primaryAction ? (t) => this._emitNodeAction(e.primaryAction, t) : void 0}
-        @keydown=${!this.editable && e.primaryAction ? (t) => this._handleNodeActionKeydown(t, e.primaryAction) : void 0}
-      >
-        <circle
-          class="node-bg"
-          r=${e.radius}
-          stroke=${this._nodeColorCached(e, t, n, r)}
-          stroke-width=${e.kind === "junction" ? 4 : 2.5}
-        />
-        <circle class="hit-area" r=${e.radius + 18} />
-      </g>
-    `;
-	}
-	_renderNodeContent(e, t, n) {
-		var r, i, a;
-		let o = !!(e.icon || e.secondaryIcon), s = e.secondary !== void 0, c = this._nodeDisplayValue(e, t, n), l = !this._shouldHideNodeValue(e, c), u = s && !this._shouldHideNodeValue(e, (r = e.secondary) == null ? 0 : r), d = this._nodePrimaryValue(e, t, n), f = l ? this._nodeTextLines(d, e) : [], p = u ? this._nodeTextLines((i = e.secondaryDisplayValue) == null ? `${Math.round((a = e.secondary) == null ? 0 : a)}%` : i, e) : [], m = !o, h = f.length > 0, g = p.length > 0, _ = this._nodePrimaryTextY(e, o, s, h, g), v = this._nodeSecondaryTextY(e, o, s, h, g);
-		return F`
-      <g
-        class=${`node-content ${e.kind}-content`}
-        transform=${`translate(${e.point.x} ${e.point.y})`}
-      >
-        ${o ? this._renderNodeIcons(e) : L}
-        ${this._renderNodeFlowArrow(e)}
-        ${f.length > 0 ? this._renderTextLines(this._textLineClass("node-value", f, e), f, _, e, 0, m) : L}
-        ${p.length > 0 ? this._renderTextLines(this._textLineClass("node-secondary", p, e), p, v, e, 0, m) : L}
-        ${p.length > 0 ? this._renderSecondaryActionHitArea(e, p, v) : L}
-      </g>
-    `;
-	}
-	_nodePrimaryTextY(e, t, n, r, i) {
-		return t ? r ? e.kind === "leaf" ? n ? this._radiusLerp(e.radius, -20, -30) : this._radiusLerp(e.radius, -18, -28) : n ? this._radiusLerp(e.radius, -28, -42) : this._radiusLerp(e.radius, -22, -34) : 0 : !i || !r ? 0 : this._radiusLerp(e.radius, -12, -18);
-	}
-	_nodeSecondaryTextY(e, t, n, r, i) {
-		return t ? i ? e.kind === "leaf" ? this._radiusLerp(e.radius, 34, 47) : this._radiusLerp(e.radius, 27, 40) : 0 : !r || !i ? 0 : this._radiusLerp(e.radius, 12, 18);
-	}
-	_renderNodeLabel(e, t, n) {
-		let r = e.label.trim();
-		if (!r) return L;
-		if (this.labelStyle === "straight") {
-			let i = this._nodeStraightLabelPoint(e, t, n), a = this._straightLabelLines(r, i), o = i.className === "top" ? i.y - (a.length - 1) * 31 : i.className === "bottom" ? i.y : i.y - (a.length - 1) * 31 / 2;
-			return F`
-        <text
-          class=${`node-label node-label-straight ${i.className}`}
-          x=${i.x}
-          y=${o}
-          text-anchor=${i.textAnchor}
-          dominant-baseline=${i.baseline}
-        >
-          ${a.map((e, t) => F`
-              <tspan
-                x=${i.x}
-                dy=${t === 0 ? 0 : 31}
-              >${e}</tspan>
-            `)}
-        </text>
-      `;
-		}
-		let i = this._nodeLabelArc(e, t, n);
-		return F`
-      <path id=${i.id} class="node-label-path" d=${i.path} />
-      <text class="node-label node-label-curved">
-        <textPath href=${`#${i.id}`} startOffset="50%">
-          ${r}
-        </textPath>
-      </text>
-    `;
-	}
-	_renderLabelHandle(e, t, n) {
-		if (!this.editable || this.selectedNode !== e.id || !e.label.trim()) return L;
-		let r = this.labelStyle === "straight" ? this._nodeStraightLabelPoint(e, t, n) : this._nodeCurvedLabelHandlePoint(e, t, n);
-		return F`
-      <g class="label-handle">
-        <circle
-          class="label-handle-hit"
-          cx=${r.x}
-          cy=${r.y}
-          r="14"
-          @pointerdown=${(r) => this._startLabelDrag(r, e, t, n)}
-        />
-        <circle class="label-handle-dot" cx=${r.x} cy=${r.y} r="4.5" />
-      </g>
-    `;
-	}
-	_nodeLabelArc(e, t, n) {
-		let r = this._nodeLabelAngle(e, t, n), i = e.radius + (e.kind === "junction" ? this._radiusLerp(e.radius, 24, 18) : this._radiusLerp(e.radius, 19, 15)), a = e.kind === "junction" ? 16 : 15, o = Y((e.label.length * a + 36) / i, 1.35, Math.PI * .92), s = Math.sin(r) > 0, c = s ? r + o / 2 : r - o / 2, l = s ? r - o / 2 : r + o / 2, u = this._pointOnCircle(e.point, i, c), d = this._pointOnCircle(e.point, i, l), f = +!s, p = e.id.replace(/[^a-z0-9_-]/gi, "-");
-		return {
-			id: `home-flow-label-${this.graphInstanceId}-${p}`,
-			path: `M ${u.x} ${u.y} A ${i} ${i} 0 0 ${f} ${d.x} ${d.y}`
-		};
-	}
-	_nodeStraightLabelPoint(e, t, n) {
-		let r = e.labelOffsetX, i = e.labelOffsetY;
-		return r !== void 0 || i !== void 0 ? {
-			x: e.point.x + (r == null ? 0 : r),
-			y: e.point.y + (i == null ? 0 : i),
-			textAnchor: "middle",
-			baseline: "middle",
-			className: "manual"
-		} : this._nodeAutoStraightLabelPoint(e, t, n);
-	}
-	_straightLabelLines(e, t) {
-		let n = t.textAnchor === "start" ? Ie - 28 - t.x : t.textAnchor === "end" ? t.x - 28 : 2 * Math.min(t.x - 28, Ie - 28 - t.x), r = Math.max(80, n);
-		if (this._measureLabelWidth(e) <= r) return [e];
-		let i = [], a = "";
-		for (let t of e.split(/\s+/)) {
-			let e = a ? `${a} ${t}` : t;
-			if (this._measureLabelWidth(e) <= r) {
-				a = e;
-				continue;
-			}
-			if (a && i.push(a), this._measureLabelWidth(t) <= r) {
-				a = t;
-				continue;
-			}
-			let n = "";
-			for (let e of t) {
-				let t = n + e;
-				n && this._measureLabelWidth(t) > r ? (i.push(n), n = e) : n = t;
-			}
-			a = n;
-		}
-		return a && i.push(a), i.length > 0 ? i : [e];
-	}
-	_measureLabelWidth(e) {
-		var t, n;
-		let r = this._labelWidthCache.get(e);
-		if (r !== void 0) return r;
-		this._labelMeasureContext === void 0 && (this._labelMeasureContext = document.createElement("canvas").getContext("2d"), this._labelMeasureContext && (this._labelMeasureContext.font = "400 27px Roboto, sans-serif"));
-		let i = (t = (n = this._labelMeasureContext) == null ? void 0 : n.measureText(e).width) == null ? e.length * 13 : t;
-		return this._labelWidthCache.set(e, i), i;
-	}
-	_nodeAutoStraightLabelPoint(e, t, n) {
-		let r = this._nodeLabelAnchorIndex(e, t, n), i = this._anchorAngle(r), a = e.radius + (e.kind === "junction" ? this._radiusLerp(e.radius, 18, 14) : this._radiusLerp(e.radius, 14, 11)), o = this._pointOnCircle(e.point, a, i), s = Math.sin(i);
-		return s < -.55 ? {
-			x: o.x,
-			y: o.y - 2,
-			textAnchor: "middle",
-			baseline: "auto",
-			className: "top"
-		} : s > .55 ? {
-			x: o.x,
-			y: o.y + 2,
-			textAnchor: "middle",
-			baseline: "hanging",
-			className: "bottom"
-		} : Math.cos(i) < 0 ? {
-			x: o.x - 4,
-			y: o.y,
-			textAnchor: "end",
-			baseline: "middle",
-			className: "left"
-		} : {
-			x: o.x + 4,
-			y: o.y,
-			textAnchor: "start",
-			baseline: "middle",
-			className: "right"
-		};
-	}
-	_nodeLabelAngle(e, t, n) {
-		var r;
-		return (r = e.labelAngle) == null ? this._anchorAngle(this._nodeLabelAnchorIndex(e, t, n)) : r;
-	}
-	_nodeCurvedLabelHandlePoint(e, t, n) {
-		let r = this._nodeLabelAngle(e, t, n), i = e.radius + (e.kind === "junction" ? this._radiusLerp(e.radius, 24, 18) : this._radiusLerp(e.radius, 19, 15));
-		return this._pointOnCircle(e.point, i, r);
-	}
-	_nodeLabelAnchorIndex(e, t, n) {
-		let r = [...n.filter((t) => t.from === e.id || t.to === e.id).map((n) => this._connectionAnchorIndex(e, n, t)).filter((e) => e !== void 0), ...this._nearbyNodeAnchorIndices(e, t)];
-		if (r.length === 0) return W / 2;
-		let i = 0, a = -Infinity;
-		for (let e = 0; e < W; e += 1) {
-			let t = Math.min(...r.map((t) => this._circularAnchorDistance(e, t)));
-			if (t < 3) continue;
-			let n = this._anchorAngle(e), o = Math.abs(Math.sin(n)) * 10, s = Math.abs(Math.cos(n)) * 4, c = +(Math.sin(n) > 0), l = t * .75 + o + c - s;
-			l > a && (a = l, i = e);
-		}
-		return a === -Infinity ? W / 2 : i;
-	}
-	_nearbyNodeAnchorIndices(e, t) {
-		return Object.values(t.nodes).filter((t) => t.id !== e.id).filter((t) => {
-			let n = Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y), r = e.kind === "junction" ? 38 : 32;
-			return n < e.radius + t.radius + r;
-		}).map((t) => this._nearestAnchorIndex(e, t.point));
-	}
-	_connectionAnchorIndex(e, t, n) {
-		let r = this._linkAnchor(t, e.id);
-		if (r !== void 0) return this._normalizeAnchorIndex(r);
-		let i = t.from === e.id ? t.to : t.from, a = n.nodes[i];
-		return a ? this._nearestAnchorIndex(e, a.point) : void 0;
-	}
-	_circularAnchorDistance(e, t) {
-		let n = Math.abs(e - t);
-		return Math.min(n, W - n);
-	}
-	_pointOnCircle(e, t, n) {
-		return {
-			x: Number((e.x + Math.cos(n) * t).toFixed(2)),
-			y: Number((e.y + Math.sin(n) * t).toFixed(2))
-		};
-	}
-	_nodeTextLines(e, t) {
-		let n = 46 + Math.max(0, e.length - 7) * 4.5;
-		if (t.radius >= n) return [e];
-		let r = e.match(/^(.+?)\s+([^\s]+(?:\s+[←→↑↓])?)$/);
-		if (r) return [r[1], r[2]];
-		let i = e.match(/^([-+]?\d+(?:[.,]\d+)?)([^\d\s].*?(?:\s+[←→↑↓])?)$/);
-		return i ? [i[1], i[2]] : [e];
-	}
-	_textLineClass(e, t, n) {
-		return t.length > 1 ? `${e} compact` : e;
-	}
-	_shouldHideNodeValue(e, t) {
-		var n;
-		return ((n = e.hideZeroValues) == null ? this.hideZeroValues : n) && Math.abs(t) <= q;
-	}
-	_renderTextLines(e, t, n, r, i = 0, a = !1) {
-		let o = this._textFontSize(e, t, r);
-		if (t.length <= 1) {
-			var s;
-			return F`
-        <text
-          class=${e}
-          x=${i}
-          y=${n}
-          style=${`font-size:${o}px;`}
-          dominant-baseline=${a ? "middle" : L}
-        >
-          ${(s = t[0]) == null ? "" : s}
-        </text>
-      `;
-		}
-		let c = this._textLineGap(e, t, r), l = n - c / 2;
-		return F`
-      ${t.map((t, n) => F`
-            <text
-              class=${e}
-              x=${i}
-              y=${l + n * c}
-              style=${`font-size:${o}px;`}
-              dominant-baseline=${a ? "middle" : L}
-            >
-              ${t}
-            </text>
-          `)}
-    `;
-	}
-	_renderSecondaryActionHitArea(e, t, n) {
-		if (this.editable || !e.secondaryAction) return L;
-		let r = this._textLineGap("node-secondary", t, e), i = t.length <= 1 ? 28 : r * (t.length - 1) + 30, a = (t.length <= 1 ? n : n - r / 2) + (t.length - 1) * r / 2, o = Math.max(52, e.radius * 1.55);
-		return F`
-      <rect
-        class="value-hit secondary-value-hit"
-        x=${-o / 2}
-        y=${a - i / 2}
-        width=${o}
-        height=${i}
-        rx="8"
-        @click=${(t) => this._emitNodeAction(e.secondaryAction, t)}
-      />
-    `;
-	}
-	_textLineGap(e, t, n) {
-		return t.length > 1 ? this._radiusLerp(n.radius, 26, 30) : 18;
-	}
-	_textFontSize(e, t, n) {
-		return e.includes("flow-icon-arrow") ? this._radiusLerp(n.radius, 22, 28) : t.length > 1 ? this._radiusLerp(n.radius, 26, 30) : this._radiusLerp(n.radius, 26, 28);
-	}
-	_radiusLerp(e, t, n) {
-		let r = Y((e - Be) / (Ve - Be), 0, 1);
-		return t + (n - t) * r;
-	}
-	willUpdate(e) {
-		if (!(!e.has("nodes") && this.hasUpdated)) for (let e of this.nodes) for (let t of [e.icon, e.secondaryIcon]) t != null && t.includes(":") && this._queueExternalIcon(t);
-	}
-	_queueExternalIcon(e) {
-		ct.has(e) || this.requestedExternalIcons.has(e) || (this.requestedExternalIcons.add(e), dt(e).finally(() => {
-			this.requestedExternalIcons.delete(e), this.isConnected && this.requestUpdate();
-		}));
-	}
-	_renderNodeIcons(e) {
-		let t = [e.icon, e.secondaryIcon].filter(Boolean);
-		if (t.length === 0) return L;
-		if (t.length === 1) {
-			let { scale: n, y: r } = this._nodeIconMetrics(e);
-			return this._renderIconAt(t[0], 0, r, n);
-		}
-		let { scale: n, y: r, gap: i } = this._dualIconMetrics(e);
-		return F`
-      ${t.slice(0, 2).map((e, t) => this._renderIconAt(e, t === 0 ? -i : i, r, n))}
-    `;
-	}
-	_renderIconAt(e, t, n, r) {
-		return this._renderExternalIconAt(e, t, n, r);
-	}
-	_renderExternalIconAt(e, t, n, r) {
-		let i = ct.get(e);
-		if (!i) return L;
-		let a = 68 * r, o = a / 2;
-		return F`
-      <svg
-        class="node-icon-svg"
-        x=${t - o}
-        y=${n - o}
-        width=${a}
-        height=${a}
-        viewBox=${i.viewBox}
-        preserveAspectRatio="xMidYMid meet"
-        aria-hidden="true"
-      >
-        <path d=${i.path}></path>
-        ${i.secondaryPath ? F`<path class="node-icon-secondary-path" d=${i.secondaryPath}></path>` : L}
-      </svg>
-    `;
-	}
-	_renderNodeFlowArrow(e) {
-		if (!this._hasNodeFlowArrow(e)) return L;
-		let t = e.icon && e.secondaryIcon ? this._dualIconMetrics(e) : void 0, { y: n, scale: r } = t == null ? this._nodeIconMetrics(e) : t, i = (t ? -t.gap : 0) + 68 * r * .42 + 10, a = this._nodeFlowArrow(e);
-		return F`<text class="flow-icon-arrow" x=${i} y=${n + 3} dominant-baseline="middle">${a}</text>`;
-	}
-	_nodeFlowArrow(e) {
-		return this._nodeFlowValue(e) >= 0 ? "→" : "←";
-	}
-	_nodeIconMetrics(e) {
-		if (e.kind === "leaf") {
-			let t = e.secondary !== void 0;
-			return {
-				scale: (t ? Y(e.radius * .58, 24, 52) : Y(e.radius * .64, 26, 58)) / 68,
-				y: t ? this._radiusLerp(e.radius, -8, -5) : this._radiusLerp(e.radius, -2, 0)
-			};
-		}
-		return {
-			scale: Y(e.radius * .62, 28, 60) / 68,
-			y: 0
-		};
-	}
-	_dualIconMetrics(e) {
-		return {
-			scale: (e.secondary !== void 0 && e.kind === "leaf" ? Y(e.radius * .42, 16, 34) : Y(e.radius * .48, 18, 40)) / 68,
-			y: 0,
-			gap: Y(e.radius * .26, 12, 24)
-		};
-	}
-	_renderPendingLink(e, t) {
-		if (!this.pendingLink || !this.pointerPoint) return L;
-		let n = e[this.pendingLink.from];
-		if (!n) return L;
-		let r = this._pendingLinkPath(n, e, t);
-		return r ? F`
-      <path
-        class="connector base selected pending"
-        d=${r}
-      />
-    ` : L;
-	}
-	_pendingLinkPath(e, t, n) {
-		if (!this.pendingLink || !this.pointerPoint) return "";
-		let r = this.hoverTarget ? t[this.hoverTarget] : void 0;
-		if (r && this._isCompatibleLink(e, r)) {
-			let i = this._nearestAnchorIndex(r, this.pointerPoint), a = this._manualLink(this._canonicalLink(e, r, this.pendingLink.fromAnchor, i)), o = this._replaceLink(n, a);
-			return this._graphLinkPath(a, t, o);
-		}
-		let i = this._pendingJunctionConnectionCandidate(e, this.pointerPoint, t);
-		if (i) {
-			let t = this._guideNode("pending-junction-connection-pointer", i.point);
-			return this._defaultConnectorPath(e, t, { from: this.pendingLink.fromAnchor });
-		}
-		let a = this._guideNode("pending-pointer", this.pointerPoint);
-		return this._defaultConnectorPath(e, a, { from: this.pendingLink.fromAnchor });
-	}
-	_renderAnchorControls(e, t) {
-		if (this.pendingLink) {
-			let t = e[this.pendingLink.from], n = this.hoverTarget ? e[this.hoverTarget] : void 0, r = n && this.pointerPoint ? this._nearestAnchorIndex(n, this.pointerPoint) : void 0;
-			return F`
-        ${t ? this._renderAnchorPoints(t, "source", { selectedAnchorIndex: this.pendingLink.fromAnchor }) : L}
-        ${n ? this._renderAnchorPoints(n, "target", { selectedAnchorIndex: r }) : L}
-      `;
-		}
-		if (this.selectedLink) {
-			let n = t.find((e) => e.id === this.selectedLink);
-			if (n) return F`
-          ${this._linkEndControls(n, e, t).map((e) => this._renderAnchorPoints(e.node, "source", { fixedLinkEnd: e }))}
-        `;
-		}
-		if (!this.selectedNode) return L;
-		let n = e[this.selectedNode];
-		return !n || !this._canStartLink(n) ? L : this._renderAnchorPoints(n, "source", { linkEnds: this._nodeLinkEndControls(n.id, e, t) });
-	}
-	_renderAnchorPoints(e, t, n = {}) {
-		return F`
-      <g class=${`anchor-controls ${t}`}>
-        ${Array.from({ length: W }, (r, i) => {
-			var a, o;
-			let s = this._anchorPoint(e, i), c = (a = n.fixedLinkEnd) == null ? (o = n.linkEnds) == null ? void 0 : o.find((e) => e.anchorIndex === i) : a, l = n.selectedAnchorIndex !== void 0 && this._normalizeAnchorIndex(n.selectedAnchorIndex) === i, u = n.fixedLinkEnd ? n.fixedLinkEnd.anchorIndex === i : !!c || l;
-			return F`
-            <g class=${`anchor-handle ${u ? "selected" : ""}`}>
-              <circle
-                class="anchor-hit"
-                cx=${s.x}
-                cy=${s.y}
-                r=${Ke}
-                @pointerdown=${(n) => c ? this._startAnchorDrag(n, c, i) : t === "source" ? this._startPendingLink(n, e, i) : this._commitPendingLink(n, e, i)}
-              />
-              <circle
-                class="anchor-point"
-                cx=${s.x}
-                cy=${s.y}
-                r=${u ? Ge : We}
-              />
-            </g>
-          `;
-		})}
-      </g>
-    `;
-	}
-	_linkEndControls(e, t, n) {
-		return ["from", "to"].map((r) => {
-			let i = t[r === "from" ? e.from : e.to];
-			if (this._isVirtualJunctionJoinEnd(e, r, t, n)) return;
-			let a = this._linkEndAnchorIndex(e, r, t, n);
-			if (!(!i || i.radius <= 0 || a === void 0)) return {
-				anchorIndex: a,
-				end: r,
-				link: e,
-				node: i
-			};
-		}).filter((e) => !!e);
-	}
-	_isVirtualJunctionJoinEnd(e, t, n, r) {
-		let i = this._junctionJoinGeometry(e, n, r);
-		return !(i != null && i.pathsByLinkId) || i.busLinkId !== e.id ? !1 : (t === "from" ? e.from : e.to) === i.middleId;
-	}
-	_nodeLinkEndControls(e, t, n) {
-		return n.flatMap((r) => this._linkEndControls(r, t, n).filter((t) => t.node.id === e));
-	}
-	_linkEndAnchorIndex(e, t, n, r) {
-		let i = n[t === "from" ? e.from : e.to];
-		if (!i || i.radius <= 0) return;
-		let a = t === "from" ? e.fromAnchorMode === "manual" ? e.fromAnchor : void 0 : e.toAnchorMode === "manual" ? e.toAnchor : void 0;
-		if (a !== void 0) return this._normalizeAnchorIndex(a);
-		if (i.kind === "leaf") {
-			let a = this._leafAutoAnchorReferencePoint(e, t, n, r);
-			if (a) return this._nearestAnchorIndex(i, a);
-		}
-		let o = this._graphLinkPath(e, n, r), s = this._pathLinkEndPoint(o, t);
-		return s ? this._nearestAnchorIndex(i, s) : void 0;
-	}
-	_leafAutoAnchorReferencePoint(e, t, n, r) {
-		let i = t === "from" ? e.from : e.to, a = t === "from" ? e.to : e.from, o = n[i], s = n[a];
-		if (!o || !s || o.kind !== "leaf" || s.kind !== "junction") return;
-		if (this.leafRouting === "radial" || this.leafRouting === "sweep") return s.point;
-		let c = this._linkedLeafNodes(s.id, n, r), l = this._sortedLaneNodes(c.filter((e) => e.point.y <= s.point.y - s.radius), "x"), u = this._sortedLaneNodes(c.filter((e) => e.point.y >= s.point.y + s.radius), "x"), d = this._sortedLaneNodes(c.filter((e) => e.point.x <= s.point.x), "y"), f = this._sortedLaneNodes(c.filter((e) => e.point.x >= s.point.x), "y");
-		switch (this._leafConnectorSide(o, s)) {
-			case "upper": return this._upperLeafAnchorReferencePoint(o, s, this._laneSlotForNode(o.id, l).index, Math.max(1, l.length));
-			case "lower": return this._lowerLeafAnchorReferencePoint(o, s, this._laneSlotForNode(o.id, u).index, Math.max(1, u.length));
-			case "left": return this._leftLeafAnchorReferencePoint(o, s, this._laneSlotForNode(o.id, d).index, Math.max(1, d.length));
-			case "right": return this._rightLeafAnchorReferencePoint(o, s, this._laneSlotForNode(o.id, f).index, Math.max(1, f.length));
-			default: return s.point;
-		}
-	}
-	_pathLinkEndPoint(e, t) {
-		let n = this._pathNumbers(e);
-		if (!n || n.length < 2) return;
-		let r = t === "from" ? 0 : n.length - 2;
-		return {
-			x: n[r],
-			y: n[r + 1]
-		};
-	}
-	_pathNumbers(e) {
-		var t, n;
-		return (t = (n = e.match(/-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/gi)) == null ? void 0 : n.map((e) => Number(e))) == null ? [] : t;
-	}
-	_startAnchorDrag(e, t, n) {
-		if (!this.editable) return;
-		let r = this._eventPoint(e), i = r ? this._anchorIndexForPointerPoint(t.node, r, t.anchorIndex, n) : n;
-		this.selectedLink = t.link.id, this.selectedNode = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this._anchorDrag = {
-			end: t.end,
-			linkId: t.link.id,
-			nodeId: t.node.id,
-			pointerId: e.pointerId
-		}, this._setLinkEndAnchor(t.link.id, t.end, i, !0, !0), this._capturePointer(e), e.stopPropagation(), e.preventDefault();
-	}
-	_startPendingLink(e, t, n) {
-		if (!this.editable || !this._canStartLink(t)) return;
-		let r = this._eventPoint(e), i = r ? this._anchorIndexForPointerPoint(t, r, void 0, n) : n;
-		this.selectedLink = void 0, this.pendingLink = {
-			from: t.id,
-			fromAnchor: i
-		}, this.pointerPoint = r == null ? this._anchorPoint(t, i) : r, this.hoverTarget = void 0, this._capturePointer(e), e.stopPropagation(), e.preventDefault();
-	}
-	_commitPendingLink(e, t, n) {
-		if (!this.editable || !this.pendingLink) return;
-		let r = this._model().nodes[this.pendingLink.from];
-		if (!r || !this._isCompatibleLink(r, t)) return;
-		let i = this._manualLink(this._canonicalLink(r, t, this.pendingLink.fromAnchor, n)), a = this._replaceLink(this.links, i);
-		this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this.selectedLink = void 0, this.selectedNode = void 0, this.links = a, this._emitLinksChange(a), e.stopPropagation(), e.preventDefault();
-	}
-	_canonicalLink(e, t, n, r) {
-		return e.kind === "leaf" && t.kind === "junction" ? {
-			id: `${e.id}->${t.id}`,
-			from: e.id,
-			to: t.id,
-			fromAnchor: n,
-			fromAnchorMode: "auto",
-			toAnchor: r,
-			toAnchorMode: "auto"
-		} : t.kind === "leaf" && e.kind === "junction" ? {
-			id: `${t.id}->${e.id}`,
-			from: t.id,
-			to: e.id,
-			fromAnchor: r,
-			fromAnchorMode: "auto",
-			toAnchor: n,
-			toAnchorMode: "auto"
-		} : (e.kind === "junction" && t.kind, {
-			id: `${e.id}->${t.id}`,
-			from: e.id,
-			to: t.id,
-			fromAnchor: n,
-			fromAnchorMode: "auto",
-			toAnchor: r,
-			toAnchorMode: "auto"
-		});
-	}
-	_manualLink(e) {
-		return {
-			...e,
-			fromAnchorMode: "manual",
-			toAnchorMode: "manual"
-		};
-	}
-	_replaceLink(e, t) {
-		return [...e.filter((e) => !(e.from === t.from && e.to === t.to || e.from === t.to && e.to === t.from)), t];
-	}
-	_autoAnchorLinksForNode(e) {
-		let t = this._junctionJoinInfoForMovingJunction(e), n = !1, r = this.links.map((r) => {
-			if (r.from === e || r.to === e) {
-				var i;
-				let e = t.get(r.id), a = (i = e == null ? void 0 : e.joinId) == null ? r.junctionJoinId : i;
-				return r.fromAnchor !== void 0 || r.fromAnchorMode !== void 0 || r.toAnchor !== void 0 || r.toAnchorMode !== void 0 || a !== r.junctionJoinId ? (n = !0, {
-					...r,
-					fromAnchor: void 0,
-					fromAnchorMode: void 0,
-					toAnchor: void 0,
-					toAnchorMode: void 0,
-					junctionJoinId: a
-				}) : r;
-			}
-			return r;
-		});
-		return n ? r : this.links;
-	}
-	_junctionJoinInfoForMovingJunction(e) {
-		let t = this._model(), n = t.nodes[e], r = /* @__PURE__ */ new Map();
-		if (!n || n.kind !== "junction") return r;
-		let i = this.links.filter((n) => {
-			if (n.from !== e && n.to !== e) return !1;
-			let r = t.nodes[n.from === e ? n.to : n.from];
-			return (r == null ? void 0 : r.kind) === "junction";
-		}), a = /* @__PURE__ */ new Map();
-		return i.forEach((t) => {
-			var n, r;
-			let i = this._linkAnchor(t, e), o = (n = t.junctionJoinId) == null ? i === void 0 ? void 0 : `legacy-anchor-${this._normalizeAnchorIndex(i)}` : n;
-			o && a.set(o, [...(r = a.get(o)) == null ? [] : r, t]);
-		}), a.forEach((t) => {
-			var n;
-			if (t.length < 2) return;
-			let i = t.map((t) => t.from === e ? t.to : t.from).sort(), a = (n = t[0].junctionJoinId) == null ? this._junctionJoinId(i[0], i[1], e) : n;
-			t.forEach((e) => r.set(e.id, { joinId: a }));
-		}), r;
-	}
-	_selectLink(e, t) {
-		var n;
-		this.editable && (this.selectedLink = t, this.selectedNode = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, (n = this.renderRoot.querySelector(".flow-svg")) == null || n.focus(), e.stopPropagation(), e.preventDefault());
-	}
-	_handleKeydown(e) {
-		if (e.key === "Escape") {
-			this.selectedLink = void 0, this.selectedNode = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, e.preventDefault();
-			return;
-		}
-		if (this.selectedLink && (e.key === "Delete" || e.key === "Backspace")) {
-			let t = this.selectedLink;
-			this.selectedLink = void 0, this.links = this._linksAfterLinkDelete(t), this._emitLinksChange(this.links), e.stopPropagation(), e.preventDefault();
-		}
-		if (this.selectedNode && (e.key === "Delete" || e.key === "Backspace")) {
-			let t = this.selectedNode;
-			this.selectedNode = void 0, this.selectedLink = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this._emitNodeRemove(t), this._emitNodeSelect(void 0), e.stopPropagation(), e.preventDefault();
-		}
-	}
-	_setLinkEndAnchor(e, t, n, r = !0, i = !1) {
-		let a = this._normalizeAnchorIndex(n), o = !1, s = this.links.map((n) => {
-			if (n.id !== e) return n;
-			let r = t === "from" ? {
-				...n,
-				fromAnchor: a,
-				fromAnchorMode: "manual"
-			} : {
-				...n,
-				toAnchor: a,
-				toAnchorMode: "manual"
-			};
-			return o = o || r.fromAnchor !== n.fromAnchor || r.fromAnchorMode !== n.fromAnchorMode || r.toAnchor !== n.toAnchor || r.toAnchorMode !== n.toAnchorMode, r;
-		});
-		o && (this.links = s, r && this._emitLinksChange(s, i));
-	}
-	_startNodeDrag(e, t) {
-		var n;
-		if (!this.editable || this.pendingLink) return;
-		let r = this._eventPoint(e);
-		if (!r) return;
-		this.selectedNode = t.id, this.selectedLink = void 0, this._emitNodeSelect(t.id), (n = this.renderRoot.querySelector(".flow-svg")) == null || n.focus();
-		let i = this._model();
-		this._drag = {
-			attachedLeaves: this._overlappingUnlinkedLeaves(t, i),
-			id: t.id,
-			pointerId: e.pointerId,
-			startX: r.x,
-			startY: r.y,
-			offsetX: r.x - t.point.x,
-			offsetY: r.y - t.point.y,
-			moved: !1
-		}, this.activeNode = t.id, this._capturePointer(e), e.stopPropagation(), e.preventDefault();
-	}
-	_startLabelDrag(e, t, n, r) {
-		var i;
-		if (!this.editable) return;
-		let a = this._eventPoint(e);
-		if (!a) return;
-		let o = this.labelStyle === "straight" ? this._nodeStraightLabelPoint(t, n, r) : this._nodeCurvedLabelHandlePoint(t, n, r);
-		this.selectedNode = t.id, this.selectedLink = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this._emitNodeSelect(t.id), (i = this.renderRoot.querySelector(".flow-svg")) == null || i.focus(), this._labelDrag = this.labelStyle === "straight" ? {
-			dragOffsetX: a.x - o.x,
-			dragOffsetY: a.y - o.y,
-			mode: "straight",
-			nodeId: t.id,
-			pointerId: e.pointerId
-		} : {
-			dragOffsetX: 0,
-			dragOffsetY: 0,
-			mode: "curved",
-			nodeId: t.id,
-			pointerId: e.pointerId
-		}, this._capturePointer(e), e.stopPropagation(), e.preventDefault();
-	}
-	_handlePointerMove(e) {
-		var t;
-		if (!this.editable) return;
-		let n = this._eventPoint(e);
-		if (!n) return;
-		let r = this._anchorDrag;
-		if (r && e.pointerId === r.pointerId) {
-			let e = this._model().nodes[r.nodeId];
-			if (!e) return;
-			this._setLinkEndAnchor(r.linkId, r.end, this._nearestAnchorIndex(e, n), !0, !0);
-			return;
-		}
-		let i = this._labelDrag;
-		if (i && e.pointerId === i.pointerId) {
-			let e = this._model().nodes[i.nodeId];
-			if (!e) return;
-			if (i.mode === "curved") this._emitNodeLabelChange({
-				nodeId: e.id,
-				labelAngle: Math.atan2(n.y - e.point.y, n.x - e.point.x),
-				labelOffsetX: e.labelOffsetX,
-				labelOffsetY: e.labelOffsetY
-			}, !0);
-			else {
-				let t = n.x - i.dragOffsetX, r = n.y - i.dragOffsetY;
-				this._emitNodeLabelChange({
-					nodeId: e.id,
-					labelAngle: e.labelAngle,
-					labelOffsetX: t - e.point.x,
-					labelOffsetY: r - e.point.y
-				}, !0);
-			}
-			return;
-		}
-		if (this.pendingLink) {
-			var a;
-			let e = this._model();
-			this.pointerPoint = n, this.hoverTarget = (a = this._nearestCompatibleTarget(e.nodes[this.pendingLink.from], n, e.nodes)) == null ? void 0 : a.id;
-			return;
-		}
-		let o = this._drag;
-		if (!o || e.pointerId !== o.pointerId) return;
-		if (!o.moved) {
-			if (Math.hypot(n.x - o.startX, n.y - o.startY) < Ue) return;
-			o.moved = !0;
-			let e = this._autoAnchorLinksForNode(o.id);
-			e !== this.links && (o.anchorsChanged = !0, this.links = e, this._emitLinksChange(e, !0));
-		}
-		let s = this._clampedPoint({
-			x: n.x - o.offsetX,
-			y: n.y - o.offsetY
-		}), c = this._model().nodes[o.id] ? {
-			x: o.startX - o.offsetX,
-			y: o.startY - o.offsetY
-		} : s, l = {
-			x: s.x - c.x,
-			y: s.y - c.y
-		}, u = Object.fromEntries(((t = o.attachedLeaves) == null ? [] : t).map((e) => [e.id, this._clampedPoint({
-			x: e.point.x + l.x,
-			y: e.point.y + l.y
-		})]));
-		this.layout = {
-			...this.layout,
-			...u,
-			[o.id]: s
-		}, this._emitLayoutChange(this.layout, !0);
-	}
-	_handlePointerUp(e) {
-		var t;
-		if (!this.editable) return;
-		let n = this._anchorDrag;
-		if (n && e.pointerId === n.pointerId) {
-			var r;
-			let t = e.target;
-			!(t == null || (r = t.hasPointerCapture) == null) && r.call(t, e.pointerId) && t.releasePointerCapture(e.pointerId), this._anchorDrag = void 0, this._emitLinksChange(this.links), e.stopPropagation(), e.preventDefault();
-			return;
-		}
-		let i = this._labelDrag;
-		if (i && e.pointerId === i.pointerId) {
-			var a;
-			let t = this._eventPoint(e), n = this._model().nodes[i.nodeId], r = e.target;
-			if (!(r == null || (a = r.hasPointerCapture) == null) && a.call(r, e.pointerId) && r.releasePointerCapture(e.pointerId), this._labelDrag = void 0, t && n) if (i.mode === "curved") this._emitNodeLabelChange({
-				nodeId: n.id,
-				labelAngle: Math.atan2(t.y - n.point.y, t.x - n.point.x),
-				labelOffsetX: n.labelOffsetX,
-				labelOffsetY: n.labelOffsetY
-			});
-			else {
-				let e = t.x - i.dragOffsetX, r = t.y - i.dragOffsetY;
-				this._emitNodeLabelChange({
-					nodeId: n.id,
-					labelAngle: n.labelAngle,
-					labelOffsetX: e - n.point.x,
-					labelOffsetY: r - n.point.y
-				});
-			}
-			e.stopPropagation(), e.preventDefault();
-			return;
-		}
-		if (this.pendingLink) {
-			var o, s;
-			let t = e.target;
-			!(t == null || (o = t.hasPointerCapture) == null) && o.call(t, e.pointerId) && t.releasePointerCapture(e.pointerId);
-			let n = (s = this._eventPoint(e)) == null ? this.pointerPoint : s;
-			if (n) {
-				var c;
-				this.pointerPoint = n;
-				let t = this._model(), r = t.nodes[this.pendingLink.from], i = (c = this.hoverTarget ? t.nodes[this.hoverTarget] : void 0) == null ? this._nearestCompatibleTarget(r, n, t.nodes) : c;
-				if (i) {
-					this._commitPendingLink(e, i, this._nearestAnchorIndex(i, n));
-					return;
-				}
-				let a = this._pendingJunctionConnectionCandidate(r, n, t.nodes);
-				if (a) {
-					this._commitPendingLinkToJunctionConnection(e, a);
-					return;
-				}
-			}
-			this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this.selectedLink = void 0, this.selectedNode = void 0, e.stopPropagation(), e.preventDefault();
-			return;
-		}
-		let l = this._drag;
-		if (!l || e.pointerId !== l.pointerId) return;
-		let u = e.target;
-		if (!(u == null || (t = u.hasPointerCapture) == null) && t.call(u, e.pointerId) && u.releasePointerCapture(e.pointerId), this._drag = void 0, this.activeNode = void 0, l.moved) {
-			let e = this._connectJunctionToWrappedConnection(l.id), t = l.anchorsChanged || e !== this.links;
-			this.links = e, this._emitLayoutChange(this.layout), t && this._emitLinksChange(this.links);
-		}
-	}
-	_clearInteraction(e) {
-		this.editable && e.currentTarget === e.target && (this.selectedNode = void 0, this.selectedLink = void 0, this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this._emitNodeSelect(void 0));
-	}
-	_nextLayout(e, t) {
-		return {
-			...this.layout,
-			[e]: this._clampedPoint(t)
-		};
-	}
-	_overlappingUnlinkedLeaves(e, t) {
-		return Object.values(t.nodes).filter((t) => t.kind === "leaf" && t.id !== e.id && t.stackIndex < e.stackIndex).filter((t) => Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y) < t.radius + e.radius).filter((e) => !this.links.some((t) => t.from === e.id || t.to === e.id)).map((e) => ({
-			id: e.id,
-			point: { ...e.point }
-		}));
-	}
-	_normalizedLinks(e) {
-		return this.links.filter((t) => {
-			let n = e[t.from], r = e[t.to];
-			return !!(n && r && this._isCompatibleLink(n, r));
-		});
-	}
-	_connectJunctionToWrappedConnection(e) {
-		let t = this._model(), n = t.nodes[e];
-		if (!n || n.kind !== "junction") return this.links;
-		let r = this._wrappedJunctionConnectionCandidate(n, t.nodes);
-		return r ? this._splitJunctionConnectionWithJunction(r.link, n.id, this._junctionConnectionSnapAnchor(r.detour)) : this.links;
-	}
-	_wrappedJunctionConnectionCandidate(e, t) {
-		return this.links.map((n) => {
-			let r = t[n.from], i = t[n.to];
-			if (!r || !i || r.kind !== "junction" || i.kind !== "junction" || r.id === e.id || i.id === e.id) return;
-			let a = this._connectionPoint(r, i, this._linkAnchor(n, r.id), V), o = this._connectionPoint(i, r, this._linkAnchor(n, i.id), V), s = this._junctionLineDetour(a, o, e);
-			if (s) return {
-				detour: s,
-				link: n,
-				score: Math.abs(s.signedDistance)
-			};
-		}).filter((e) => !!e).sort((e, t) => e.score - t.score)[0];
-	}
-	_pendingJunctionConnectionCandidate(e, t, n) {
-		if (e.kind === "junction") return this.links.map((r) => {
-			let i = n[r.from], a = n[r.to];
-			if (!i || !a || i.kind !== "junction" || a.kind !== "junction" || i.id === e.id || a.id === e.id) return;
-			let o = this._connectionPoint(i, a, this._linkAnchor(r, i.id), V), s = this._connectionPoint(a, i, this._linkAnchor(r, a.id), V), c = this._junctionLineDetour(o, s, e), l = this._closestPointOnSegment(t, o, s);
-			if (!(l.distance > Ze)) return {
-				detour: c,
-				link: r,
-				point: l.point,
-				score: l.distance
-			};
-		}).filter((e) => !!e).sort((e, t) => e.score - t.score)[0];
-	}
-	_commitPendingLinkToJunctionConnection(e, t) {
-		if (!this.pendingLink) return;
-		let n = this.pendingLink.from, r = t.detour ? this._junctionConnectionSnapAnchor(t.detour) : this.pendingLink.fromAnchor, i = this._splitJunctionConnectionWithJunction(t.link, n, r);
-		this.pendingLink = void 0, this.hoverTarget = void 0, this.pointerPoint = void 0, this.selectedLink = void 0, this.selectedNode = void 0, this.links = i, this._emitLinksChange(i), e.stopPropagation(), e.preventDefault();
-	}
-	_splitJunctionConnectionWithJunction(e, t, n) {
-		var r;
-		let i = (r = e.junctionJoinId) == null ? this._junctionJoinId(e.from, e.to, t) : r, a = this._splitWrappedJunctionLink(e, e.from, t, {
-			fromAnchor: e.fromAnchor,
-			fromAnchorMode: e.fromAnchorMode,
-			toAnchor: n,
-			toAnchorMode: n === void 0 ? void 0 : "manual",
-			junctionJoinId: i
-		}), o = this._splitWrappedJunctionLink(e, t, e.to, {
-			fromAnchor: n,
-			fromAnchorMode: n === void 0 ? void 0 : "manual",
-			toAnchor: e.toAnchor,
-			toAnchorMode: e.toAnchorMode,
-			junctionJoinId: i
-		});
-		return [
-			...this.links.filter((t) => t.id !== e.id && !this._sameLinkEnds(t, a.from, a.to) && !this._sameLinkEnds(t, o.from, o.to)),
-			a,
-			o
-		];
-	}
-	_splitWrappedJunctionLink(e, t, n, r) {
-		return {
-			id: `${t}->${n}`,
-			from: t,
-			to: n,
-			attribute: e.attribute,
-			color: e.color,
-			displayValue: e.displayValue,
-			entity: e.entity,
-			factor: e.factor,
-			flowMaxValue: e.flowMaxValue,
-			flowMinVisibleValue: e.flowMinVisibleValue,
-			invert: e.invert,
-			unit: e.unit,
-			value: e.value,
-			...r
-		};
-	}
-	_junctionJoinId(e, t, n) {
-		let [r, i] = [e, t].sort();
-		return `${r}--${i}--via-${n}`;
-	}
-	_linksAfterLinkDelete(e) {
-		let t = this._model(), n = this.links.find((t) => t.id === e);
-		if (!n) return this.links;
-		let r = this._junctionJoinGeometry(n, t.nodes, this.links);
-		return (r == null ? void 0 : r.branchLinkId) === e && r.busLinkId && r.branchLinkId ? this._linksAfterBranchDelete(r) : (r == null ? void 0 : r.busLinkId) === e && r.branchLinkId ? this.links.filter((e) => e.id !== r.busLinkId && e.id !== r.branchLinkId) : this.links.filter((t) => t.id !== e);
-	}
-	_linksAfterBranchDelete(e) {
-		let t = this.links.find((t) => t.id === e.busLinkId), n = this.links.find((t) => t.id === e.branchLinkId);
-		if (!t || !n) return this.links.filter((t) => t.id !== e.branchLinkId);
-		let r = this._restoredJunctionBusLink(e, t, n);
-		return [...this.links.filter((e) => e.id !== t.id && e.id !== n.id && !this._sameLinkEnds(e, r.from, r.to)), r];
-	}
-	_restoredJunctionBusLink(e, t, n) {
-		let r = this._linkAnchorFields(t, e.firstOuterId), i = this._linkAnchorFields(n, e.secondOuterId);
-		return {
-			...t,
-			id: `${e.firstOuterId}->${e.secondOuterId}`,
-			from: e.firstOuterId,
-			to: e.secondOuterId,
-			fromAnchor: r.anchor,
-			fromAnchorMode: r.mode,
-			toAnchor: i.anchor,
-			toAnchorMode: i.mode,
-			junctionJoinId: void 0
-		};
-	}
-	_linkAnchorFields(e, t) {
-		return e.from === t ? {
-			anchor: e.fromAnchor,
-			mode: e.fromAnchorMode
-		} : e.to === t ? {
-			anchor: e.toAnchor,
-			mode: e.toAnchorMode
-		} : {};
-	}
-	_sameLinkEnds(e, t, n) {
-		return e.from === t && e.to === n || e.from === n && e.to === t;
-	}
-	_junctionConnectionSnapAnchor(e) {
-		return e.tapAnchor;
-	}
-	_closestPointOnSegment(e, t, n) {
-		let r = n.x - t.x, i = n.y - t.y, a = r * r + i * i || 1, o = Y(((e.x - t.x) * r + (e.y - t.y) * i) / a, 0, 1), s = {
-			x: t.x + r * o,
-			y: t.y + i * o
-		};
-		return {
-			distance: Math.hypot(e.x - s.x, e.y - s.y),
-			point: s,
-			t: o
-		};
-	}
-	_isCompatibleLink(e, t) {
-		let n = new Set([e.kind, t.kind]);
-		return !!(n.has("leaf") && n.has("junction") || e.kind === "junction" && t.kind === "junction");
-	}
-	_canStartLink(e) {
-		return e.kind === "junction" || e.kind === "leaf";
-	}
-	_nearestCompatibleTarget(e, t, n) {
-		var r;
-		if (e) return (r = Object.values(n).filter((t) => t.id !== e.id && this._isCompatibleLink(e, t)).map((e) => ({
-			node: e,
-			distance: Math.hypot(e.point.x - t.x, e.point.y - t.y)
-		})).filter(({ node: e, distance: t }) => t <= e.radius + 46).sort((e, t) => e.distance - t.distance)[0]) == null ? void 0 : r.node;
-	}
-	_linkSignedValue(e, t, n = this.links, r) {
-		if (Number.isFinite(e.value)) return Number(e.value);
-		let i = t[e.from], a = t[e.to];
-		return (i == null ? void 0 : i.kind) === "leaf" ? this._nodeFlowValue(i) : (a == null ? void 0 : a.kind) === "leaf" ? -this._nodeFlowValue(a) : (i == null ? void 0 : i.kind) === "junction" && (a == null ? void 0 : a.kind) === "junction" ? this._derivedJunctionLinkValue(e, i, a, t, n, r) : 0;
-	}
-	_nodeFlowValue(e) {
-		return Number.isFinite(e.flowValue) ? Number(e.flowValue) : e.value;
-	}
-	_derivedJunctionLinkValue(e, t, n, r, i, a) {
-		let o = this._nodeIdsOnSideOfLinkCached(e, t.id, n.id, r, i, a);
-		if (!o || o.has(n.id)) return 0;
-		let s = 0, c = Array.from(o).reduce((e, t) => {
-			let n = r[t];
-			return !n || !this._nodeContributesToAutoFlow(n) ? e : (s += 1, e + this._nodeFlowValue(n));
-		}, 0);
-		return s > 0 ? c : 0;
-	}
-	_linkSourceParts(e, t, n, r, i) {
-		if (e.color || Math.abs(r) <= q) return;
-		let a = this._mergedFlowSources(this._linkFlowSources(e, t, n, r, i));
-		if (a.length === 0) return;
-		let o = a.reduce((e, t) => e + t.amount, 0);
-		if (o <= q) return;
-		let s = 0, c = a.map((e, t) => {
-			let n = t === a.length - 1 ? G - s : e.amount / o * G, r = {
-				color: e.color,
-				key: e.key,
-				length: n,
-				start: s
-			};
-			return s += n, r;
-		});
-		return this._compactFlowSourceParts(c);
-	}
-	_linkFlowSources(e, t, n, r, i) {
-		let a = t.nodes, o = a[e.from], s = a[e.to];
-		if (!o || !s) return [];
-		let c = r >= 0 ? e.from : e.to, l = r >= 0 ? e.to : e.from, u = this._nodeIdsOnSideOfLinkCached(e, c, l, a, n, i);
-		if (!u || u.has(l)) return [];
-		let d = a[c], f = a[l], p = this._sourceProjectionDirection(d, f);
-		return Array.from(u).map((e) => a[e]).filter((e) => !!e).filter((e) => this._nodeContributesToAutoFlow(e)).map((e) => ({
-			amount: this._nodeFlowValue(e),
-			color: this._nodeColorCached(e, t, n, i),
-			key: e.id,
-			node: e
-		})).filter((e) => e.amount > q).sort((e, t) => this._sourceProjection(e.node, d, p) - this._sourceProjection(t.node, d, p) || e.key.localeCompare(t.key));
-	}
-	_mergedFlowSources(e) {
-		let t = /* @__PURE__ */ new Map();
-		return e.forEach((e) => {
-			let n = t.get(e.color);
-			if (n) {
-				n.amount += e.amount;
-				return;
-			}
-			t.set(e.color, { ...e });
-		}), Array.from(t.values());
-	}
-	_compactFlowSourceParts(e) {
-		if (e.length <= 1) return e;
-		let t = [], n = 0;
-		if (e.forEach((e) => {
-			e.length < Xe ? n += e.length : t.push({ ...e });
-		}), t.length === e.length) return e;
-		if (t.length === 0) return [{
-			...e.reduce((e, t) => t.length > e.length ? t : e),
-			length: G,
-			start: 0
-		}];
-		let r = t.reduce((e, n, r) => n.length > t[e].length ? r : e, 0);
-		t[r] = {
-			...t[r],
-			length: t[r].length + n
-		};
-		let i = 0;
-		return t.map((e, n) => {
-			let r = n === t.length - 1 ? G - i : e.length, a = {
-				...e,
-				length: r,
-				start: i
-			};
-			return i += r, a;
-		});
-	}
-	_sourceProjectionDirection(e, t) {
-		let n = t.point.x - e.point.x, r = t.point.y - e.point.y, i = Math.hypot(n, r) || 1;
-		return {
-			x: n / i,
-			y: r / i
-		};
-	}
-	_sourceProjection(e, t, n) {
-		return (e.point.x - t.point.x) * n.x + (e.point.y - t.point.y) * n.y;
-	}
-	_nodeContributesToAutoFlow(e) {
-		var t;
-		return (t = e.contributesToFlow) == null ? e.kind === "leaf" : t;
-	}
-	_nodeIdsOnSideOfLinkCached(e, t, n, r, i, a) {
-		if (!a) return this._nodeIdsOnSideOfLink(e, t, n, r, i);
-		let o = `${e.id}|${t}|${n}`;
-		return a.sideNodeIds.has(o) || a.sideNodeIds.set(o, this._nodeIdsOnSideOfLink(e, t, n, r, i)), a.sideNodeIds.get(o);
-	}
-	_nodeIdsOnSideOfLink(e, t, n, r, i) {
-		if (!r[t] || !r[n]) return;
-		let a = /* @__PURE__ */ new Set(), o = [t], s = (t) => t.id === e.id || t.from === e.from && t.to === e.to || t.from === e.to && t.to === e.from;
-		for (; o.length > 0;) {
-			let e = o.shift();
-			!e || a.has(e) || (a.add(e), i.forEach((t) => {
-				if (s(t) || t.from !== e && t.to !== e) return;
-				let n = t.from === e ? t.to : t.from;
-				!a.has(n) && r[n] && o.push(n);
-			}));
-		}
-		return a;
-	}
-	_linkColor(e, t, n, r = this._linkSignedValue(e, t.nodes, n), i) {
-		let a = t.nodes;
-		if (e.color) return e.color;
-		let o = a[e.from], s = a[e.to], c = r >= 0 ? o : s;
-		return c ? this._nodeColorCached(c, t, n, i) : at.junction;
-	}
-	_nodeColorCached(e, t, n, r) {
-		if (!r) return this._nodeColor(e, t, n);
-		let i = r.nodeColors.get(e.id);
-		if (i) return i;
-		let a = this._nodeColor(e, t, n);
-		return r.nodeColors.set(e.id, a), a;
-	}
-	_nodeColor(e, t, n, r = /* @__PURE__ */ new Set()) {
-		var i;
-		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (t && n ? this._overlappingUnlinkedLeafColor(e, t, n, new Set(r).add(e.id)) : void 0) || (e.icon === "mdi:solar-power" ? "var(--energy-solar-color, #d6a500)" : (i = e.icon) != null && i.startsWith("mdi:battery") ? "var(--energy-battery-discharge-color, #3f79c9)" : at.leaf) : this._nonLeafColor(e, t);
-	}
-	_nodeDirectColor(e, t, n) {
-		var r;
-		return e.color ? e.color : e.kind === "leaf" ? (t && n ? this._attachedLeafColor(e, t, n) : void 0) || (e.icon === "mdi:solar-power" ? "var(--energy-solar-color, #d6a500)" : (r = e.icon) != null && r.startsWith("mdi:battery") ? "var(--energy-battery-discharge-color, #3f79c9)" : at.leaf) : this._nonLeafColor(e, t);
-	}
-	_attachedLeafColor(e, t, n) {
-		let r = n.filter((t) => t.from === e.id || t.to === e.id).map((n) => t.nodes[n.from === e.id ? n.to : n.from]).filter((e) => !!e).find((e) => e.kind === "junction");
-		if (r) return this._junctionFlowColor(r.id, t.nodes);
-	}
-	_overlappingUnlinkedLeafColor(e, t, n, r = /* @__PURE__ */ new Set()) {
-		if (n.some((t) => t.from === e.id || t.to === e.id)) return;
-		let i = Object.values(t.nodes).filter((t) => t.id !== e.id).map((t) => ({
-			node: t,
-			distance: Math.hypot(t.point.x - e.point.x, t.point.y - e.point.y)
-		})).filter(({ node: t, distance: n }) => n < t.radius + e.radius).sort((e, t) => e.distance - t.distance).map(({ node: e }) => e), a;
-		for (let e of i) {
-			if (e.kind !== "leaf") return this._nonLeafColor(e, t);
-			let i = this._attachedLeafColor(e, t, n);
-			if (i) return i;
-			if (!r.has(e.id)) {
-				let i = this._overlappingUnlinkedLeafColor(e, t, n, new Set(r).add(e.id));
-				if (i) return i;
-			}
-			a || (a = this._nodeDirectColor(e, t, n));
-		}
-		return a;
-	}
-	_nonLeafColor(e, t) {
-		return e.color ? e.color : e.kind === "junction" && t ? this._junctionFlowColor(e.id, t.nodes) : at[e.kind];
-	}
-	_connectionPoint(e, t, n, r) {
-		if (e.radius > 0) {
-			let i = r == null ? e.kind === "junction" ? B : 0 : r;
-			return this._anchorPoint(e, n == null ? this._nearestAnchorIndex(e, t.point) : n, i);
-		}
-		return e.point;
-	}
-	_anchorPoint(e, t, n = B) {
-		let r = this._anchorAngle(t), i = Math.max(0, e.radius + n);
-		return {
-			x: Math.round(e.point.x + Math.cos(r) * i),
-			y: Math.round(e.point.y + Math.sin(r) * i)
-		};
-	}
-	_anchorAngle(e) {
-		let t = this._normalizeAnchorIndex(e);
-		return -Math.PI / 2 + t * (Math.PI * 2 / W);
-	}
-	_nearestAnchorIndex(e, t) {
-		let n = (Math.atan2(t.y - e.point.y, t.x - e.point.x) + Math.PI / 2) / (Math.PI * 2) * W;
-		return this._normalizeAnchorIndex(Math.round(n));
-	}
-	_normalizeAnchorIndex(e) {
-		return (Math.round(e) % W + W) % W;
-	}
-	_anchorIndexForPointerPoint(e, t, n, r) {
-		let i = n === void 0 ? void 0 : this._normalizeAnchorIndex(n), a = r === void 0 ? void 0 : this._normalizeAnchorIndex(r), o = this._nearestAnchorIndex(e, t);
-		if (i !== void 0) {
-			let n = this._anchorPoint(e, i, 0), r = this._anchorPoint(e, o, 0), a = Math.hypot(t.x - n.x, t.y - n.y), s = Math.hypot(t.x - r.x, t.y - r.y);
-			if (a <= qe || a <= s + Je) return i;
-		}
-		return a == null ? o : a;
-	}
-	_clampedPoint(e) {
-		let t = {
-			x: Y(e.x, J.minX, J.maxX),
-			y: Y(e.y, J.minY, J.maxY)
-		}, n = {
-			x: J.minX + Math.round((t.x - J.minX) / U) * U,
-			y: J.minY + Math.round((t.y - J.minY) / U) * U
-		};
-		return {
-			x: Y(n.x, J.minX, J.maxX),
-			y: Y(n.y, J.minY, J.maxY)
-		};
-	}
-	_shouldShowFlow(e, t = this._flowMinVisibleValue()) {
-		let n = Math.abs(e);
-		return n > q && n >= Math.max(0, t);
-	}
-	_flowWidth(e, t = this._flowMinVisibleValue(), n = this._flowMaxValue(t)) {
-		return tt + Y((Math.abs(e) - t) / (n - t), 0, 1) ** rt * (nt - tt);
-	}
-	_flowMinVisibleValue() {
-		return Math.max(0, Number.isFinite(this.flowMinVisibleValue) ? this.flowMinVisibleValue : $e);
-	}
-	_flowMaxValue(e = this._flowMinVisibleValue()) {
-		let t = Number.isFinite(this.flowMaxValue) ? this.flowMaxValue : et;
-		return Math.max(t, e + 1);
-	}
-	_linkMinVisibleValue(e, t, n = this.links) {
-		var r;
-		return Math.max(0, Number.isFinite(e.flowMinVisibleValue) ? Number(e.flowMinVisibleValue) : (r = this._junctionFlowMinVisibleValue(e, t, n)) == null ? this._flowMinVisibleValue() : r);
-	}
-	_linkMaxValue(e, t = this._linkMinVisibleValue(e), n, r = this.links) {
-		var i;
-		let a = Number.isFinite(e.flowMaxValue) ? Number(e.flowMaxValue) : (i = this._junctionFlowMaxValue(e, n, r)) == null ? this._flowMaxValue(t) : i;
-		return Math.max(a, t + 1);
-	}
-	_junctionFlowMinVisibleValue(e, t, n) {
-		let r = this._linkScaleJunction(e, t, n, "flowMinVisibleValue");
-		return Number.isFinite(r == null ? void 0 : r.flowMinVisibleValue) ? Number(r == null ? void 0 : r.flowMinVisibleValue) : void 0;
-	}
-	_junctionFlowMaxValue(e, t, n) {
-		let r = this._linkScaleJunction(e, t, n, "flowMaxValue");
-		return Number.isFinite(r == null ? void 0 : r.flowMaxValue) ? Number(r == null ? void 0 : r.flowMaxValue) : void 0;
-	}
-	_linkScaleJunction(e, t, n, r) {
-		if (!t) return;
-		let i = this._nodeIdsConnectedTo(e.from, t, n);
-		return Object.values(t).filter((e) => e.kind === "junction" && i.has(e.id)).find((e) => Number.isFinite(e[r]));
-	}
-	_nodeIdsConnectedTo(e, t, n) {
-		let r = /* @__PURE__ */ new Set(), i = [e];
-		for (; i.length > 0;) {
-			let e = i.shift();
-			!e || r.has(e) || (r.add(e), n.forEach((n) => {
-				if (n.from !== e && n.to !== e) return;
-				let a = n.from === e ? n.to : n.from;
-				!r.has(a) && t[a] && i.push(a);
-			}));
-		}
-		return r;
-	}
-	_nodePrimaryValue(e, t, n) {
-		if (e.displayValue) return e.displayValue;
-		let r = this._nodeDisplayValue(e, t, n);
-		return this._isBatteryValueNode(e) ? this._formatNodeValue(Math.abs(r), e) : this._formatNodeValue(r, e);
-	}
-	_nodeDisplayValue(e, t, n) {
-		var r;
-		return e.kind !== "junction" || e.hasOwnValue || (r = this._junctionDisplayFlowValue(e, t.nodes, n)) == null ? e.value : r;
-	}
-	_junctionDisplayFlowValue(e, t, n) {
-		var r;
-		let i = 0, a = 0, o = 0;
-		if (n.forEach((r) => {
-			let s = this._linkFlowRelativeToNode(r, e.id, t, n);
-			s !== void 0 && (o += 1, s >= 0 ? i += s : a += Math.abs(s));
-		}), o !== 0) switch ((r = e.junctionDisplayMode) == null ? "incoming" : r) {
-			case "outgoing": return a;
-			case "net": return i - a;
-			default: return i;
-		}
-	}
-	_linkFlowRelativeToNode(e, t, n, r) {
-		if (e.from !== t && e.to !== t) return;
-		let i = n[e.from === t ? e.to : e.from];
-		if ((i == null ? void 0 : i.kind) === "leaf" && !this._nodeContributesToAutoFlow(i)) return;
-		let a = this._linkSignedValue(e, n, r);
-		if (Number.isFinite(a)) return e.to === t ? a : -a;
-	}
-	_hasNodeFlowArrow(e) {
-		return e.showFlowArrow === !0 && Math.abs(this._nodeFlowValue(e)) > q;
-	}
-	_isBatteryValueNode(e) {
-		return e.kind === "leaf" && e.secondary !== void 0 && this._isBatteryIcon(e.icon);
-	}
-	_isBatteryIcon(e) {
-		return (e == null ? void 0 : e.startsWith("mdi:battery")) === !0;
-	}
-	_formatNodeValue(e, t) {
-		var n;
-		let r = (n = t.unit) == null ? void 0 : n.trim();
-		return !r || r === "W" || r === "kW" || r === "MW" ? this._formatPower(e) : `${this._formatNumber(Math.abs(e))} ${r}`;
-	}
-	_formatPower(e) {
-		let t = Math.abs(e);
-		return t >= 1e3 ? `${this._formatNumber(t / 1e3)} kW` : `${Math.round(t).toLocaleString("en-US")} W`;
-	}
-	_formatNumber(e) {
-		return e.toLocaleString("en-US", { maximumFractionDigits: e >= 100 ? 0 : 1 });
-	}
-	_defaultIcon(e) {
-		return e === "junction" ? "mdi:hub" : "mdi:leaf";
-	}
-	_capturePointer(e) {
-		try {
-			var t, n;
-			(t = e.currentTarget) == null || (n = t.setPointerCapture) == null || n.call(t, e.pointerId);
-		} catch {}
-	}
-	_eventPoint(e) {
-		let t = this.renderRoot.querySelector(".flow-svg"), n = t == null ? void 0 : t.getScreenCTM();
-		if (!n) return;
-		let r = new DOMPoint(e.clientX, e.clientY).matrixTransform(n.inverse());
-		return {
-			x: r.x,
-			y: r.y
-		};
-	}
-	_emitLayoutChange(e, t = !1) {
-		this.dispatchEvent(new CustomEvent("graph-layout-change", {
-			detail: {
-				layout: e,
-				live: t
-			},
-			bubbles: !0,
-			composed: !0
-		}));
-	}
-	_emitLinksChange(e, t = !1) {
-		this.dispatchEvent(new CustomEvent("graph-links-change", {
-			detail: {
-				links: e,
-				live: t
-			},
-			bubbles: !0,
-			composed: !0
-		}));
-	}
-	_emitNodeSelect(e) {
-		this.dispatchEvent(new CustomEvent("graph-node-select", {
-			detail: { nodeId: e },
-			bubbles: !0,
-			composed: !0
-		}));
-	}
-	_emitNodeRemove(e) {
-		this.dispatchEvent(new CustomEvent("graph-node-remove", {
-			detail: { nodeId: e },
-			bubbles: !0,
-			composed: !0
-		}));
-	}
-	_emitNodeLabelChange(e, t = !1) {
-		this.dispatchEvent(new CustomEvent("graph-node-label-change", {
-			detail: {
-				...e,
-				live: t
-			},
-			bubbles: !0,
-			composed: !0
-		}));
-	}
-	_nodeActionLabel(e) {
-		switch (e.type) {
-			case "toggle": return "toggle";
-			case "navigate": return "navigate";
-			case "url": return "open link";
-			default: return "details";
-		}
-	}
-	_emitNodeAction(e, t) {
-		e && (t == null || t.stopPropagation(), t == null || t.preventDefault(), this.dispatchEvent(new CustomEvent("graph-node-action", {
-			detail: { action: e },
-			bubbles: !0,
-			composed: !0
-		})));
-	}
-	_emitEntityMoreInfo(e, t) {
-		e && (t == null || t.stopPropagation(), t == null || t.preventDefault(), this.dispatchEvent(new CustomEvent("graph-entity-more-info", {
-			detail: { entityId: e },
-			bubbles: !0,
-			composed: !0
-		})));
-	}
-	_handleNodeActionKeydown(e, t) {
-		e.key !== "Enter" && e.key !== " " || this._emitNodeAction(t, e);
-	}
-};
-Pe = ft, Pe.properties = {
-	activeNode: { state: !0 },
-	editable: { type: Boolean },
-	hoverTarget: { state: !0 },
-	flowMaxValue: {
-		type: Number,
-		attribute: "flow-max-value"
-	},
-	flowMinVisibleValue: {
-		type: Number,
-		attribute: "flow-min-visible-value"
-	},
-	hideZeroValues: {
-		type: Boolean,
-		attribute: "hide-zero-values"
-	},
-	layout: { attribute: !1 },
-	labelStyle: {
-		type: String,
-		attribute: "label-style"
-	},
-	leafRouting: {
-		type: String,
-		attribute: "leaf-routing"
-	},
-	links: { attribute: !1 },
-	nodes: { attribute: !1 },
-	pendingLink: { state: !0 },
-	pointerPoint: { state: !0 },
-	selectedLink: { state: !0 },
-	selectedNode: { state: !0 }
-}, Pe.styles = o`
+var e,t,n,i,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s=Symbol(),a=/* @__PURE__ */new WeakMap,l=class{constructor(e,t,n){if(this._$cssResult$=!0,n!==s)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(r&&void 0===e){const n=void 0!==t&&1===t.length;n&&(e=a.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),n&&a.set(t,e))}return e}toString(){return this.cssText}},d=(e,...t)=>{const n=1===e.length?e[0]:t.reduce((t,n,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(n)+e[i+1],e[0]);return new l(n,e,s)},h=r?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const n of e.cssRules)t+=n.cssText;return(e=>new l("string"==typeof e?e:e+"",void 0,s))(t)})(e):e,{is:c,defineProperty:u,getOwnPropertyDescriptor:p,getOwnPropertyNames:f,getOwnPropertySymbols:_,getPrototypeOf:v}=Object,m=globalThis,g=m.trustedTypes,y=g?g.emptyScript:"",b=m.reactiveElementPolyfillSupport,x=(e,t)=>e,$={toAttribute(e,t){switch(t){case Boolean:e=e?y:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let n=e;switch(t){case Boolean:n=null!==e;break;case Number:n=null===e?null:Number(e);break;case Object:case Array:try{n=JSON.parse(e)}catch(e){n=null}}return n}},w=(e,t)=>!c(e,t),k={attribute:!0,type:String,converter:$,reflect:!1,useDefault:!1,hasChanged:w};null!==(t=(e=Symbol).metadata)&&void 0!==t||(e.metadata=Symbol("metadata")),null!==(n=m.litPropertyMetadata)&&void 0!==n||(m.litPropertyMetadata=/* @__PURE__ */new WeakMap);var A,L=class extends HTMLElement{static addInitializer(e){var t;this._$Ei(),(null!==(t=this.l)&&void 0!==t?t:this.l=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=k){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const n=Symbol(),i=this.getPropertyDescriptor(e,n,t);void 0!==i&&u(this.prototype,e,i)}}static getPropertyDescriptor(e,t,n){var i;const{get:o,set:r}=null!==(i=p(this.prototype,e))&&void 0!==i?i:{get(){return this[t]},set(e){this[t]=e}};return{get:o,set(t){const i=null==o?void 0:o.call(this);null==r||r.call(this,t),this.requestUpdate(e,i,n)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){var t;return null!==(t=this.elementProperties.get(e))&&void 0!==t?t:k}static _$Ei(){if(this.hasOwnProperty(x("elementProperties")))return;const e=v(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(x("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(x("properties"))){const e=this.properties,t=[...f(e),..._(e)];for(const n of t)this.createProperty(n,e[n])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,n]of t)this.elementProperties.set(e,n)}this._$Eh=/* @__PURE__ */new Map;for(const[t,n]of this.elementProperties){const e=this._$Eu(t,n);void 0!==e&&this._$Eh.set(e,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const n=new Set(e.flat(1/0).reverse());for(const e of n)t.unshift(h(e))}else void 0!==e&&t.push(h(e));return t}static _$Eu(e,t){const n=t.attribute;return!1===n?void 0:"string"==typeof n?n:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){var e;this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=/* @__PURE__ */new Map,this._$E_(),this.requestUpdate(),null===(e=this.constructor.l)||void 0===e||e.forEach(e=>e(this))}addController(e){var t,n;(null!==(t=this._$EO)&&void 0!==t?t:this._$EO=/* @__PURE__ */new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&(null===(n=e.hostConnected)||void 0===n||n.call(e))}removeController(e){var t;null===(t=this._$EO)||void 0===t||t.delete(e)}_$E_(){const e=/* @__PURE__ */new Map,t=this.constructor.elementProperties;for(const n of t.keys())this.hasOwnProperty(n)&&(e.set(n,this[n]),delete this[n]);e.size>0&&(this._$Ep=e)}createRenderRoot(){var e;const t=null!==(e=this.shadowRoot)&&void 0!==e?e:this.attachShadow(this.constructor.shadowRootOptions);return((e,t)=>{if(r)e.adoptedStyleSheets=t.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const n of t){const t=document.createElement("style"),i=o.litNonce;void 0!==i&&t.setAttribute("nonce",i),t.textContent=n.cssText,e.appendChild(t)}})(t,this.constructor.elementStyles),t}connectedCallback(){var e,t;null!==(e=this.renderRoot)&&void 0!==e||(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$EO)||void 0===t||t.forEach(e=>{var t;return null===(t=e.hostConnected)||void 0===t?void 0:t.call(e)})}enableUpdating(e){}disconnectedCallback(){var e;null===(e=this._$EO)||void 0===e||e.forEach(e=>{var t;return null===(t=e.hostDisconnected)||void 0===t?void 0:t.call(e)})}attributeChangedCallback(e,t,n){this._$AK(e,n)}_$ET(e,t){const n=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,n);if(void 0!==i&&!0===n.reflect){var o;const r=(void 0!==(null===(o=n.converter)||void 0===o?void 0:o.toAttribute)?n.converter:$).toAttribute(t,n.type);this._$Em=e,null==r?this.removeAttribute(i):this.setAttribute(i,r),this._$Em=null}}_$AK(e,t){const n=this.constructor,i=n._$Eh.get(e);if(void 0!==i&&this._$Em!==i){var o,r,s;const e=n.getPropertyOptions(i),a="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==(null===(o=e.converter)||void 0===o?void 0:o.fromAttribute)?e.converter:$;this._$Em=i;const l=a.fromAttribute(t,e.type);this[i]=null!==(r=null!=l?l:null===(s=this._$Ej)||void 0===s?void 0:s.get(i))&&void 0!==r?r:l,this._$Em=null}}requestUpdate(e,t,n,i=!1,o){if(void 0!==e){var r,s,a;const l=this.constructor;if(!1===i&&(o=this[e]),null!==(r=n)&&void 0!==r||(n=l.getPropertyOptions(e)),!((null!==(s=n.hasChanged)&&void 0!==s?s:w)(o,t)||n.useDefault&&n.reflect&&o===(null===(a=this._$Ej)||void 0===a?void 0:a.get(e))&&!this.hasAttribute(l._$Eu(e,n))))return;this.C(e,t,n)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:n,reflect:i,wrapped:o},r){var s,a,l;n&&!(null!==(s=this._$Ej)&&void 0!==s?s:this._$Ej=/* @__PURE__ */new Map).has(e)&&(this._$Ej.set(e,null!==(a=null!=r?r:t)&&void 0!==a?a:this[e]),!0!==o||void 0!==r)||(this._$AL.has(e)||(this.hasUpdated||n||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(null!==(l=this._$Eq)&&void 0!==l?l:this._$Eq=/* @__PURE__ */new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){var e;if(null!==(e=this.renderRoot)&&void 0!==e||(this.renderRoot=this.createRenderRoot()),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const t=this.constructor.elementProperties;if(t.size>0)for(const[e,n]of t){const{wrapped:t}=n,i=this[e];!0!==t||this._$AL.has(e)||void 0===i||this.C(e,void 0,n,i)}}let t=!1;const n=this._$AL;try{var i;t=this.shouldUpdate(n),t?(this.willUpdate(n),null===(i=this._$EO)||void 0===i||i.forEach(e=>{var t;return null===(t=e.hostUpdate)||void 0===t?void 0:t.call(e)}),this.update(n)):this._$EM()}catch(n){throw t=!1,this._$EM(),n}t&&this._$AE(n)}willUpdate(e){}_$AE(e){var t;null===(t=this._$EO)||void 0===t||t.forEach(e=>{var t;return null===(t=e.hostUpdated)||void 0===t?void 0:t.call(e)}),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=/* @__PURE__ */new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&(this._$Eq=this._$Eq.forEach(e=>this._$ET(e,this[e]))),this._$EM()}updated(e){}firstUpdated(e){}};L.elementStyles=[],L.shadowRootOptions={mode:"open"},L[x("elementProperties")]=/* @__PURE__ */new Map,L[x("finalized")]=/* @__PURE__ */new Map,null==b||b({ReactiveElement:L}),(null!==(i=m.reactiveElementVersions)&&void 0!==i?i:m.reactiveElementVersions=[]).push("2.1.2");var P=globalThis,C=e=>e,N=P.trustedTypes,M=N?N.createPolicy("lit-html",{createHTML:e=>e}):void 0,I="$lit$",S=`lit$${Math.random().toFixed(9).slice(2)}$`,E="?"+S,j=`<${E}>`,V=document,O=()=>V.createComment(""),F=e=>null===e||"object"!=typeof e&&"function"!=typeof e,D=Array.isArray,T=e=>D(e)||"function"==typeof(null==e?void 0:e[Symbol.iterator]),R="[ \t\n\f\r]",J=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,B=/-->/g,z=/>/g,U=RegExp(`>|${R}(?:([^\\s"'>=/]+)(${R}*=${R}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),H=/'/g,G=/"/g,W=/^(?:script|style|textarea|title)$/i,K=e=>(t,...n)=>({_$litType$:e,strings:t,values:n}),q=K(1),Y=K(2),X=(K(3),Symbol.for("lit-noChange")),Z=Symbol.for("lit-nothing"),Q=/* @__PURE__ */new WeakMap,ee=V.createTreeWalker(V,129);function te(e,t){if(!D(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==M?M.createHTML(t):t}var ne=(e,t)=>{const n=e.length-1,i=[];let o,r=2===t?"<svg>":3===t?"<math>":"",s=J;for(let l=0;l<n;l++){var a;const t=e[l];let n,d,h=-1,c=0;for(;c<t.length&&(s.lastIndex=c,d=s.exec(t),null!==d);)c=s.lastIndex,s===J?"!--"===d[1]?s=B:void 0!==d[1]?s=z:void 0!==d[2]?(W.test(d[2])&&(o=RegExp("</"+d[2],"g")),s=U):void 0!==d[3]&&(s=U):s===U?">"===d[0]?(s=null!==(a=o)&&void 0!==a?a:J,h=-1):void 0===d[1]?h=-2:(h=s.lastIndex-d[2].length,n=d[1],s=void 0===d[3]?U:'"'===d[3]?G:H):s===G||s===H?s=U:s===B||s===z?s=J:(s=U,o=void 0);const u=s===U&&e[l+1].startsWith("/>")?" ":"";r+=s===J?t+j:h>=0?(i.push(n),t.slice(0,h)+I+t.slice(h)+S+u):t+S+(-2===h?l:u)}return[te(e,r+(e[n]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]},ie=class e{constructor({strings:t,_$litType$:n},i){let o;this.parts=[];let r=0,s=0;const a=t.length-1,l=this.parts,[d,h]=ne(t,n);if(this.el=e.createElement(d,i),ee.currentNode=this.el.content,2===n||3===n){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(o=ee.nextNode())&&l.length<a;){if(1===o.nodeType){if(o.hasAttributes())for(const e of o.getAttributeNames())if(e.endsWith(I)){const t=h[s++],n=o.getAttribute(e).split(S),i=/([.?@])?(.*)/.exec(t);l.push({type:1,index:r,name:i[2],strings:n,ctor:"."===i[1]?le:"?"===i[1]?de:"@"===i[1]?he:ae}),o.removeAttribute(e)}else e.startsWith(S)&&(l.push({type:6,index:r}),o.removeAttribute(e));if(W.test(o.tagName)){const e=o.textContent.split(S),t=e.length-1;if(t>0){o.textContent=N?N.emptyScript:"";for(let n=0;n<t;n++)o.append(e[n],O()),ee.nextNode(),l.push({type:2,index:++r});o.append(e[t],O())}}}else if(8===o.nodeType)if(o.data===E)l.push({type:2,index:r});else{let e=-1;for(;-1!==(e=o.data.indexOf(S,e+1));)l.push({type:7,index:r}),e+=S.length-1}r++}}static createElement(e,t){const n=V.createElement("template");return n.innerHTML=e,n}};function oe(e,t,n=e,i){var o,r,s;if(t===X)return t;let a=void 0!==i?null===(o=n._$Co)||void 0===o?void 0:o[i]:n._$Cl;const l=F(t)?void 0:t._$litDirective$;return(null==a?void 0:a.constructor)!==l&&(null==a||null===(r=a._$AO)||void 0===r||r.call(a,!1),void 0===l?a=void 0:(a=new l(e),a._$AT(e,n,i)),void 0!==i?(null!==(s=n._$Co)&&void 0!==s?s:n._$Co=[])[i]=a:n._$Cl=a),void 0!==a&&(t=oe(e,a._$AS(e,t.values),a,i)),t}var re=class{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){var t;const{el:{content:n},parts:i}=this._$AD,o=(null!==(t=null==e?void 0:e.creationScope)&&void 0!==t?t:V).importNode(n,!0);ee.currentNode=o;let r=ee.nextNode(),s=0,a=0,l=i[0];for(;void 0!==l;){if(s===l.index){let t;2===l.type?t=new se(r,r.nextSibling,this,e):1===l.type?t=new l.ctor(r,l.name,l.strings,this,e):6===l.type&&(t=new ce(r,this,e)),this._$AV.push(t),l=i[++a]}s!==(null==l?void 0:l.index)&&(r=ee.nextNode(),s++)}return ee.currentNode=V,o}p(e){let t=0;for(const n of this._$AV)void 0!==n&&(void 0!==n.strings?(n._$AI(e,n,t),t+=n.strings.length-2):n._$AI(e[t])),t++}},se=class e{get _$AU(){var e,t;return null!==(e=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==e?e:this._$Cv}constructor(e,t,n,i){var o;this.type=2,this._$AH=Z,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=n,this.options=i,this._$Cv=null===(o=null==i?void 0:i.isConnected)||void 0===o||o}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===(null==e?void 0:e.nodeType)&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=oe(this,e,t),F(e)?e===Z||null==e||""===e?(this._$AH!==Z&&this._$AR(),this._$AH=Z):e!==this._$AH&&e!==X&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):T(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==Z&&F(this._$AH)?this._$AA.nextSibling.data=e:this.T(V.createTextNode(e)),this._$AH=e}$(e){var t;const{values:n,_$litType$:i}=e,o="number"==typeof i?this._$AC(e):(void 0===i.el&&(i.el=ie.createElement(te(i.h,i.h[0]),this.options)),i);if((null===(t=this._$AH)||void 0===t?void 0:t._$AD)===o)this._$AH.p(n);else{const e=new re(o,this),t=e.u(this.options);e.p(n),this.T(t),this._$AH=e}}_$AC(e){let t=Q.get(e.strings);return void 0===t&&Q.set(e.strings,t=new ie(e)),t}k(t){D(this._$AH)||(this._$AH=[],this._$AR());const n=this._$AH;let i,o=0;for(const r of t)o===n.length?n.push(i=new e(this.O(O()),this.O(O()),this,this.options)):i=n[o],i._$AI(r),o++;o<n.length&&(this._$AR(i&&i._$AB.nextSibling,o),n.length=o)}_$AR(e=this._$AA.nextSibling,t){var n;for(null===(n=this._$AP)||void 0===n||n.call(this,!1,!0,t);e!==this._$AB;){const t=C(e).nextSibling;C(e).remove(),e=t}}setConnected(e){var t;void 0===this._$AM&&(this._$Cv=e,null===(t=this._$AP)||void 0===t||t.call(this,e))}},ae=class{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,n,i,o){this.type=1,this._$AH=Z,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=o,n.length>2||""!==n[0]||""!==n[1]?(this._$AH=Array(n.length-1).fill(/* @__PURE__ */new String),this.strings=n):this._$AH=Z}_$AI(e,t=this,n,i){const o=this.strings;let r=!1;if(void 0===o)e=oe(this,e,t,0),r=!F(e)||e!==this._$AH&&e!==X,r&&(this._$AH=e);else{var s;const i=e;let a,l;for(e=o[0],a=0;a<o.length-1;a++)l=oe(this,i[n+a],t,a),l===X&&(l=this._$AH[a]),r||(r=!F(l)||l!==this._$AH[a]),l===Z?e=Z:e!==Z&&(e+=(null!==(s=l)&&void 0!==s?s:"")+o[a+1]),this._$AH[a]=l}r&&!i&&this.j(e)}j(e){e===Z?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=e?e:"")}},le=class extends ae{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===Z?void 0:e}},de=class extends ae{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==Z)}},he=class extends ae{constructor(e,t,n,i,o){super(e,t,n,i,o),this.type=5}_$AI(e,t=this){var n;if((e=null!==(n=oe(this,e,t,0))&&void 0!==n?n:Z)===X)return;const i=this._$AH,o=e===Z&&i!==Z||e.capture!==i.capture||e.once!==i.once||e.passive!==i.passive,r=e!==Z&&(i===Z||o);o&&this.element.removeEventListener(this.name,this,i),r&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){var t,n;"function"==typeof this._$AH?this._$AH.call(null!==(t=null===(n=this.options)||void 0===n?void 0:n.host)&&void 0!==t?t:this.element,e):this._$AH.handleEvent(e)}},ce=class{constructor(e,t,n){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=n}get _$AU(){return this._$AM._$AU}_$AI(e){oe(this,e)}},ue={M:I,P:S,A:E,C:1,L:ne,R:re,D:T,V:oe,I:se,H:ae,N:de,U:he,B:le,F:ce},pe=P.litHtmlPolyfillSupport;null==pe||pe(ie,se),(null!==(A=P.litHtmlVersions)&&void 0!==A?A:P.litHtmlVersions=[]).push("3.3.2");var fe,_e,ve=globalThis,me=class extends L{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){var e,t;const n=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=n.firstChild),n}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,n)=>{var i;const o=null!==(i=null==n?void 0:n.renderBefore)&&void 0!==i?i:t;let r=o._$litPart$;if(void 0===r){var s;const e=null!==(s=null==n?void 0:n.renderBefore)&&void 0!==s?s:null;o._$litPart$=r=new se(t.insertBefore(O(),e),e,void 0,null!=n?n:{})}return r._$AI(e),r})(t,this.renderRoot,this.renderOptions)}connectedCallback(){var e;super.connectedCallback(),null===(e=this._$Do)||void 0===e||e.setConnected(!0)}disconnectedCallback(){var e;super.disconnectedCallback(),null===(e=this._$Do)||void 0===e||e.setConnected(!1)}render(){return X}};me._$litElement$=!0,me.finalized=!0,null===(fe=ve.litElementHydrateSupport)||void 0===fe||fe.call(ve,{LitElement:me});var ge=ve.litElementPolyfillSupport;null==ge||ge({LitElement:me}),(null!==(_e=ve.litElementVersions)&&void 0!==_e?_e:ve.litElementVersions=[]).push("4.2.2");var ye=(e,t,n)=>Math.min(Math.max(e,t),n);function be(e,t,n){return{x:Number((e.x+Math.cos(n)*t).toFixed(2)),y:Number((e.y+Math.sin(n)*t).toFixed(2))}}function xe(e,t,n){const i=n.x-t.x,o=n.y-t.y,r=i*i+o*o||1,s=ye(((e.x-t.x)*i+(e.y-t.y)*o)/r,0,1),a={x:t.x+i*s,y:t.y+o*s};return{distance:Math.hypot(e.x-a.x,e.y-a.y),point:a,t:s}}var $e=class{constructor(){this.widths=/* @__PURE__ */new Map}measure(e){var t,n;const i=this.widths.get(e);if(void 0!==i)return i;void 0===this.context&&(this.context=document.createElement("canvas").getContext("2d"),this.context&&(this.context.font="400 27px Roboto, sans-serif"));const o=null!==(t=null===(n=this.context)||void 0===n?void 0:n.measureText(e).width)&&void 0!==t?t:13*e.length;return this.widths.set(e,o),o}},we=d`
     :host {
       display: block;
       height: 100%;
@@ -3134,28 +258,6 @@ Pe = ft, Pe.properties = {
       pointer-events: none;
     }
 
-    .icon-line,
-    .icon-box {
-      fill: none;
-      stroke: currentColor;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 5;
-    }
-
-    .icon-line.thin {
-      stroke-width: 3;
-    }
-
-    .icon-dot,
-    .battery-fill {
-      fill: #4f9b6d;
-    }
-
-    .bolt {
-      fill: #d88a00;
-    }
-
     .anchor-controls {
       pointer-events: none;
     }
@@ -3189,602 +291,342 @@ Pe = ft, Pe.properties = {
     .connector-hit.selected {
       filter: drop-shadow(0 1px 4px rgb(63 121 201 / 0.45));
     }
-  `, customElements.get("home-flow-graph-card") || customElements.define("home-flow-graph-card", ft);
-//#endregion
-//#region src/preview-events.ts
-var pt = 0;
-function mt(e) {
-	return pt += 1, `${e}-${pt}`;
-}
-function ht(e, t = {}) {
-	var n;
-	window.dispatchEvent(new CustomEvent("home-flow-card-preview-config-changed", { detail: {
-		config: e,
-		configKey: t.configKey,
-		sourceConfigKey: (n = t.sourceConfigKey) == null ? t.configKey : n,
-		sourceId: t.sourceId
-	} }));
-}
-function gt(e, t = {}) {
-	window.dispatchEvent(new CustomEvent("home-flow-card-preview-node-selected", { detail: {
-		configKey: t.configKey,
-		nodeId: e,
-		sourceId: t.sourceId,
-		targetId: t.targetId
-	} }));
-}
-//#endregion
-//#region src/home-flow-config.ts
-var _t = "home-flow-card", vt = 12e3, yt = "curved", bt = "funnel", xt = "fit-width", St = "#2d8f8a", Ct = "#3f79c9", wt = "#c65b4a", Tt = "#3f79c9", Et = "#d6a500", Dt = .5, Ot = [
-	"device_class",
-	"friendly_name",
-	"icon",
-	"unit_of_measurement"
-], kt = [
-	"#f6b73c",
-	"#ef6c00",
-	"#f4a340",
-	"#b85f1a"
-], At = [
-	St,
-	Ct,
-	Et,
-	Tt,
-	wt,
-	"#ef6c00",
-	"#4f9b6d",
-	"#8a5cc2",
-	"#d04b89",
-	"#4d90d9",
-	"#7a7f2f",
-	"#c86b2f"
-], jt = [
-	{
-		id: "grid",
-		kind: "junction",
-		label: "Grid",
-		icon: "mdi:transmission-tower",
-		radius: 90,
-		color: St,
-		flowDirection: "supply",
-		balance_role: "junction"
-	},
-	{
-		id: "home",
-		kind: "junction",
-		label: "Home",
-		icon: "mdi:home-lightning-bolt",
-		radius: 90,
-		color: Ct,
-		flowDirection: "consume",
-		balance_role: "junction"
-	},
-	{
-		id: "heat-pump",
-		kind: "leaf",
-		label: "Heat pump",
-		icon: "mdi:heat-pump",
-		radius: 65,
-		flowDirection: "consume"
-	}
-], Mt = [{
-	id: "grid->home",
-	from: "grid",
-	to: "home"
-}, {
-	id: "heat-pump->home",
-	from: "heat-pump",
-	to: "home"
-}], Nt = {
-	grid: {
-		x: 245,
-		y: 365
-	},
-	home: {
-		x: 490,
-		y: 365
-	},
-	"heat-pump": {
-		x: 705,
-		y: 365
-	}
-};
-function X(e) {
-	let t = xn(e) ? e : {}, n = Array.isArray(t.nodes), r = Sn(t.flow_min_visible_value, 10), i = Math.max(Sn(t.flow_max_value, vt), r + 1), a = t.hide_zero_values === !0;
-	return {
-		type: typeof t.type == "string" ? t.type : `custom:${_t}`,
-		title: typeof t.title == "string" ? t.title : void 0,
-		nodes: Pt(t.nodes, a),
-		links: Wt(t.links, !n),
-		layout: Gt(t.layout, !n),
-		flow_min_visible_value: r,
-		flow_max_value: i,
-		label_style: t.label_style === "straight" ? "straight" : yt,
-		leaf_routing: t.leaf_routing === "channel" || t.leaf_routing === "radial" || t.leaf_routing === "orthogonal" || t.leaf_routing === "sweep" ? t.leaf_routing : bt,
-		scaling_mode: t.scaling_mode === "fit-width" || t.scaling_mode === "shrink" ? t.scaling_mode : xt,
-		width: Sn(t.width, 502),
-		height: Sn(t.height, 360)
-	};
-}
-function Pt(e, t = !1) {
-	return Array.isArray(e) ? e.filter((e) => xn(e)).filter((e) => typeof e.id == "string" && Ft(e.kind) !== void 0).map((e) => {
-		var n, r, i;
-		let a = (n = Ft(e.kind)) == null ? "leaf" : n;
-		return {
-			id: String(e.id),
-			kind: a,
-			label: typeof e.label == "string" ? e.label : yn(String(e.id)),
-			label_angle: $(e.label_angle),
-			label_offset_x: $(e.label_offset_x),
-			label_offset_y: $(e.label_offset_y),
-			flow_mode: Lt(e.flow_mode),
-			entity: Z(e.entity),
-			attribute: Q(e.attribute),
-			incoming_entity: Z(e.incoming_entity),
-			incoming_attribute: Q(e.incoming_attribute),
-			outgoing_entity: Z(e.outgoing_entity),
-			outgoing_attribute: Q(e.outgoing_attribute),
-			secondary_entity: Z(e.secondary_entity),
-			secondary_attribute: Q(e.secondary_attribute),
-			primary_action: Vt(e.primary_action),
-			primary_action_path: Q(e.primary_action_path),
-			secondary_action: Vt(e.secondary_action),
-			secondary_action_path: Q(e.secondary_action_path),
-			value: $(e.value),
-			secondary: $(e.secondary),
-			factor: $(e.factor),
-			invert: e.invert === !0,
-			flowDirection: It(e.flowDirection),
-			allowed_flow: zt(e.allowed_flow),
-			balance_role: a === "junction" ? (r = Rt(e.balance_role)) == null ? un(a) : r : void 0,
-			junction_display_value: Bt(e.junction_display_value),
-			hide_zero_values: typeof e.hide_zero_values == "boolean" ? e.hide_zero_values : t ? !0 : void 0,
-			hide_if_zero: typeof e.hide_if_zero == "boolean" ? e.hide_if_zero : void 0,
-			show_flow_arrow: typeof e.show_flow_arrow == "boolean" ? e.show_flow_arrow : void 0,
-			flowMinVisibleValue: $(e.flowMinVisibleValue),
-			flowMaxValue: $(e.flowMaxValue),
-			radius: Cn((i = $(e.radius)) == null ? cn(a) : i, 20, 100),
-			icon: Ht(e.icon),
-			unit: Q(e.unit),
-			color: Q(e.color)
-		};
-	}) : bn(jt).map((e) => ({
-		...e,
-		...t ? { hide_zero_values: !0 } : {}
-	}));
-}
-function Ft(e) {
-	if (e === "junction" || e === "leaf") return e;
-}
-function It(e) {
-	if (e === "consume" || e === "supply") return e;
-}
-function Lt(e) {
-	if (e === "signed" || e === "bidirectional") return e;
-}
-function Rt(e) {
-	if (e === "junction" || e === "measured" || e === "ignore") return e;
-}
-function zt(e) {
-	if (e === "both" || e === "supply" || e === "consume") return e;
-}
-function Bt(e) {
-	if (e === "incoming" || e === "outgoing" || e === "net") return e;
-}
-function Vt(e) {
-	if (e === "more-info" || e === "toggle" || e === "navigate" || e === "url" || e === "none") return e;
-}
-function Ht(e) {
-	var t;
-	if (e === null) return null;
-	let n = Q(e);
-	if (n) return (t = Ut[n]) == null ? n.includes(":") ? n : void 0 : t;
-}
-var Ut = {
-	appliance: "mdi:power-plug",
-	battery: "mdi:battery",
-	ev: "mdi:car-electric",
-	generic: "mdi:circle-outline",
-	grid: "mdi:transmission-tower",
-	heat_pump: "mdi:heat-pump",
-	home: "mdi:home-lightning-bolt",
-	junction: "mdi:hub",
-	node: "mdi:circle-small",
-	plug: "mdi:power-plug",
-	solar: "mdi:solar-power",
-	water: "mdi:water"
-};
-function Wt(e, t = !0) {
-	return Array.isArray(e) ? e.filter((e) => xn(e)).filter((e) => typeof e.from == "string" && typeof e.to == "string").map((e) => ({
-		id: typeof e.id == "string" ? e.id : `${String(e.from)}->${String(e.to)}`,
-		from: String(e.from),
-		to: String(e.to),
-		entity: Z(e.entity),
-		attribute: Q(e.attribute),
-		value: $(e.value),
-		factor: $(e.factor),
-		invert: e.invert === !0,
-		unit: Q(e.unit),
-		color: Q(e.color),
-		flowMinVisibleValue: $(e.flowMinVisibleValue),
-		flowMaxValue: $(e.flowMaxValue),
-		fromAnchor: $(e.fromAnchor),
-		fromAnchorMode: e.fromAnchorMode === "manual" ? "manual" : void 0,
-		toAnchor: $(e.toAnchor),
-		toAnchorMode: e.toAnchorMode === "manual" ? "manual" : void 0,
-		junctionJoinId: Q(e.junctionJoinId)
-	})) : t ? Mt.map((e) => ({ ...e })) : [];
-}
-function Gt(e, t = !0) {
-	return xn(e) ? Object.fromEntries(Object.entries(e).filter((e) => {
-		let t = e[1];
-		return xn(t) && Number.isFinite(t.x) && Number.isFinite(t.y);
-	}).map(([e, t]) => [e, {
-		x: Number(t.x),
-		y: Number(t.y)
-	}])) : t ? { ...Nt } : {};
-}
-function Kt(e, t) {
-	var n;
-	return ((n = e.nodes) == null ? bn(jt) : n).map((e) => {
-		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _, v, y, b, x, S, ee, C, w, T, E, te, D;
-		let O = (n = e.flow_mode) == null ? "signed" : n, k = O === "signed" ? Xt(t, e.entity ? {
-			entity: e.entity,
-			attribute: e.attribute,
-			factor: e.factor,
-			unit: e.unit
-		} : {
-			value: e.value,
-			unit: e.unit
-		}) : void 0, A = O === "bidirectional" ? Xt(t, {
-			entity: e.incoming_entity,
-			attribute: e.incoming_attribute,
-			unit: e.unit
-		}) : void 0, ne = O === "bidirectional" ? Xt(t, {
-			entity: e.outgoing_entity,
-			attribute: e.outgoing_attribute,
-			unit: e.unit
-		}) : void 0, re = e.secondary_entity ? Xt(t, {
-			entity: e.secondary_entity,
-			attribute: e.secondary_attribute,
-			value: e.secondary
-		}) : void 0, j = e.value !== void 0 || (O === "bidirectional" ? !!(e.incoming_entity || e.outgoing_entity) : !!e.entity), ie = ((r = A == null ? void 0 : A.value) == null ? 0 : r) - ((i = ne == null ? void 0 : ne.value) == null ? 0 : i), ae = (a = (o = (s = e.unit) == null ? k == null ? void 0 : k.unit : s) == null ? A == null ? void 0 : A.unit : o) == null ? ne == null ? void 0 : ne.unit : a, oe = (c = re == null ? void 0 : re.value) == null ? e.secondary : c, se = (l = (u = re == null ? void 0 : re.unit) == null ? e.unit : u) == null ? "%" : l, ce = (d = e.flowDirection) == null ? ln(e) : d, M = O === "bidirectional" ? ie : ((f = (p = k == null ? void 0 : k.value) == null ? e.value : p) == null ? 0 : f) * (ce === "consume" ? -1 : 1), le = Jt(e.invert === !0 ? -M : M, (m = e.allowed_flow) == null ? "both" : m), ue = Math.abs(le), N = O === "bidirectional" ? le > Dt ? (h = (g = e.incoming_entity) == null ? e.outgoing_entity : g) == null ? e.secondary_entity : h : le < -Dt ? (_ = (v = e.outgoing_entity) == null ? e.incoming_entity : v) == null ? e.secondary_entity : _ : (y = (b = e.incoming_entity) == null ? e.outgoing_entity : b) == null ? e.secondary_entity : y : (x = e.entity) == null ? e.secondary_entity : x, de = qt((S = e.primary_action) == null ? "more-info" : S, N, e.primary_action_path), fe = qt((ee = e.secondary_action) == null ? "more-info" : ee, e.secondary_entity, e.secondary_action_path), pe = O === "bidirectional" ? (C = e.incoming_entity) == null ? e.outgoing_entity : C : e.entity, me = e.icon === null ? null : (w = (T = e.icon) == null ? $t(t, pe) : T) == null ? sn(e.kind) : w, P = fn(dn(e));
-		return {
-			id: e.id,
-			kind: e.kind,
-			label: (E = (te = e.label) == null ? Zt(t, e.entity) : te) == null ? yn(e.id) : E,
-			labelAngle: e.label_angle,
-			labelOffsetX: e.label_offset_x,
-			labelOffsetY: e.label_offset_y,
-			value: ue,
-			flowValue: le,
-			hasOwnValue: j,
-			contributesToFlow: P,
-			junctionDisplayMode: e.junction_display_value,
-			hideZeroValues: e.hide_zero_values,
-			hideIfZero: e.hide_if_zero === !0,
-			showFlowArrow: e.show_flow_arrow === !0,
-			primaryAction: de,
-			secondaryAction: fe,
-			secondary: oe,
-			secondaryDisplayValue: oe === void 0 ? void 0 : `${an(oe)}${se ? ` ${se}` : ""}`,
-			radius: (D = e.radius) == null ? cn(e.kind) : D,
-			icon: me,
-			secondaryIcon: void 0,
-			unit: ae,
-			color: e.color,
-			flowMinVisibleValue: e.flowMinVisibleValue,
-			flowMaxValue: e.flowMaxValue
-		};
-	});
-}
-function qt(e, t, n) {
-	switch (e) {
-		case "none": return;
-		case "more-info":
-		case "toggle": return t ? {
-			entityId: t,
-			type: e
-		} : void 0;
-		case "navigate":
-		case "url": return n != null && n.trim() ? {
-			path: n.trim(),
-			type: e
-		} : void 0;
-		default: return;
-	}
-}
-function Jt(e, t) {
-	return t === "supply" ? Math.max(e, 0) : t === "consume" ? Math.min(e, 0) : e;
-}
-function Yt(e, t) {
-	var n;
-	return ((n = e.links) == null ? [] : n).map((e) => {
-		var n, r;
-		let i = e.entity ? Xt(t, {
-			...e,
-			value: void 0
-		}) : Xt(t, e), a = (n = i == null ? void 0 : i.value) == null ? e.value : n, o = (r = e.unit) == null ? i == null ? void 0 : i.unit : r;
-		return {
-			...e,
-			value: a,
-			unit: o,
-			displayValue: a === void 0 ? void 0 : on(a, o)
-		};
-	});
-}
-function Xt(e, t) {
-	var n, r, i;
-	if (!(t != null && t.entity)) return (t == null ? void 0 : t.value) === void 0 ? void 0 : {
-		value: t.value,
-		unit: t.unit
-	};
-	let a = e == null ? void 0 : e.states[t.entity];
-	if (!a) return t.value === void 0 ? void 0 : {
-		value: t.value,
-		unit: t.unit
-	};
-	let o = rn(t.attribute ? a.attributes[t.attribute] : a.state);
-	if (!Number.isFinite(o)) return t.value === void 0 ? void 0 : {
-		value: t.value,
-		unit: t.unit
-	};
-	let s = String((n = a.attributes.unit_of_measurement) == null ? "" : n).trim(), c = (r = t.unit) == null ? s : r, l = nn(c), u = (i = t.factor) == null ? l : i, d = t.invert ? -1 : 1;
-	return {
-		value: o * u * d,
-		unit: l === 1 ? c : "W"
-	};
-}
-function Z(e) {
-	var t;
-	if (typeof e == "string") return Q(e);
-	if (Array.isArray(e)) return Z(e[0]);
-	if (xn(e)) return (t = Q(e.entity)) == null ? Q(e.entity_id) : t;
-}
-function Zt(e, t) {
-	var n;
-	if (!t) return;
-	let r = e == null || (n = e.states[t]) == null ? void 0 : n.attributes.friendly_name;
-	return typeof r == "string" ? r : yn(t);
-}
-function Qt(e) {
-	var t;
-	return Object.keys((t = e == null ? void 0 : e.states) == null ? {} : t).sort();
-}
-function $t(e, t) {
-	if (!t) return;
-	let n = e == null ? void 0 : e.states[t], r = n == null ? void 0 : n.attributes.icon;
-	if (typeof r == "string" && r.startsWith("mdi:")) return r;
-	let i = n == null ? void 0 : n.attributes.device_class;
-	if (typeof i == "string") {
-		let e = en(i);
-		if (e) return e;
-	}
-	let a = t.split(".")[0];
-	return tn(a);
-}
-function en(e) {
-	if (e === "battery") return "mdi:battery";
-	if (e === "gas") return "mdi:fire";
-	if (e === "power" || e === "energy") return "mdi:flash";
-	if (e === "temperature") return "mdi:thermometer";
-	if (e === "water") return "mdi:water";
-}
-function tn(e) {
-	if (e === "battery") return "mdi:battery";
-	if (e === "binary_sensor") return "mdi:checkbox-marked-circle-outline";
-	if (e === "climate") return "mdi:heat-pump";
-	if (e === "cover") return "mdi:window-shutter";
-	if (e === "fan") return "mdi:fan";
-	if (e === "light") return "mdi:lightbulb";
-	if (e === "sensor") return "mdi:eye";
-	if (e === "switch") return "mdi:toggle-switch";
-	if (e === "water_heater") return "mdi:water-boiler";
-}
-function nn(e) {
-	return e === "kW" ? 1e3 : e === "MW" ? 1e6 : 1;
-}
-function rn(e) {
-	if (typeof e == "number") return e;
-	if (typeof e != "string") return NaN;
-	let t = e.trim().replace(",", ".").match(/[-+]?\d+(?:\.\d+)?/);
-	return t ? Number(t[0]) : NaN;
-}
-function an(e) {
-	return e.toLocaleString("en-US", { maximumFractionDigits: e >= 100 ? 0 : 1 });
-}
-function on(e, t) {
-	let n = Math.abs(e);
-	return !t || t === "W" || t === "kW" || t === "MW" ? n >= 1e3 ? `${an(n / 1e3)} kW` : `${Math.round(n).toLocaleString("en-US")} W` : `${an(n)} ${t}`;
-}
-function sn(e) {
-	return e === "junction" ? "mdi:hub" : "mdi:leaf";
-}
-function cn(e) {
-	return e === "junction" ? 90 : 65;
-}
-function ln(e) {
-	var t;
-	return (t = e.flowDirection) == null ? "supply" : t;
-}
-function un(e) {
-	return e === "junction" ? "junction" : "measured";
-}
-function dn(e) {
-	var t;
-	return e.kind === "leaf" ? "measured" : (t = e.balance_role) == null ? un(e.kind) : t;
-}
-function fn(e) {
-	return e === "measured";
-}
-function pn(e, t) {
-	var n, r, i;
-	let { [t]: a, ...o } = (n = e.layout) == null ? {} : n;
-	return X({
-		...e,
-		nodes: ((r = e.nodes) == null ? [] : r).filter((e) => e.id !== t),
-		links: ((i = e.links) == null ? [] : i).filter((e) => e.from !== t && e.to !== t),
-		layout: o
-	});
-}
-function mn(e, t) {
-	let n = t.filter((e) => e.kind === "junction");
-	return kt[Math.max(0, n.findIndex((t) => t.id === e)) % kt.length];
-}
-function hn(e) {
-	let t = /^#?([0-9a-f]{6})$/i.exec(e == null ? "" : e);
-	return t ? `#${t[1].toLowerCase()}` : void 0;
-}
-function gn(e, t) {
-	let n = _n(e), r = _n(t);
-	return !n || !r ? 0 : Math.hypot(n.r - r.r, n.g - r.g, n.b - r.b);
-}
-function _n(e) {
-	let t = hn(e);
-	if (t) return {
-		r: Number.parseInt(t.slice(1, 3), 16),
-		g: Number.parseInt(t.slice(3, 5), 16),
-		b: Number.parseInt(t.slice(5, 7), 16)
-	};
-}
-function vn(e) {
-	return /^#[0-9a-f]{6}$/i.test(e == null ? "" : e) ? e : wt;
-}
-function yn(e) {
-	return (e.includes(".") ? e.split(".").slice(1).join(".") : e).replace(/[_-]+/g, " ").replace(/\b\w/g, (e) => e.toUpperCase());
-}
-function bn(e) {
-	return e.map((e) => ({ ...e }));
-}
-function xn(e) {
-	return !!(e && typeof e == "object" && !Array.isArray(e));
-}
-function Q(e) {
-	return typeof e == "string" && e.trim() ? e.trim() : void 0;
-}
-function Sn(e, t) {
-	return Number.isFinite(e) ? Number(e) : t;
-}
-function $(e) {
-	return Number.isFinite(e) ? Number(e) : void 0;
-}
-function Cn(e, t, n) {
-	return Math.min(Math.max(e, t), n);
-}
-function wn(e, t) {
-	e.dispatchEvent(new CustomEvent("config-changed", {
-		bubbles: !0,
-		composed: !0,
-		detail: { config: t }
-	}));
-}
-function Tn(e) {
-	var t, n;
-	let r = X(e);
-	return JSON.stringify({
-		links: ((t = r.links) == null ? [] : t).map((e) => ({
-			from: e.from,
-			id: e.id,
-			to: e.to
-		})),
-		nodes: ((n = r.nodes) == null ? [] : n).map((e) => ({
-			id: e.id,
-			kind: e.kind
-		})),
-		type: r.type
-	});
-}
-function En(e) {
-	var t, n;
-	let r = /* @__PURE__ */ new Map(), i = (e, t) => {
-		var n;
-		if (!e) return;
-		let i = (n = r.get(e)) == null ? /* @__PURE__ */ new Set() : n;
-		Ot.forEach((e) => i.add(e)), t && i.add(t), r.set(e, i);
-	};
-	return ((t = e.nodes) == null ? [] : t).forEach((e) => {
-		i(e.entity, e.attribute), i(e.incoming_entity, e.incoming_attribute), i(e.outgoing_entity, e.outgoing_attribute), i(e.secondary_entity, e.secondary_attribute);
-	}), ((n = e.links) == null ? [] : n).forEach((e) => i(e.entity, e.attribute)), Array.from(r.entries()).sort(([e], [t]) => e.localeCompare(t)).map(([e, t]) => ({
-		attributes: Array.from(t).sort(),
-		entityId: e
-	}));
-}
-function Dn(e, t, n) {
-	return e.some((e) => On(e, t == null ? void 0 : t.states[e.entityId], n == null ? void 0 : n.states[e.entityId]));
-}
-function On(e, t, n) {
-	return t === n ? !1 : !t || !n ? t !== n : t.state === n.state ? e.attributes.some((e) => t.attributes[e] !== n.attributes[e]) : !0;
-}
-function kn(e, t) {
-	return {
-		links: Yt(e, t),
-		nodes: Kt(e, t)
-	};
-}
-//#endregion
-//#region src/home-flow-card.ts
-var An, jn, Mn = class extends z {
-	constructor(...e) {
-		super(...e), this.config = X(void 0), this.editMode = !1, this._previewSourceId = mt("preview"), this._entityWatchers = En(this.config), this._normalizedConfig = this.config, this._resolvedGraphData = kn(this.config, void 0), this._handlePreviewNodeSelected = (e) => {
-			if (!this.editMode) return;
-			let t = e.detail;
-			this._matchesPreviewNodeSelectedEvent(t) && (this._selectedNode = t == null ? void 0 : t.nodeId);
-		};
-	}
-	connectedCallback() {
-		super.connectedCallback(), window.addEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected);
-	}
-	disconnectedCallback() {
-		window.removeEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), super.disconnectedCallback();
-	}
-	_matchesPreviewNodeSelectedEvent(e) {
-		return !e || e.sourceId === this._previewSourceId ? !1 : e.targetId ? e.targetId === this._previewSourceId : !e.configKey || e.configKey === Tn(this.config);
-	}
-	_previewEventScope(e = this.config) {
-		return {
-			configKey: Tn(this.config),
-			sourceConfigKey: Tn(e),
-			sourceId: this._previewSourceId
-		};
-	}
-	setConfig(e) {
-		this.config = X(e);
-	}
-	getCardSize() {
-		var e;
-		return Math.ceil(((e = X(this.config).height) == null ? 360 : e) / 50);
-	}
-	static getStubConfig() {
-		return X(void 0);
-	}
-	static async getConfigElement() {
-		return document.createElement("home-flow-card-editor");
-	}
-	shouldUpdate(e) {
-		if (e.has("config")) return this._syncGraphCache(this.config, this.hass, e.get("config")), !0;
-		if (e.has("hass")) {
-			let t = e.get("hass");
-			return Dn(this._entityWatchers, t, this.hass) ? (this._resolvedGraphData = kn(this._normalizedConfig, this.hass), !0) : !1;
-		}
-		return !0;
-	}
-	render() {
-		var e, t, n, r, i, a;
-		let o = this._normalizedConfig, s = (e = o.width) == null ? 502 : e, c = (t = o.height) == null ? 360 : t;
-		return P`
-      <ha-card
-        class=${`scale-${(n = o.scaling_mode) == null ? xt : n}`}
-        style=${`--graph-width:${s};--graph-height:${c};--graph-aspect:${s} / ${c};`}
+
+`;function ke(e,t,n){return(e.point.x-t.point.x)*n.x+(e.point.y-t.point.y)*n.y}var Ae=e=>{var t;return null!==(t=e.contributesToFlow)&&void 0!==t?t:"leaf"===e.kind};function Le(e,t,n,i,o){if(!i[t]||!i[n])return;const r=/* @__PURE__ */new Set,s=[t],a=t=>t.id===e.id||t.from===e.from&&t.to===e.to||t.from===e.to&&t.to===e.from;for(;s.length>0;){const e=s.shift();if(e&&!r.has(e)){r.add(e);for(const t of o){if(a(t))continue;if(t.from!==e&&t.to!==e)continue;const n=t.from===e?t.to:t.from;!r.has(n)&&i[n]&&s.push(n)}}}return r}var Pe=.5,Ce={leaf:"var(--home-flow-leaf-color, #c65b4a)",junction:"var(--home-flow-junction-1-color, #f6b73c)"},Ne=class{constructor(e,t,n,i){this.flowMinVisibleValue=e,this.flowMaxValue=t,this.links=n,this.junctionFlowColor=i}signedValue(e,t,n=this.links,i){return this._linkSignedValue(e,t,n,i)}nodeFlowValue(e){return this._nodeFlowValue(e)}sourceParts(e,t,n,i,o){return this._linkSourceParts(e,t,n,i,o)}color(e,t,n,i,o){return this._linkColor(e,t,n,i,o)}nodeColor(e,t,n,i){return this._nodeColorCached(e,t,n,i)}showsFlow(e,t){return this._shouldShowFlow(e,t)}width(e,t,n){return this._flowWidth(e,t,n)}linkMinValue(e,t,n=this.links){return this._linkMinVisibleValue(e,t,n)}linkMaxValue(e,t,n,i=this.links){return this._linkMaxValue(e,t,n,i)}primaryValue(e,t,n){return this._nodePrimaryValue(e,t,n)}displayValue(e,t,n){return this._nodeDisplayValue(e,t,n)}hasFlowArrow(e){return this._hasNodeFlowArrow(e)}_linkSignedValue(e,t,n=this.links,i){if(Number.isFinite(e.value))return Number(e.value);const o=t[e.from],r=t[e.to];return"leaf"===(null==o?void 0:o.kind)?this._nodeFlowValue(o):"leaf"===(null==r?void 0:r.kind)?-this._nodeFlowValue(r):"junction"===(null==o?void 0:o.kind)&&"junction"===(null==r?void 0:r.kind)?this._derivedJunctionLinkValue(e,o,r,t,n,i):0}_nodeFlowValue(e){return Number.isFinite(e.flowValue)?Number(e.flowValue):e.value}_derivedJunctionLinkValue(e,t,n,i,o,r){const s=this._nodeIdsOnSideOfLinkCached(e,t.id,n.id,i,o,r);if(!s||s.has(n.id))return 0;let a=0;const l=Array.from(s).reduce((e,t)=>{const n=i[t];return n&&Ae(n)?(a+=1,e+this._nodeFlowValue(n)):e},0);return a>0?l:0}_linkSourceParts(e,t,n,i,o){if(e.color||Math.abs(i)<=Pe)return;const r=function(e){const t=/* @__PURE__ */new Map;for(const n of e){const e=t.get(n.color);e?e.amount+=n.amount:t.set(n.color,{...n})}return Array.from(t.values())}(this._linkFlowSources(e,t,n,i,o));if(0===r.length)return;const s=r.reduce((e,t)=>e+t.amount,0);if(s<=Pe)return;let a=0;return function(e){if(e.length<=1)return e;const t=[];let n=0;for(const r of e)r.length<1?n+=r.length:t.push({...r});if(t.length===e.length)return e;if(0===t.length)return[{...e.reduce((e,t)=>t.length>e.length?t:e),length:18,start:0}];const i=t.reduce((e,n,i)=>n.length>t[e].length?i:e,0);t[i]={...t[i],length:t[i].length+n};let o=0;return t.map((e,n)=>{const i=n===t.length-1?18-o:e.length,r={...e,length:i,start:o};return o+=i,r})}(r.map((e,t)=>{const n=t===r.length-1?18-a:e.amount/s*18,i={color:e.color,key:e.key,length:n,start:a};return a+=n,i}))}_linkFlowSources(e,t,n,i,o){const r=t.nodes,s=r[e.from],a=r[e.to];if(!s||!a)return[];const l=i>=0?e.from:e.to,d=i>=0?e.to:e.from,h=this._nodeIdsOnSideOfLinkCached(e,l,d,r,n,o);if(!h||h.has(d))return[];const c=r[l],u=r[d],p=function(e,t){const n=t.point.x-e.point.x,i=t.point.y-e.point.y,o=Math.hypot(n,i)||1;return{x:n/o,y:i/o}}(c,u);return Array.from(h).map(e=>r[e]).filter(e=>Boolean(e)).filter(e=>Ae(e)).map(e=>({amount:this._nodeFlowValue(e),color:this._nodeColorCached(e,t,n,o),key:e.id,node:e})).filter(e=>e.amount>Pe).sort((e,t)=>ke(e.node,c,p)-ke(t.node,c,p)||e.key.localeCompare(t.key))}_nodeIdsOnSideOfLinkCached(e,t,n,i,o,r){if(!r)return Le(e,t,n,i,o);const s=`${e.id}|${t}|${n}`;return r.sideNodeIds.has(s)||r.sideNodeIds.set(s,Le(e,t,n,i,o)),r.sideNodeIds.get(s)}_linkColor(e,t,n,i=this._linkSignedValue(e,t.nodes,n),o){const r=t.nodes;if(e.color)return e.color;const s=r[e.from],a=r[e.to],l=i>=0?s:a;return l?this._nodeColorCached(l,t,n,o):Ce.junction}_nodeColorCached(e,t,n,i){if(!i)return this._nodeColor(e,t,n);const o=i.nodeColors.get(e.id);if(o)return o;const r=this._nodeColor(e,t,n);return i.nodeColors.set(e.id,r),r}_nodeColor(e,t,n,i=/* @__PURE__ */new Set){var o;if(e.color)return e.color;if("leaf"!==e.kind)return this._nonLeafColor(e,t);const r=t&&n?this._attachedLeafColor(e,t,n):void 0;if(r)return r;return(t&&n?this._overlappingUnlinkedLeafColor(e,t,n,new Set(i).add(e.id)):void 0)||("mdi:solar-power"===e.icon?"var(--energy-solar-color, #d6a500)":(null===(o=e.icon)||void 0===o?void 0:o.startsWith("mdi:battery"))?"var(--energy-battery-discharge-color, #3f79c9)":Ce.leaf)}_nodeDirectColor(e,t,n){var i;if(e.color)return e.color;if("leaf"!==e.kind)return this._nonLeafColor(e,t);return(t&&n?this._attachedLeafColor(e,t,n):void 0)||("mdi:solar-power"===e.icon?"var(--energy-solar-color, #d6a500)":(null===(i=e.icon)||void 0===i?void 0:i.startsWith("mdi:battery"))?"var(--energy-battery-discharge-color, #3f79c9)":Ce.leaf)}_attachedLeafColor(e,t,n){const i=n.filter(t=>t.from===e.id||t.to===e.id).map(n=>t.nodes[n.from===e.id?n.to:n.from]).filter(e=>Boolean(e)).find(e=>"junction"===e.kind);if(i)return this.junctionFlowColor(i.id,t.nodes)}_overlappingUnlinkedLeafColor(e,t,n,i=/* @__PURE__ */new Set){if(n.some(t=>t.from===e.id||t.to===e.id))return;const o=Object.values(t.nodes).filter(t=>t.id!==e.id).map(t=>({node:t,distance:Math.hypot(t.point.x-e.point.x,t.point.y-e.point.y)})).filter(({node:t,distance:n})=>n<t.radius+e.radius).sort((e,t)=>e.distance-t.distance).map(({node:e})=>e);let r;for(const s of o){if("leaf"!==s.kind)return this._nonLeafColor(s,t);const e=this._attachedLeafColor(s,t,n);if(e)return e;if(!i.has(s.id)){const e=this._overlappingUnlinkedLeafColor(s,t,n,new Set(i).add(s.id));if(e)return e}r||(r=this._nodeDirectColor(s,t,n))}return r}_nonLeafColor(e,t){return e.color?e.color:"junction"===e.kind&&t?this.junctionFlowColor(e.id,t.nodes):Ce[e.kind]}_shouldShowFlow(e,t=this._flowMinVisibleValue()){return function(e,t){const n=Math.abs(e);return n>.5&&n>=Math.max(0,t)}(e,t)}_flowWidth(e,t=this._flowMinVisibleValue(),n=this._flowMaxValue(t)){return function(e,t,n){const i=ye((Math.abs(e)-t)/(n-t),0,1);return 2.4+11.6*Math.pow(i,1.15)}(e,t,n)}_flowMinVisibleValue(){return Math.max(0,Number.isFinite(this.flowMinVisibleValue)?this.flowMinVisibleValue:10)}_flowMaxValue(e=this._flowMinVisibleValue()){const t=Number.isFinite(this.flowMaxValue)?this.flowMaxValue:12e3;return Math.max(t,e+1)}_linkMinVisibleValue(e,t,n=this.links){var i;return Math.max(0,Number.isFinite(e.flowMinVisibleValue)?Number(e.flowMinVisibleValue):null!==(i=this._junctionFlowMinVisibleValue(e,t,n))&&void 0!==i?i:this._flowMinVisibleValue())}_linkMaxValue(e,t=this._linkMinVisibleValue(e),n,i=this.links){var o;const r=Number.isFinite(e.flowMaxValue)?Number(e.flowMaxValue):null!==(o=this._junctionFlowMaxValue(e,n,i))&&void 0!==o?o:this._flowMaxValue(t);return Math.max(r,t+1)}_junctionFlowMinVisibleValue(e,t,n){const i=this._linkScaleJunction(e,t,n,"flowMinVisibleValue");return Number.isFinite(null==i?void 0:i.flowMinVisibleValue)?Number(null==i?void 0:i.flowMinVisibleValue):void 0}_junctionFlowMaxValue(e,t,n){const i=this._linkScaleJunction(e,t,n,"flowMaxValue");return Number.isFinite(null==i?void 0:i.flowMaxValue)?Number(null==i?void 0:i.flowMaxValue):void 0}_linkScaleJunction(e,t,n,i){if(!t)return;const o=this._nodeIdsConnectedTo(e.from,t,n);return Object.values(t).filter(e=>"junction"===e.kind&&o.has(e.id)).find(e=>Number.isFinite(e[i]))}_nodeIdsConnectedTo(e,t,n){const i=/* @__PURE__ */new Set,o=[e];for(;o.length>0;){const e=o.shift();e&&!i.has(e)&&(i.add(e),n.forEach(n=>{if(n.from!==e&&n.to!==e)return;const r=n.from===e?n.to:n.from;!i.has(r)&&t[r]&&o.push(r)}))}return i}_nodePrimaryValue(e,t,n){if(e.displayValue)return e.displayValue;const i=this._nodeDisplayValue(e,t,n);return this._isBatteryValueNode(e)?this._formatNodeValue(Math.abs(i),e):this._formatNodeValue(i,e)}_nodeDisplayValue(e,t,n){var i;return"junction"!==e.kind||e.hasOwnValue?e.value:null!==(i=this._junctionDisplayFlowValue(e,t.nodes,n))&&void 0!==i?i:e.value}_junctionDisplayFlowValue(e,t,n){var i;let o=0,r=0,s=0;if(n.forEach(i=>{const a=this._linkFlowRelativeToNode(i,e.id,t,n);void 0!==a&&(s+=1,a>=0?o+=a:r+=Math.abs(a))}),0!==s)switch(null!==(i=e.junctionDisplayMode)&&void 0!==i?i:"incoming"){case"outgoing":return r;case"net":return o-r;default:return o}}_linkFlowRelativeToNode(e,t,n,i){if(e.from!==t&&e.to!==t)return;const o=n[e.from===t?e.to:e.from];if("leaf"===(null==o?void 0:o.kind)&&!Ae(o))return;const r=this._linkSignedValue(e,n,i);return Number.isFinite(r)?e.to===t?r:-r:void 0}_hasNodeFlowArrow(e){return!0===e.showFlowArrow&&Math.abs(this._nodeFlowValue(e))>Pe}_isBatteryValueNode(e){return"leaf"===e.kind&&void 0!==e.secondary&&this._isBatteryIcon(e.icon)}_isBatteryIcon(e){return!0===(null==e?void 0:e.startsWith("mdi:battery"))}_formatNodeValue(e,t){var n;const i=null===(n=t.unit)||void 0===n?void 0:n.trim();return i&&"W"!==i&&"kW"!==i&&"MW"!==i?`${this._formatNumber(Math.abs(e))} ${i}`:this._formatPower(e)}_formatPower(e){const t=Math.abs(e);return t>=1e3?`${this._formatNumber(t/1e3)} kW`:`${Math.round(t).toLocaleString("en-US")} W`}_formatNumber(e){return e.toLocaleString("en-US",{maximumFractionDigits:e>=100?0:1})}},Me=/* @__PURE__ */new Map,Ie=/* @__PURE__ */new Map,Se=e=>new Promise(t=>window.setTimeout(t,e)),Ee=class{constructor(e){this.host=e}render(e,t,n,i,o){return this._renderNodeLayer(e,t,n,i,o)}straightLabelPoint(e,t,n){return this._nodeStraightLabelPoint(e,t,n)}curvedLabelHandlePoint(e,t,n){return this._nodeCurvedLabelHandlePoint(e,t,n)}_renderNodeLayer(e,t,n,i,o){return Y`
+      ${this._renderNodeShell(e,t,i,o)}
+      ${this._renderNodeBusCover(e,t,n,i,o)}
+      ${this._renderNodeOverlay(e,t,i)}
+    `}_renderNodeOverlay(e,t,n){return Y`
+      ${this._renderNodeContent(e,t,n)}
+      ${this._renderNodeLabel(e,t,n)}
+      ${this._renderLabelHandle(e,t,n)}
+      ${this.host.editable?Y`
+            <g
+              class="node-hit-layer"
+              transform=${`translate(${e.point.x} ${e.point.y})`}
+            >
+              <circle
+                class="hit-area node-hit-proxy"
+                r=${e.radius+18}
+                @pointerdown=${t=>this.host._startNodeDrag(t,e)}
+              />
+            </g>
+          `:Z}
+    `}_renderNodeBusCover(e,t,n,i,o){return this._shouldBusStayBehindNode(e,n,t.nodes,o)?Y`
+      <g
+        class="node-bus-cover"
+        transform=${`translate(${e.point.x} ${e.point.y})`}
+        aria-hidden="true"
       >
-        ${o.title ? P`<div class="title">${o.title}</div>` : L}
+        <circle
+          class="node-bg bus-cover"
+          r=${e.radius}
+          stroke=${this.host._nodeColorCached(e,t,i,o)}
+          stroke-width=${"junction"===e.kind?4:2.5}
+        />
+      </g>
+    `:Z}_shouldBusStayBehindNode(e,t,n,i){return"junction"===e.kind&&!this._isWrappedJunction(e,t,n,i)&&t.filter(t=>(t.from===e.id||t.to===e.id)&&this.host._isJunctionJunctionLink(t,n)).length<=1}_isWrappedJunction(e,t,n,i){return t.some(o=>{if(!this.host._isJunctionJunctionLink(o,n))return!1;const r=this.host._junctionJoinGeometry(o,n,t,i);return(null==r?void 0:r.middleId)===e.id})}_renderNodeShell(e,t,n,i){return Y`
+      <g
+        class=${`node ${e.kind}-node ${!this.host.editable&&e.primaryAction?"actionable":""} ${this.host.activeNode===e.id?"dragging":""} ${this.host.selectedNode===e.id?"selected":""}`}
+        transform=${`translate(${e.point.x} ${e.point.y})`}
+        tabindex=${this.host.editable||e.primaryAction?0:-1}
+        role=${!this.host.editable&&e.primaryAction?"button":Z}
+        aria-label=${!this.host.editable&&e.primaryAction?`${e.label} ${this.host._nodeActionLabel(e.primaryAction)}`:e.label}
+        @pointerdown=${this.host.editable?t=>this.host._startNodeDrag(t,e):void 0}
+        @click=${!this.host.editable&&e.primaryAction?t=>this.host._emitNodeAction(e.primaryAction,t):void 0}
+        @keydown=${!this.host.editable&&e.primaryAction?t=>this.host._handleNodeActionKeydown(t,e.primaryAction):void 0}
+      >
+        <circle
+          class="node-bg"
+          r=${e.radius}
+          stroke=${this.host._nodeColorCached(e,t,n,i)}
+          stroke-width=${"junction"===e.kind?4:2.5}
+        />
+        <circle class="hit-area" r=${e.radius+18} />
+      </g>
+    `}_renderNodeContent(e,t,n){var i,o,r;const s=Boolean(e.icon||e.secondaryIcon),a=void 0!==e.secondary,l=this.host._nodeDisplayValue(e,t,n),d=!this._shouldHideNodeValue(e,l),h=a&&!this._shouldHideNodeValue(e,null!==(i=e.secondary)&&void 0!==i?i:0),c=this.host._nodePrimaryValue(e,t,n),u=d?this._nodeTextLines(c,e):[],p=h?this._nodeTextLines(null!==(o=e.secondaryDisplayValue)&&void 0!==o?o:`${Math.round(null!==(r=e.secondary)&&void 0!==r?r:0)}%`,e):[],f=!s,_=u.length>0,v=p.length>0,m=this._nodePrimaryTextY(e,s,a,_,v),g=this._nodeSecondaryTextY(e,s,a,_,v);return Y`
+      <g
+        class=${`node-content ${e.kind}-content`}
+        transform=${`translate(${e.point.x} ${e.point.y})`}
+      >
+        ${s?this._renderNodeIcons(e):Z}
+        ${this._renderNodeFlowArrow(e)}
+        ${u.length>0?this._renderTextLines(this._textLineClass("node-value",u,e),u,m,e,0,f):Z}
+        ${p.length>0?this._renderTextLines(this._textLineClass("node-secondary",p,e),p,g,e,0,f):Z}
+        ${p.length>0?this._renderSecondaryActionHitArea(e,p,g):Z}
+      </g>
+    `}_nodePrimaryTextY(e,t,n,i,o){return t?i?"leaf"===e.kind?n?this._radiusLerp(e.radius,-20,-30):this._radiusLerp(e.radius,-18,-28):n?this._radiusLerp(e.radius,-28,-42):this._radiusLerp(e.radius,-22,-34):0:o&&i?this._radiusLerp(e.radius,-12,-18):0}_nodeSecondaryTextY(e,t,n,i,o){return t?o?"leaf"===e.kind?this._radiusLerp(e.radius,34,47):this._radiusLerp(e.radius,27,40):0:i&&o?this._radiusLerp(e.radius,12,18):0}_renderNodeLabel(e,t,n){const i=e.label.trim();if(!i)return Z;if("straight"===this.host.labelStyle){const o=this._nodeStraightLabelPoint(e,t,n),r=function(e,t,n,i){const o="start"===t.textAnchor?958-t.x:"end"===t.textAnchor?t.x-28:2*Math.min(t.x-28,958-t.x),r=Math.max(80,o);if(i.measure(e)<=r)return[e];const s=[];let a="";for(const l of e.split(/\s+/)){const e=a?`${a} ${l}`:l;if(i.measure(e)<=r){a=e;continue}if(a&&s.push(a),i.measure(l)<=r){a=l;continue}let t="";for(const n of l){const e=t+n;t&&i.measure(e)>r?(s.push(t),t=n):t=e}a=t}return a&&s.push(a),s.length>0?s:[e]}(i,o,0,this.host._labelTextMeasurer),s=31,a=function(e,t,n){return"top"===e.className?e.y-(t-1)*n:"bottom"===e.className?e.y:e.y-(t-1)*n/2}(o,r.length,s);return Y`
+        <text
+          class=${`node-label node-label-straight ${o.className}`}
+          x=${o.x}
+          y=${a}
+          text-anchor=${o.textAnchor}
+          dominant-baseline=${o.baseline}
+        >
+          ${r.map((e,t)=>Y`
+              <tspan
+                x=${o.x}
+                dy=${0===t?0:s}
+              >${e}</tspan>
+            `)}
+        </text>
+      `}const o=this._nodeLabelArc(e,t,n);return Y`
+      <path id=${o.id} class="node-label-path" d=${o.path} />
+      <text class="node-label node-label-curved">
+        <textPath href=${`#${o.id}`} startOffset="50%">
+          ${i}
+        </textPath>
+      </text>
+    `}_renderLabelHandle(e,t,n){if(!this.host.editable||this.host.selectedNode!==e.id||!e.label.trim())return Z;const i="straight"===this.host.labelStyle?this._nodeStraightLabelPoint(e,t,n):this._nodeCurvedLabelHandlePoint(e,t,n);return Y`
+      <g class="label-handle">
+        <circle
+          class="label-handle-hit"
+          cx=${i.x}
+          cy=${i.y}
+          r="14"
+          @pointerdown=${i=>this.host._startLabelDrag(i,e,t,n)}
+        />
+        <circle class="label-handle-dot" cx=${i.x} cy=${i.y} r="4.5" />
+      </g>
+    `}_nodeLabelArc(e,t,n){const i=this._nodeLabelAngle(e,t,n),o=e.radius+("junction"===e.kind?this._radiusLerp(e.radius,24,18):this._radiusLerp(e.radius,19,15)),r="junction"===e.kind?16:15,s=ye((e.label.length*r+36)/o,1.35,.92*Math.PI),a=Math.sin(i)>0,l=a?i+s/2:i-s/2,d=a?i-s/2:i+s/2,h=be(e.point,o,l),c=be(e.point,o,d),u=a?0:1,p=e.id.replace(/[^a-z0-9_-]/gi,"-");return{id:`home-flow-label-${this.host.graphInstanceId}-${p}`,path:`M ${h.x} ${h.y} A ${o} ${o} 0 0 ${u} ${c.x} ${c.y}`}}_nodeStraightLabelPoint(e,t,n){const i=e.labelOffsetX,o=e.labelOffsetY;return void 0!==i||void 0!==o?{x:e.point.x+(null!=i?i:0),y:e.point.y+(null!=o?o:0),textAnchor:"middle",baseline:"middle",className:"manual"}:this._nodeAutoStraightLabelPoint(e,t,n)}_nodeAutoStraightLabelPoint(e,t,n){const i=this._nodeLabelAnchorIndex(e,t,n),o=this.host._anchorAngle(i),r=e.radius+("junction"===e.kind?this._radiusLerp(e.radius,18,14):this._radiusLerp(e.radius,14,11)),s=be(e.point,r,o),a=Math.sin(o),l=Math.cos(o);if(a<-.55)return{x:s.x,y:s.y-2,textAnchor:"middle",baseline:"auto",className:"top"};if(a>.55){const t=this.host._renderScale<.6?.6/Math.max(this.host._renderScale,.1):1,n=be(e.point,e.radius+(r-e.radius)*t,o);return{x:n.x,y:n.y+2*t,textAnchor:"middle",baseline:"hanging",className:"bottom"}}return l<0?{x:s.x-4,y:s.y,textAnchor:"end",baseline:"middle",className:"left"}:{x:s.x+4,y:s.y,textAnchor:"start",baseline:"middle",className:"right"}}_nodeLabelAngle(e,t,n){var i;return null!==(i=e.labelAngle)&&void 0!==i?i:this.host._anchorAngle(this._nodeLabelAnchorIndex(e,t,n))}_nodeCurvedLabelHandlePoint(e,t,n){const i=this._nodeLabelAngle(e,t,n),o=e.radius+("junction"===e.kind?this._radiusLerp(e.radius,24,18):this._radiusLerp(e.radius,19,15));return be(e.point,o,i)}_nodeLabelAnchorIndex(e,t,n){const i=[...n.filter(t=>t.from===e.id||t.to===e.id).map(n=>this._connectionAnchorIndex(e,n,t)).filter(e=>void 0!==e),...this._nearbyNodeAnchorIndices(e,t)];if(0===i.length)return 16;let o=0,r=Number.NEGATIVE_INFINITY;for(let s=0;s<32;s+=1){const e=Math.min(...i.map(e=>this._circularAnchorDistance(s,e)));if(e<3)continue;const t=this.host._anchorAngle(s),n=10*Math.abs(Math.sin(t)),a=4*Math.abs(Math.cos(t)),l=.75*e+n+(Math.sin(t)>0?1:0)-a;l>r&&(r=l,o=s)}return r===Number.NEGATIVE_INFINITY?16:o}_nearbyNodeAnchorIndices(e,t){return Object.values(t.nodes).filter(t=>t.id!==e.id).filter(t=>{const n=Math.hypot(t.point.x-e.point.x,t.point.y-e.point.y),i="junction"===e.kind?38:32;return n<e.radius+t.radius+i}).map(t=>this.host._nearestAnchorIndex(e,t.point))}_connectionAnchorIndex(e,t,n){const i=this.host._linkAnchor(t,e.id);if(void 0!==i)return this.host._normalizeAnchorIndex(i);const o=t.from===e.id?t.to:t.from,r=n.nodes[o];return r?this.host._nearestAnchorIndex(e,r.point):void 0}_circularAnchorDistance(e,t){const n=Math.abs(e-t);return Math.min(n,32-n)}_nodeTextLines(e,t){const n=46+4.5*Math.max(0,e.length-7);if(t.radius>=n)return[e];const i=e.match(/^(.+?)\s+([^\s]+(?:\s+[←→↑↓])?)$/);if(i)return[i[1],i[2]];const o=e.match(/^([-+]?\d+(?:[.,]\d+)?)([^\d\s].*?(?:\s+[←→↑↓])?)$/);return o?[o[1],o[2]]:[e]}_textLineClass(e,t,n){return t.length>1?`${e} compact`:e}_shouldHideNodeValue(e,t){var n;return(null!==(n=e.hideZeroValues)&&void 0!==n?n:this.host.hideZeroValues)&&Math.abs(t)<=.5}_renderTextLines(e,t,n,i,o=0,r=!1){const s=this._textFontSize(e,t,i);var a;if(t.length<=1)return Y`
+        <text
+          class=${e}
+          x=${o}
+          y=${n}
+          style=${`font-size:${s}px;`}
+          dominant-baseline=${r?"middle":Z}
+        >
+          ${null!==(a=t[0])&&void 0!==a?a:""}
+        </text>
+      `;const l=this._textLineGap(e,t,i),d=n-l/2;return Y`
+      ${t.map((t,n)=>Y`
+            <text
+              class=${e}
+              x=${o}
+              y=${d+n*l}
+              style=${`font-size:${s}px;`}
+              dominant-baseline=${r?"middle":Z}
+            >
+              ${t}
+            </text>
+          `)}
+    `}_renderSecondaryActionHitArea(e,t,n){if(this.host.editable||!e.secondaryAction)return Z;const i=this._textLineGap("node-secondary",t,e),o=t.length<=1?28:i*(t.length-1)+30,r=(t.length<=1?n:n-i/2)+(t.length-1)*i/2,s=Math.max(52,1.55*e.radius);return Y`
+      <rect
+        class="value-hit secondary-value-hit"
+        x=${-s/2}
+        y=${r-o/2}
+        width=${s}
+        height=${o}
+        rx="8"
+        @click=${t=>this.host._emitNodeAction(e.secondaryAction,t)}
+      />
+    `}_textLineGap(e,t,n){return t.length>1?this._radiusLerp(n.radius,26,30):18}_textFontSize(e,t,n){return e.includes("flow-icon-arrow")?this._radiusLerp(n.radius,22,28):t.length>1?this._radiusLerp(n.radius,26,30):this._radiusLerp(n.radius,26,28)}_radiusLerp(e,t,n){return function(e,t,n,i,o){return i+(o-i)*ye((e-20)/80,0,1)}(e,0,0,t,n)}_renderNodeIcons(e){const t=[e.icon,e.secondaryIcon].filter(Boolean);if(0===t.length)return Z;if(1===t.length){const{scale:n,y:i}=this._nodeIconMetrics(e);return this._renderIconAt(t[0],0,i,n)}const{scale:n,y:i,gap:o}=this._dualIconMetrics(e);return Y`
+      ${t.slice(0,2).map((e,t)=>this._renderIconAt(e,0===t?-o:o,i,n))}
+    `}_renderIconAt(e,t,n,i){return this._renderExternalIconAt(e,t,n,i)}_renderExternalIconAt(e,t,n,i){const o=(e=>Me.get(e))(e);if(!o)return Z;const r=68*i,s=r/2;return Y`
+      <svg
+        class="node-icon-svg"
+        x=${t-s}
+        y=${n-s}
+        width=${r}
+        height=${r}
+        viewBox=${o.viewBox}
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        <path d=${o.path}></path>
+        ${o.secondaryPath?Y`<path class="node-icon-secondary-path" d=${o.secondaryPath}></path>`:Z}
+      </svg>
+    `}_renderNodeFlowArrow(e){if(!this.host._hasNodeFlowArrow(e))return Z;const t=e.icon&&e.secondaryIcon?this._dualIconMetrics(e):void 0,{y:n,scale:i}=null!=t?t:this._nodeIconMetrics(e),o=(t?-t.gap:0)+68*i*.42+10,r=this._nodeFlowArrow(e);return Y`<text class="flow-icon-arrow" x=${o} y=${n+3} dominant-baseline="middle">${r}</text>`}_nodeFlowArrow(e){return this.host._nodeFlowValue(e)>=0?"→":"←"}_nodeIconMetrics(e){if("leaf"===e.kind){const t=void 0!==e.secondary;return{scale:(t?ye(.58*e.radius,24,52):ye(.64*e.radius,26,58))/68,y:t?this._radiusLerp(e.radius,-8,-5):this._radiusLerp(e.radius,-2,0)}}return{scale:ye(.62*e.radius,28,60)/68,y:0}}_dualIconMetrics(e){return{scale:(void 0!==e.secondary&&"leaf"===e.kind?ye(.42*e.radius,16,34):ye(.48*e.radius,18,40))/68,y:0,gap:ye(.26*e.radius,12,24)}}},je=class{constructor(e){this.host=e}normalizeLinks(e){return this._normalizedLinks(e)}clearInteraction(e){return this._clearInteraction(e)}handlePointerMove(e){return this._handlePointerMove(e)}handlePointerUp(e){return this._handlePointerUp(e)}handleKeydown(e){return this._handleKeydown(e)}selectLink(e,t){return this._selectLink(e,t)}startAnchorDrag(e,t,n){return this._startAnchorDrag(e,t,n)}startPendingLink(e,t,n){return this._startPendingLink(e,t,n)}commitPendingLink(e,t,n){return this._commitPendingLink(e,t,n)}startNodeDrag(e,t){return this._startNodeDrag(e,t)}startLabelDrag(e,t,n,i){return this._startLabelDrag(e,t,n,i)}canonicalLink(e,t,n,i){return this._canonicalLink(e,t,n,i)}manualLink(e){return this._manualLink(e)}replaceLink(e,t){return this._replaceLink(e,t)}pendingJunctionConnectionCandidate(e,t,n){return this._pendingJunctionConnectionCandidate(e,t,n)}isCompatibleLink(e,t){return this._isCompatibleLink(e,t)}canStartLink(e){return this._canStartLink(e)}sameLinkEnds(e,t,n){return this._sameLinkEnds(e,t,n)}_startAnchorDrag(e,t,n){if(!this.host.editable)return;const i=this.host._eventPoint(e),o=i?this.host._anchorIndexForPointerPoint(t.node,i,t.anchorIndex,n):n;this.host.selectedLink=t.link.id,this.host.selectedNode=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this._anchorDrag={end:t.end,linkId:t.link.id,nodeId:t.node.id,pointerId:e.pointerId},this._setLinkEndAnchor(t.link.id,t.end,o,!0,!0),this.host._capturePointer(e),e.stopPropagation(),e.preventDefault()}_startPendingLink(e,t,n){if(!this.host.editable)return;if(!this._canStartLink(t))return;const i=this.host._eventPoint(e),o=i?this.host._anchorIndexForPointerPoint(t,i,void 0,n):n;this.host.selectedLink=void 0,this.host.pendingLink={from:t.id,fromAnchor:o},this.host.pointerPoint=null!=i?i:this.host._anchorPoint(t,o),this.host.hoverTarget=void 0,this.host._capturePointer(e),e.stopPropagation(),e.preventDefault()}_commitPendingLink(e,t,n){if(!this.host.editable)return;if(!this.host.pendingLink)return;const i=this.host._model().nodes[this.host.pendingLink.from];if(!i||!this._isCompatibleLink(i,t))return;const o=this._manualLink(this._canonicalLink(i,t,this.host.pendingLink.fromAnchor,n)),r=this._replaceLink(this.host.links,o);this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host.selectedLink=void 0,this.host.selectedNode=void 0,this.host.links=r,this.host._emitLinksChange(r),e.stopPropagation(),e.preventDefault()}_canonicalLink(e,t,n,i){return"leaf"===e.kind&&"junction"===t.kind?{id:`${e.id}->${t.id}`,from:e.id,to:t.id,fromAnchor:n,fromAnchorMode:"auto",toAnchor:i,toAnchorMode:"auto"}:"leaf"===t.kind&&"junction"===e.kind?{id:`${t.id}->${e.id}`,from:t.id,to:e.id,fromAnchor:i,fromAnchorMode:"auto",toAnchor:n,toAnchorMode:"auto"}:("junction"===e.kind&&t.kind,{id:`${e.id}->${t.id}`,from:e.id,to:t.id,fromAnchor:n,fromAnchorMode:"auto",toAnchor:i,toAnchorMode:"auto"})}_manualLink(e){return{...e,fromAnchorMode:"manual",toAnchorMode:"manual"}}_replaceLink(e,t){return[...e.filter(e=>!(e.from===t.from&&e.to===t.to||e.from===t.to&&e.to===t.from)),t]}_autoAnchorLinksForNode(e){const t=this._junctionJoinInfoForMovingJunction(e);let n=!1;const i=this.host.links.map(i=>{if(i.from===e||i.to===e){var o;const e=t.get(i.id),r=null!==(o=null==e?void 0:e.joinId)&&void 0!==o?o:i.junctionJoinId;return void 0===i.fromAnchor&&void 0===i.fromAnchorMode&&void 0===i.toAnchor&&void 0===i.toAnchorMode&&r===i.junctionJoinId?i:(n=!0,{...i,fromAnchor:void 0,fromAnchorMode:void 0,toAnchor:void 0,toAnchorMode:void 0,junctionJoinId:r})}return i});return n?i:this.host.links}_junctionJoinInfoForMovingJunction(e){const t=this.host._model(),n=t.nodes[e],i=/* @__PURE__ */new Map;if(!n||"junction"!==n.kind)return i;const o=this.host.links.filter(n=>{if(n.from!==e&&n.to!==e)return!1;const i=t.nodes[n.from===e?n.to:n.from];return"junction"===(null==i?void 0:i.kind)}),r=/* @__PURE__ */new Map;return o.forEach(t=>{var n,i;const o=this.host._linkAnchor(t,e),s=null!==(n=t.junctionJoinId)&&void 0!==n?n:void 0!==o?`legacy-anchor-${this.host._normalizeAnchorIndex(o)}`:void 0;s&&r.set(s,[...null!==(i=r.get(s))&&void 0!==i?i:[],t])}),r.forEach(t=>{var n;if(t.length<2)return;const o=t.map(t=>t.from===e?t.to:t.from).sort(),r=null!==(n=t[0].junctionJoinId)&&void 0!==n?n:this._junctionJoinId(o[0],o[1],e);t.forEach(e=>i.set(e.id,{joinId:r}))}),i}_selectLink(e,t){var n;this.host.editable&&(this.host.selectedLink=t,this.host.selectedNode=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,null===(n=this.host.renderRoot.querySelector(".flow-svg"))||void 0===n||n.focus(),e.stopPropagation(),e.preventDefault())}_handleKeydown(e){if("Escape"===e.key)return this.host.selectedLink=void 0,this.host.selectedNode=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,void e.preventDefault();if(this.host.selectedLink&&("Delete"===e.key||"Backspace"===e.key)){const t=this.host.selectedLink;this.host.selectedLink=void 0,this.host.links=this._linksAfterLinkDelete(t),this.host._emitLinksChange(this.host.links),e.stopPropagation(),e.preventDefault()}if(this.host.selectedNode&&("Delete"===e.key||"Backspace"===e.key)){const t=this.host.selectedNode;this.host.selectedNode=void 0,this.host.selectedLink=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host._emitNodeRemove(t),this.host._emitNodeSelect(void 0),e.stopPropagation(),e.preventDefault()}}_setLinkEndAnchor(e,t,n,i=!0,o=!1){const r=this.host._normalizeAnchorIndex(n);let s=!1;const a=this.host.links.map(n=>{if(n.id!==e)return n;const i="from"===t?{...n,fromAnchor:r,fromAnchorMode:"manual"}:{...n,toAnchor:r,toAnchorMode:"manual"};return s=s||i.fromAnchor!==n.fromAnchor||i.fromAnchorMode!==n.fromAnchorMode||i.toAnchor!==n.toAnchor||i.toAnchorMode!==n.toAnchorMode,i});s&&(this.host.links=a,i&&this.host._emitLinksChange(a,o))}_startNodeDrag(e,t){var n;if(!this.host.editable)return;if(this.host.pendingLink)return;const i=this.host._eventPoint(e);if(!i)return;this.host.selectedNode=t.id,this.host.selectedLink=void 0,this.host._emitNodeSelect(t.id),null===(n=this.host.renderRoot.querySelector(".flow-svg"))||void 0===n||n.focus();const o=this.host._model();this._drag={attachedLeaves:this._overlappingUnlinkedLeaves(t,o),id:t.id,pointerId:e.pointerId,startX:i.x,startY:i.y,offsetX:i.x-t.point.x,offsetY:i.y-t.point.y,moved:!1},this.host.activeNode=t.id,this.host._capturePointer(e),e.stopPropagation(),e.preventDefault()}_startLabelDrag(e,t,n,i){var o;if(!this.host.editable)return;const r=this.host._eventPoint(e);if(!r)return;const s="straight"===this.host.labelStyle?this.host._nodeStraightLabelPoint(t,n,i):this.host._nodeCurvedLabelHandlePoint(t,n,i);this.host.selectedNode=t.id,this.host.selectedLink=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host._emitNodeSelect(t.id),null===(o=this.host.renderRoot.querySelector(".flow-svg"))||void 0===o||o.focus(),this._labelDrag="straight"===this.host.labelStyle?{dragOffsetX:r.x-s.x,dragOffsetY:r.y-s.y,mode:"straight",nodeId:t.id,pointerId:e.pointerId}:{dragOffsetX:0,dragOffsetY:0,mode:"curved",nodeId:t.id,pointerId:e.pointerId},this.host._capturePointer(e),e.stopPropagation(),e.preventDefault()}_handlePointerMove(e){var t;if(!this.host.editable)return;const n=this.host._eventPoint(e);if(!n)return;const i=this._anchorDrag;if(i&&e.pointerId===i.pointerId){const e=this.host._model().nodes[i.nodeId];if(!e)return;return void this._setLinkEndAnchor(i.linkId,i.end,this.host._nearestAnchorIndex(e,n),!0,!0)}const o=this._labelDrag;if(o&&e.pointerId===o.pointerId){const e=this.host._model().nodes[o.nodeId];if(!e)return;if("curved"===o.mode)this.host._emitNodeLabelChange({nodeId:e.id,labelAngle:Math.atan2(n.y-e.point.y,n.x-e.point.x),labelOffsetX:e.labelOffsetX,labelOffsetY:e.labelOffsetY},!0);else{const t=n.x-o.dragOffsetX,i=n.y-o.dragOffsetY;this.host._emitNodeLabelChange({nodeId:e.id,labelAngle:e.labelAngle,labelOffsetX:t-e.point.x,labelOffsetY:i-e.point.y},!0)}return}if(this.host.pendingLink){var r;const e=this.host._model();return this.host.pointerPoint=n,void(this.host.hoverTarget=null===(r=this._nearestCompatibleTarget(e.nodes[this.host.pendingLink.from],n,e.nodes))||void 0===r?void 0:r.id)}const s=this._drag;if(!s||e.pointerId!==s.pointerId)return;if(!s.moved){if(Math.hypot(n.x-s.startX,n.y-s.startY)<4)return;s.moved=!0;const e=this._autoAnchorLinksForNode(s.id);e!==this.host.links&&(s.anchorsChanged=!0,this.host.links=e,this.host._emitLinksChange(e,!0))}const a=this.host._clampedPoint({x:n.x-s.offsetX,y:n.y-s.offsetY}),l=this.host._model().nodes[s.id]?{x:s.startX-s.offsetX,y:s.startY-s.offsetY}:a,d=a.x-l.x,h=a.y-l.y,c=Object.fromEntries((null!==(t=s.attachedLeaves)&&void 0!==t?t:[]).map(e=>[e.id,this.host._clampedPoint({x:e.point.x+d,y:e.point.y+h})]));this.host.layout={...this.host.layout,...c,[s.id]:a},this.host._emitLayoutChange(this.host.layout,!0)}_handlePointerUp(e){var t;if(!this.host.editable)return;const n=this._anchorDrag;if(n&&e.pointerId===n.pointerId){var i;const t=e.target;return(null==t||null===(i=t.hasPointerCapture)||void 0===i?void 0:i.call(t,e.pointerId))&&t.releasePointerCapture(e.pointerId),this._anchorDrag=void 0,this.host._emitLinksChange(this.host.links),e.stopPropagation(),void e.preventDefault()}const o=this._labelDrag;if(o&&e.pointerId===o.pointerId){var r;const t=this.host._eventPoint(e),n=this.host._model().nodes[o.nodeId],i=e.target;if((null==i||null===(r=i.hasPointerCapture)||void 0===r?void 0:r.call(i,e.pointerId))&&i.releasePointerCapture(e.pointerId),this._labelDrag=void 0,t&&n)if("curved"===o.mode)this.host._emitNodeLabelChange({nodeId:n.id,labelAngle:Math.atan2(t.y-n.point.y,t.x-n.point.x),labelOffsetX:n.labelOffsetX,labelOffsetY:n.labelOffsetY});else{const e=t.x-o.dragOffsetX,i=t.y-o.dragOffsetY;this.host._emitNodeLabelChange({nodeId:n.id,labelAngle:n.labelAngle,labelOffsetX:e-n.point.x,labelOffsetY:i-n.point.y})}return e.stopPropagation(),void e.preventDefault()}if(this.host.pendingLink){var s,a;const t=e.target;(null==t||null===(s=t.hasPointerCapture)||void 0===s?void 0:s.call(t,e.pointerId))&&t.releasePointerCapture(e.pointerId);const n=null!==(a=this.host._eventPoint(e))&&void 0!==a?a:this.host.pointerPoint;if(n){var l;this.host.pointerPoint=n;const t=this.host._model(),i=t.nodes[this.host.pendingLink.from],o=null!==(l=this.host.hoverTarget?t.nodes[this.host.hoverTarget]:void 0)&&void 0!==l?l:this._nearestCompatibleTarget(i,n,t.nodes);if(o)return void this._commitPendingLink(e,o,this.host._nearestAnchorIndex(o,n));const r=this._pendingJunctionConnectionCandidate(i,n,t.nodes);if(r)return void this._commitPendingLinkToJunctionConnection(e,r)}return this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host.selectedLink=void 0,this.host.selectedNode=void 0,e.stopPropagation(),void e.preventDefault()}const d=this._drag;if(!d||e.pointerId!==d.pointerId)return;const h=e.target;if((null==h||null===(t=h.hasPointerCapture)||void 0===t?void 0:t.call(h,e.pointerId))&&h.releasePointerCapture(e.pointerId),this._drag=void 0,this.host.activeNode=void 0,d.moved){const e=this._connectJunctionToWrappedConnection(d.id),t=d.anchorsChanged||e!==this.host.links;this.host.links=e,this.host._emitLayoutChange(this.host.layout),t&&this.host._emitLinksChange(this.host.links)}}_clearInteraction(e){this.host.editable&&e.currentTarget===e.target&&(this.host.selectedNode=void 0,this.host.selectedLink=void 0,this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host._emitNodeSelect(void 0))}_nextLayout(e,t){return{...this.host.layout,[e]:this.host._clampedPoint(t)}}_overlappingUnlinkedLeaves(e,t){return Object.values(t.nodes).filter(t=>"leaf"===t.kind&&t.id!==e.id&&t.stackIndex<e.stackIndex).filter(t=>Math.hypot(t.point.x-e.point.x,t.point.y-e.point.y)<t.radius+e.radius).filter(e=>!this.host.links.some(t=>t.from===e.id||t.to===e.id)).map(e=>({id:e.id,point:{...e.point}}))}_normalizedLinks(e){return this.host.links.filter(t=>{const n=e[t.from],i=e[t.to];return Boolean(n&&i&&this._isCompatibleLink(n,i))})}_connectJunctionToWrappedConnection(e){const t=this.host._model(),n=t.nodes[e];if(!n||"junction"!==n.kind)return this.host.links;const i=this._wrappedJunctionConnectionCandidate(n,t.nodes);return i?this._splitJunctionConnectionWithJunction(i.link,n.id,this._junctionConnectionSnapAnchor(i.detour)):this.host.links}_wrappedJunctionConnectionCandidate(e,t){return this.host.links.map(n=>{const i=t[n.from],o=t[n.to];if(!i||!o||"junction"!==i.kind||"junction"!==o.kind||i.id===e.id||o.id===e.id)return;const r=this.host._connectionPoint(i,o,this.host._linkAnchor(n,i.id),0),s=this.host._connectionPoint(o,i,this.host._linkAnchor(n,o.id),0),a=this.host._junctionLineDetour(r,s,e);return a?{detour:a,link:n,score:Math.abs(a.signedDistance)}:void 0}).filter(e=>Boolean(e)).sort((e,t)=>e.score-t.score)[0]}_pendingJunctionConnectionCandidate(e,t,n){if(e&&"junction"===e.kind)return this.host.links.map(i=>{const o=n[i.from],r=n[i.to];if(!o||!r||"junction"!==o.kind||"junction"!==r.kind||o.id===e.id||r.id===e.id)return;const s=this.host._connectionPoint(o,r,this.host._linkAnchor(i,o.id),0),a=this.host._connectionPoint(r,o,this.host._linkAnchor(i,r.id),0),l=this.host._junctionLineDetour(s,a,e),d=xe(t,s,a);return d.distance>28?void 0:{detour:l,link:i,point:d.point,score:d.distance}}).filter(e=>Boolean(e)).sort((e,t)=>e.score-t.score)[0]}_commitPendingLinkToJunctionConnection(e,t){if(!this.host.pendingLink)return;const n=this.host.pendingLink.from,i=t.detour?this._junctionConnectionSnapAnchor(t.detour):this.host.pendingLink.fromAnchor,o=this._splitJunctionConnectionWithJunction(t.link,n,i);this.host.pendingLink=void 0,this.host.hoverTarget=void 0,this.host.pointerPoint=void 0,this.host.selectedLink=void 0,this.host.selectedNode=void 0,this.host.links=o,this.host._emitLinksChange(o),e.stopPropagation(),e.preventDefault()}_splitJunctionConnectionWithJunction(e,t,n){var i;const o=null!==(i=e.junctionJoinId)&&void 0!==i?i:this._junctionJoinId(e.from,e.to,t),r=this._splitWrappedJunctionLink(e,e.from,t,{fromAnchor:e.fromAnchor,fromAnchorMode:e.fromAnchorMode,toAnchor:n,toAnchorMode:void 0===n?void 0:"manual",junctionJoinId:o}),s=this._splitWrappedJunctionLink(e,t,e.to,{fromAnchor:n,fromAnchorMode:void 0===n?void 0:"manual",toAnchor:e.toAnchor,toAnchorMode:e.toAnchorMode,junctionJoinId:o});return[...this.host.links.filter(t=>t.id!==e.id&&!this._sameLinkEnds(t,r.from,r.to)&&!this._sameLinkEnds(t,s.from,s.to)),r,s]}_splitWrappedJunctionLink(e,t,n,i){return{id:`${t}->${n}`,from:t,to:n,attribute:e.attribute,color:e.color,displayValue:e.displayValue,entity:e.entity,factor:e.factor,flowMaxValue:e.flowMaxValue,flowMinVisibleValue:e.flowMinVisibleValue,invert:e.invert,unit:e.unit,value:e.value,...i}}_junctionJoinId(e,t,n){const[i,o]=[e,t].sort();return`${i}--${o}--via-${n}`}_linksAfterLinkDelete(e){const t=this.host._model(),n=this.host.links.find(t=>t.id===e);if(!n)return this.host.links;const i=this.host._junctionJoinGeometry(n,t.nodes,this.host.links);return(null==i?void 0:i.branchLinkId)===e&&i.busLinkId&&i.branchLinkId?this._linksAfterBranchDelete(i):(null==i?void 0:i.busLinkId)===e&&i.branchLinkId?this.host.links.filter(e=>e.id!==i.busLinkId&&e.id!==i.branchLinkId):this.host.links.filter(t=>t.id!==e)}_linksAfterBranchDelete(e){const t=this.host.links.find(t=>t.id===e.busLinkId),n=this.host.links.find(t=>t.id===e.branchLinkId);if(!t||!n)return this.host.links.filter(t=>t.id!==e.branchLinkId);const i=this._restoredJunctionBusLink(e,t,n);return[...this.host.links.filter(e=>e.id!==t.id&&e.id!==n.id&&!this._sameLinkEnds(e,i.from,i.to)),i]}_restoredJunctionBusLink(e,t,n){const i=this._linkAnchorFields(t,e.firstOuterId),o=this._linkAnchorFields(n,e.secondOuterId);return{...t,id:`${e.firstOuterId}->${e.secondOuterId}`,from:e.firstOuterId,to:e.secondOuterId,fromAnchor:i.anchor,fromAnchorMode:i.mode,toAnchor:o.anchor,toAnchorMode:o.mode,junctionJoinId:void 0}}_linkAnchorFields(e,t){return e.from===t?{anchor:e.fromAnchor,mode:e.fromAnchorMode}:e.to===t?{anchor:e.toAnchor,mode:e.toAnchorMode}:{}}_sameLinkEnds(e,t,n){return e.from===t&&e.to===n||e.from===n&&e.to===t}_junctionConnectionSnapAnchor(e){return e.tapAnchor}_isCompatibleLink(e,t){const n=/* @__PURE__ */new Set([e.kind,t.kind]);return!(!n.has("leaf")||!n.has("junction"))||"junction"===e.kind&&"junction"===t.kind}_canStartLink(e){return"junction"===e.kind||"leaf"===e.kind}_nearestCompatibleTarget(e,t,n){var i;if(e)return null===(i=Object.values(n).filter(t=>t.id!==e.id&&this._isCompatibleLink(e,t)).map(e=>({node:e,distance:Math.hypot(e.point.x-t.x,e.point.y-t.y)})).filter(({node:e,distance:t})=>t<=e.radius+46).sort((e,t)=>e.distance-t.distance)[0])||void 0===i?void 0:i.node}};function Ve(e,t){const n=t.replace(/^M\s*-?\d+(?:\.\d+)?(?:e[-+]?\d+)?\s+-?\d+(?:\.\d+)?(?:e[-+]?\d+)?\s*/i,"").trim();return n?`${e} ${n}`:e}function Oe(e){return 1===e?0:1}function Fe(e,t,n){return Math.abs(e.x-t.x)<3?`M${e.x} ${e.y} L${t.x} ${t.y}`:[`M${e.x} ${e.y}`,`L${e.x} ${n}`,`L${t.x} ${n}`,`L${t.x} ${t.y}`].join(" ")}function De(e,t,n){return Math.abs(e.y-t.y)<3?`M${e.x} ${e.y} L${t.x} ${t.y}`:[`M${e.x} ${e.y}`,`L${n} ${e.y}`,`L${n} ${t.y}`,`L${t.x} ${t.y}`].join(" ")}function Te(e,t,n){const i=Math.abs(t.y-e.y),o=ye(.26*i,18,36),r=ye(.22*i,16,30),s="down"===n?e.y+o:e.y-o,a="down"===n?t.y-o:t.y+o;return Math.abs(e.x-t.x)<3||Math.abs(a-s)<6?`M${e.x} ${e.y} L${t.x} ${t.y}`:[`M${e.x} ${e.y}`,`L${e.x} ${s}`,`C${e.x} ${"down"===n?s+r:s-r} ${t.x} ${"down"===n?a-r:a+r} ${t.x} ${a}`,`L${t.x} ${t.y}`].join(" ")}function Re(e,t,n){const i=Math.abs(t.x-e.x),o=ye(.26*i,18,36),r=ye(.22*i,16,30),s="right"===n?e.x+o:e.x-o,a="right"===n?t.x-o:t.x+o;return Math.abs(e.y-t.y)<3||Math.abs(a-s)<6?`M${e.x} ${e.y} L${t.x} ${t.y}`:[`M${e.x} ${e.y}`,`L${s} ${e.y}`,`C${"right"===n?s+r:s-r} ${e.y} ${"right"===n?a-r:a+r} ${t.y} ${a} ${t.y}`,`L${t.x} ${t.y}`].join(" ")}var Je,Be=10,ze=class{constructor(e,t){this.routing=e,this.connectionPoint=t}connectorPath(e,t,n,i,o){const r=this._linkedLeafNodes(n.id,i,o),s=this._sortedLaneNodes(r.filter(e=>e.point.y<=n.point.y-n.radius),"x"),a=this._sortedLaneNodes(r.filter(e=>e.point.y>=n.point.y+n.radius),"x"),l=this._sortedLaneNodes(r.filter(e=>e.point.x<=n.point.x),"y"),d=this._sortedLaneNodes(r.filter(e=>e.point.x>=n.point.x),"y"),h={from:this._linkAnchor(e,t.id),to:this._linkAnchor(e,n.id)};if("radial"===this.routing)return this._radialConnectorPath(t,n,h);if("sweep"===this.routing)return this._defaultConnectorPath(t,n,h);switch(this._leafConnectorSide(t,n)){case"upper":return"channel"===this.routing?this._upperLeafChannelPath(t,n,this._laneSlotForNode(t.id,s).index,Math.max(1,s.length),h):"orthogonal"===this.routing?this._upperLeafOrthogonalPath(t,n,this._laneSlotForNode(t.id,s).index,Math.max(1,s.length),h):this._upperLeafConnectorPath(t,n,this._laneSlotForNode(t.id,s).index,Math.max(1,s.length),h);case"lower":return"channel"===this.routing?this._lowerLeafChannelPath(t,n,this._laneSlotForNode(t.id,a).index,Math.max(1,a.length),h):"orthogonal"===this.routing?this._lowerLeafOrthogonalPath(t,n,this._laneSlotForNode(t.id,a).index,Math.max(1,a.length),h):this._lowerLeafConnectorPath(t,n,this._laneSlotForNode(t.id,a).index,Math.max(1,a.length),h);case"left":return"channel"===this.routing?this._leftLeafChannelPath(t,n,this._laneSlotForNode(t.id,l).index,Math.max(1,l.length),h):"orthogonal"===this.routing?this._leftLeafOrthogonalPath(t,n,this._laneSlotForNode(t.id,l).index,Math.max(1,l.length),h):this._leftLeafConnectorPath(t,n,this._laneSlotForNode(t.id,l).index,Math.max(1,l.length),h);case"right":return"channel"===this.routing?this._rightLeafChannelPath(t,n,this._laneSlotForNode(t.id,d).index,Math.max(1,d.length),h):"orthogonal"===this.routing?this._rightLeafOrthogonalPath(t,n,this._laneSlotForNode(t.id,d).index,Math.max(1,d.length),h):this._rightLeafConnectorPath(t,n,this._laneSlotForNode(t.id,d).index,Math.max(1,d.length),h);default:return this._radialConnectorPath(t,n,h)}}autoAnchorReference(e,t,n,i){return this._leafAutoAnchorReferencePoint(e,t,n,i)}defaultConnectorPath(e,t,n={}){return this._defaultConnectorPath(e,t,n)}linkAnchor(e,t){return this._linkAnchor(e,t)}guideNode(e,t){return this._guideNode(e,t)}_leafConnectorSide(e,t){const n=e.point.x-t.point.x,i=e.point.y-t.point.y,o=Math.max(0,Math.abs(n)-t.radius),r=Math.max(0,Math.abs(i)-t.radius);return o<=0&&r<=0?"radial":r>=o?i<=0?"upper":"lower":n<=0?"left":"right"}_leafAutoAnchorReferencePoint(e,t,n,i){const o="from"===t?e.from:e.to,r="from"===t?e.to:e.from,s=n[o],a=n[r];if(!s||!a||"leaf"!==s.kind||"junction"!==a.kind)return;if("radial"===this.routing||"sweep"===this.routing)return a.point;const l=this._linkedLeafNodes(a.id,n,i),d=this._sortedLaneNodes(l.filter(e=>e.point.y<=a.point.y-a.radius),"x"),h=this._sortedLaneNodes(l.filter(e=>e.point.y>=a.point.y+a.radius),"x"),c=this._sortedLaneNodes(l.filter(e=>e.point.x<=a.point.x),"y"),u=this._sortedLaneNodes(l.filter(e=>e.point.x>=a.point.x),"y");switch(this._leafConnectorSide(s,a)){case"upper":return this._upperLeafAnchorReferencePoint(s,a,this._laneSlotForNode(s.id,d).index,Math.max(1,d.length));case"lower":return this._lowerLeafAnchorReferencePoint(s,a,this._laneSlotForNode(s.id,h).index,Math.max(1,h.length));case"left":return this._leftLeafAnchorReferencePoint(s,a,this._laneSlotForNode(s.id,c).index,Math.max(1,c.length));case"right":return this._rightLeafAnchorReferencePoint(s,a,this._laneSlotForNode(s.id,u).index,Math.max(1,u.length));default:return a.point}}_upperLeafConnectorPath(e,t,n,i,o={}){if(e.point.y>=t.point.y-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-22)),s=t.point.y-t.radius-Be-16,a=this._guideNode(`${e.id}-upper-drop`,{x:t.point.x,y:s}),l=this._guideNode(`${t.id}-upper-neck`,{x:r,y:s}),d=this.connectionPoint(e,a,o.from),h=this.connectionPoint(t,l,o.to,0),c=Math.max(0,h.y-d.y);if(Math.abs(d.x-h.x)<3)return`M${d.x} ${d.y} L${h.x} ${h.y}`;const u=d.y+ye(.42*c,38,72),p=ye(.35*(u-d.y),16,28);return[`M${d.x} ${d.y}`,`C${d.x} ${d.y+p} ${h.x} ${u-p} ${h.x} ${u}`,`L${h.x} ${h.y}`].join(" ")}_lowerLeafConnectorPath(e,t,n,i,o={}){if(e.point.y<=t.point.y+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-22)),s=t.point.y+t.radius+Be+16,a=this._guideNode(`${e.id}-lower-drop`,{x:e.point.x,y:s}),l=this._guideNode(`${t.id}-lower-neck`,{x:r,y:s}),d=this.connectionPoint(e,a,o.from),h=this.connectionPoint(t,l,o.to,0),c=Math.max(0,d.y-h.y);if(Math.abs(d.x-h.x)<3)return`M${d.x} ${d.y} L${h.x} ${h.y}`;const u=h.y+ye(.58*c,44,76),p=ye(.35*(d.y-u),16,28);return[`M${d.x} ${d.y}`,`C${d.x} ${d.y-p} ${h.x} ${u+p} ${h.x} ${u}`,`L${h.x} ${h.y}`].join(" ")}_leftLeafConnectorPath(e,t,n,i,o={}){if(e.point.x>=t.point.x-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-22)),s=t.point.x-t.radius-Be-16,a=this._guideNode(`${e.id}-left-spread`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-left-neck`,{x:s,y:r}),d=this.connectionPoint(e,a,o.from),h=this.connectionPoint(t,l,o.to,0),c=Math.max(0,h.x-d.x);if(Math.abs(d.y-h.y)<3)return`M${d.x} ${d.y} L${h.x} ${h.y}`;const u=d.x+ye(.42*c,38,72),p=ye(.35*(u-d.x),16,28);return[`M${d.x} ${d.y}`,`C${d.x+p} ${d.y} ${u-p} ${h.y} ${u} ${h.y}`,`L${h.x} ${h.y}`].join(" ")}_rightLeafConnectorPath(e,t,n,i,o={}){if(e.point.x<=t.point.x+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-22)),s=t.point.x+t.radius+Be+16,a=this._guideNode(`${e.id}-right-spread`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-right-neck`,{x:s,y:r}),d=this.connectionPoint(e,a,o.from),h=this.connectionPoint(t,l,o.to,0),c=Math.max(0,d.x-h.x);if(Math.abs(d.y-h.y)<3)return`M${d.x} ${d.y} L${h.x} ${h.y}`;const u=d.x-ye(.42*c,38,72),p=ye(.35*(d.x-u),16,28);return[`M${d.x} ${d.y}`,`C${d.x-p} ${d.y} ${u+p} ${h.y} ${u} ${h.y}`,`L${h.x} ${h.y}`].join(" ")}_upperLeafChannelPath(e,t,n,i,o={}){if(e.point.y>=t.point.y-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-18)),s=t.point.y-t.radius-Be-18,a=this._guideNode(`${e.id}-upper-channel`,{x:e.point.x,y:s}),l=this._guideNode(`${t.id}-upper-channel`,{x:r,y:s});return Te(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),"down")}_lowerLeafChannelPath(e,t,n,i,o={}){if(e.point.y<=t.point.y+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-18)),s=t.point.y+t.radius+Be+18,a=this._guideNode(`${e.id}-lower-channel`,{x:e.point.x,y:s}),l=this._guideNode(`${t.id}-lower-channel`,{x:r,y:s});return Te(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),"up")}_leftLeafChannelPath(e,t,n,i,o={}){if(e.point.x>=t.point.x-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-18)),s=t.point.x-t.radius-Be-18,a=this._guideNode(`${e.id}-left-channel`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-left-channel`,{x:s,y:r});return Re(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),"right")}_rightLeafChannelPath(e,t,n,i,o={}){if(e.point.x<=t.point.x+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-18)),s=t.point.x+t.radius+Be+18,a=this._guideNode(`${e.id}-right-channel`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-right-channel`,{x:s,y:r});return Re(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),"left")}_upperLeafAnchorReferencePoint(e,t,n,i){return"channel"===this.routing||"orthogonal"===this.routing?{x:e.point.x,y:t.point.y-t.radius-Be-18}:{x:t.point.x,y:t.point.y-t.radius-Be-16}}_lowerLeafAnchorReferencePoint(e,t,n,i){return"channel"===this.routing||"orthogonal"===this.routing?{x:e.point.x,y:t.point.y+t.radius+Be+18}:{x:e.point.x,y:t.point.y+t.radius+Be+16}}_leftLeafAnchorReferencePoint(e,t,n,i){return"channel"===this.routing||"orthogonal"===this.routing?{x:t.point.x-t.radius-Be-18,y:e.point.y}:{x:t.point.x-t.radius-Be-16,y:e.point.y}}_rightLeafAnchorReferencePoint(e,t,n,i){return"channel"===this.routing||"orthogonal"===this.routing?{x:t.point.x+t.radius+Be+18,y:e.point.y}:{x:t.point.x+t.radius+Be+16,y:e.point.y}}_upperLeafOrthogonalPath(e,t,n,i,o={}){if(e.point.y>=t.point.y-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-18)),s=t.point.y-t.radius-Be-18,a=this._guideNode(`${e.id}-upper-orthogonal`,{x:e.point.x,y:s}),l=this._guideNode(`${t.id}-upper-orthogonal`,{x:r,y:s});return Fe(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),s)}_lowerLeafOrthogonalPath(e,t,n,i,o={}){if(e.point.y<=t.point.y+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.x,t.point.x,n,i,Math.max(0,t.radius-18)),s=t.point.y+t.radius+Be+18,a=this._guideNode(`${e.id}-lower-orthogonal`,{x:e.point.x,y:s}),l=this._guideNode(`${t.id}-lower-orthogonal`,{x:r,y:s});return Fe(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),s)}_leftLeafOrthogonalPath(e,t,n,i,o={}){if(e.point.x>=t.point.x-t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-18)),s=t.point.x-t.radius-Be-18,a=this._guideNode(`${e.id}-left-orthogonal`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-left-orthogonal`,{x:s,y:r});return De(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),s)}_rightLeafOrthogonalPath(e,t,n,i,o={}){if(e.point.x<=t.point.x+t.radius)return this._radialConnectorPath(e,t,o);const r=this._funnelLaneCoordinate(e.point.y,t.point.y,n,i,Math.max(0,t.radius-18)),s=t.point.x+t.radius+Be+18,a=this._guideNode(`${e.id}-right-orthogonal`,{x:s,y:e.point.y}),l=this._guideNode(`${t.id}-right-orthogonal`,{x:s,y:r});return De(this.connectionPoint(e,a,o.from),this.connectionPoint(t,l,o.to,0),s)}_defaultConnectorPath(e,t,n={}){const i=this.connectionPoint(e,t,n.from,"junction"===e.kind&&"leaf"===t.kind?0:void 0),o=this.connectionPoint(t,e,n.to,"junction"===t.kind&&"leaf"===e.kind?0:void 0),r=o.x-i.x,s=o.y-i.y;if(Math.abs(r)>=Math.abs(s)){const e=.38*r;return`M${i.x} ${i.y} C${i.x+e} ${i.y} ${o.x-e} ${o.y} ${o.x} ${o.y}`}const a=.38*s;return`M${i.x} ${i.y} C${i.x} ${i.y+a} ${o.x} ${o.y-a} ${o.x} ${o.y}`}_radialConnectorPath(e,t,n={}){const i=this.connectionPoint(e,t,n.from,"junction"===e.kind&&"leaf"===t.kind?0:void 0),o=this.connectionPoint(t,e,n.to,"junction"===t.kind&&"leaf"===e.kind?0:void 0),r=t.point.x-e.point.x,s=t.point.y-e.point.y,a=Math.hypot(r,s)||1,l=r/a,d=s/a,h=ye(.32*a,46,120);return[`M${i.x} ${i.y}`,`C${i.x+l*h} ${i.y+d*h}`,`${o.x-l*h} ${o.y-d*h}`,`${o.x} ${o.y}`].join(" ")}_linkedLeafNodes(e,t,n){return this._uniqueNodes(n.map(n=>{if(n.from!==e&&n.to!==e)return;const i=t[n.from===e?n.to:n.from];return"leaf"===(null==i?void 0:i.kind)?i:void 0}).filter(e=>Boolean(e)))}_uniqueNodes(e){return Array.from(new Map(e.map(e=>[e.id,e])).values())}_sortedLaneNodes(e,t){return[...e].sort((e,n)=>{const i=e.point[t]-n.point[t];return Math.abs(i)>.1?i:e.id.localeCompare(n.id)})}_laneSlotForNode(e,t){const n=t.findIndex(t=>t.id===e);return{index:Math.max(0,n),count:Math.max(1,t.length)}}_funnelLaneCoordinate(e,t,n,i,o){if(o<=0)return t;const r=ye(e-t,-o,o);if(i<=1)return t+r;const s=this._laneOffset(n,i,72,o);return t+ye(.75*r+.25*s,-o,o)}_laneOffset(e,t,n,i){if(t<=1||i<=0)return 0;const o=(t-1)/2*n;return(e-(t-1)/2)*n*(o>i?i/o:1)}_linkAnchor(e,t){return e.from===t&&"manual"===e.fromAnchorMode?e.fromAnchor:e.to===t&&"manual"===e.toAnchorMode?e.toAnchor:void 0}_guideNode(e,t){return{id:e,kind:"junction",stackIndex:-1,label:"",value:0,radius:0,point:t,icon:"mdi:circle-small"}}},Ue=class{constructor(e,t,n,i,o,r){this.connectionPoint=e,this.defaultConnectorPath=t,this.guideNode=n,this.linkAnchor=i,this.nearestAnchorIndex=o,this.sameLinkEnds=r}connectorPath(e,t,n,i={}){return this._junctionConnectorPath(e,t,n,i)}joinedConnectionPath(e,t,n,i){return this._junctionJoinedConnectionPath(e,t,n,i)}joinGeometry(e,t,n,i){return this._junctionJoinGeometry(e,t,n,i)}lineDetour(e,t,n,i=0){return this._junctionLineDetour(e,t,n,i)}_junctionConnectorPath(e,t,n,i={}){const o=this.connectionPoint(e,t,i.from,0),r=this.connectionPoint(t,e,i.to,0),s=this._junctionLineDetours(o,r,e,t,n);if(0===s.length)return`M${o.x} ${o.y} L${r.x} ${r.y}`;const a=[`M${o.x} ${o.y}`];let l=0;return s.forEach(e=>{e.beforeDistance>l+.5&&a.push(`L${e.entry.x} ${e.entry.y}`),a.push(`A${e.radius} ${e.radius} 0 0 ${e.sweepFlag} ${e.exit.x} ${e.exit.y}`),l=e.afterDistance}),a.push(`L${r.x} ${r.y}`),a.join(" ")}_junctionLineDetours(e,t,n,i,o){return Object.values(o).filter(e=>"junction"===e.kind&&e.id!==n.id&&e.id!==i.id).map(n=>this._junctionLineDetour(e,t,n)).filter(e=>Boolean(e)).sort((e,t)=>e.beforeDistance-t.beforeDistance)}_junctionLineDetour(e,t,n,i=0){const o=t.x-e.x,r=t.y-e.y,s=Math.hypot(o,r);if(s<1)return;const a={x:o/s,y:r/s},l=-a.y,d=a.x,h=n.point.x-e.x,c=n.point.y-e.y,u=h*a.x+c*a.y,p=h*l+c*d,f=n.radius+10,_=f+Math.max(0,i),v=Math.max(18,n.radius-8),m=Math.min(f,Math.max(34,.55*n.radius));if(u<=m||u>=s-m)return;if(Math.abs(p)>_)return;const g=Math.abs(p)<v?v:Math.abs(p)>f?_:f,y=Math.sqrt(Math.max(0,g**2-p**2)),b=Math.max(0,u-y),x=Math.min(s,u+y),$=p>=0?1:0,w=1===$?-1:1,k={x:Math.round(n.point.x+l*w*g),y:Math.round(n.point.y+d*w*g)};return{afterDistance:x,beforeDistance:b,entry:{x:e.x+a.x*b,y:e.y+a.y*b},exit:{x:e.x+a.x*x,y:e.y+a.y*x},nodeId:n.id,radius:g,signedDistance:p,sweepFlag:$,tap:k,tapAnchor:this.nearestAnchorIndex(n,k)}}_junctionJoinedConnectionPath(e,t,n,i){var o;const r=this._junctionJoinGeometry(e,t,n,i);if(!r)return;return(null===(o=r.pathsByLinkId)||void 0===o?void 0:o[e.id])||(e.from===r.firstOuterId&&e.to===r.middleId?r.beforePath:e.from===r.middleId&&e.to===r.firstOuterId?r.beforeReversePath:e.from===r.middleId&&e.to===r.secondOuterId?r.afterPath:e.from===r.secondOuterId&&e.to===r.middleId?r.afterReversePath:void 0)}_junctionJoinGeometry(e,t,n,i){if(null==i?void 0:i.has(e.id))return i.get(e.id);const o=t[e.from],r=t[e.to];if(!o||!r||"junction"!==o.kind||"junction"!==r.kind)return void(null==i||i.set(e.id,void 0));const s=[o,r].map(i=>this._junctionJoinGeometryForMiddle(e,i,t,n)).filter(e=>Boolean(e))[0];return null==i||i.set(e.id,s),(null==s?void 0:s.busLinkId)&&(null==i||i.set(s.busLinkId,s)),(null==s?void 0:s.branchLinkId)&&(null==i||i.set(s.branchLinkId,s)),s}_junctionJoinGeometryForMiddle(e,t,n,i){const o=this.linkAnchor(e,t.id),r=e.junctionJoinId;if(void 0===o&&!r)return;const s=n[e.from===t.id?e.to:e.from];if(!s||"junction"!==s.kind)return;const a=i.find(i=>{if(i.id===e.id)return!1;if(i.from!==t.id&&i.to!==t.id)return!1;const s=n[i.from===t.id?i.to:i.from];return"junction"===(null==s?void 0:s.kind)&&(r&&i.junctionJoinId===r||void 0!==o&&this.linkAnchor(i,t.id)===o)});if(!a)return;const l=n[a.from===t.id?a.to:a.from];if(!l||"junction"!==l.kind)return;const[d,h]=this._orderedJoinOuters(s,l),c=this._linkBetweenNodes(e,a,d.id,t.id),u=this._linkBetweenNodes(e,a,h.id,t.id);if(!c||!u)return;const p=this.connectionPoint(d,h,this.linkAnchor(c,d.id),0),f=this.connectionPoint(h,d,this.linkAnchor(u,h.id),0),_=this._junctionLineDetour(p,f,t,r?14:0);return _?{afterPath:this._junctionJoinAfterPath(_.tap,_,f),afterReversePath:this._junctionJoinAfterReversePath(f,_,_.tap),beforePath:this._junctionJoinBeforePath(p,_,_.tap),beforeReversePath:this._junctionJoinBeforeReversePath(_.tap,_,p),branchLinkId:u.id,busLinkId:c.id,firstOuterId:d.id,middleId:t.id,secondOuterId:h.id,tap:_.tap}:this._junctionBranchJoinGeometry(t,d,h,c,u,n)}_junctionBranchJoinGeometry(e,t,n,i,o,r){const s=this.connectionPoint(t,n,this.linkAnchor(i,t.id),0),a=this.connectionPoint(n,t,this.linkAnchor(o,n.id),0),l=xe(e.point,s,a).point,d=this.guideNode(`${e.id}-bus-tap`,l),h={...r,[d.id]:d},c=this._junctionConnectorPath(t,d,h,{from:this.linkAnchor(i,t.id)}),u=this._junctionConnectorPath(d,t,h,{to:this.linkAnchor(i,t.id)}),p=this._junctionConnectorPath(d,n,h,{to:this.linkAnchor(o,n.id)}),f=this._junctionConnectorPath(n,d,h,{from:this.linkAnchor(o,n.id)}),_=this._junctionBranchToBusPath(e,l),v=this._junctionBranchFromBusPath(e,l),m=Ve(_,p),g=Ve(f,v),y=i,b=o;return{afterPath:m,afterReversePath:g,beforePath:c,beforeReversePath:u,branchLinkId:b.id,busLinkId:y.id,firstOuterId:t.id,middleId:e.id,pathsByLinkId:{[y.id]:y.from===t.id||y.to===e.id?c:u,[b.id]:b.from===e.id||b.to===n.id?m:g},secondOuterId:n.id,tap:l}}_junctionBranchToBusPath(e,t){const n=this.guideNode(`${e.id}-bus-tap`,t);return this.defaultConnectorPath(e,n,{from:this.nearestAnchorIndex(e,t)})}_junctionBranchFromBusPath(e,t){const n=this.guideNode(`${e.id}-bus-tap`,t);return this.defaultConnectorPath(n,e,{to:this.nearestAnchorIndex(e,t)})}_orderedJoinOuters(e,t){return e.point.x!==t.point.x?e.point.x<t.point.x?[e,t]:[t,e]:e.point.y<=t.point.y?[e,t]:[t,e]}_linkBetweenNodes(e,t,n,i){return this.sameLinkEnds(e,n,i)?e:this.sameLinkEnds(t,n,i)?t:void 0}_junctionJoinBeforePath(e,t,n){const i=[`M${e.x} ${e.y}`];return Math.hypot(t.entry.x-e.x,t.entry.y-e.y)>.5&&i.push(`L${t.entry.x} ${t.entry.y}`),i.push(`A${t.radius} ${t.radius} 0 0 ${t.sweepFlag} ${n.x} ${n.y}`),i.join(" ")}_junctionJoinBeforeReversePath(e,t,n){const i=[`M${e.x} ${e.y}`,`A${t.radius} ${t.radius} 0 0 ${Oe(t.sweepFlag)} ${t.entry.x} ${t.entry.y}`];return Math.hypot(t.entry.x-n.x,t.entry.y-n.y)>.5&&i.push(`L${n.x} ${n.y}`),i.join(" ")}_junctionJoinAfterPath(e,t,n){const i=[`M${e.x} ${e.y}`,`A${t.radius} ${t.radius} 0 0 ${t.sweepFlag} ${t.exit.x} ${t.exit.y}`];return Math.hypot(n.x-t.exit.x,n.y-t.exit.y)>.5&&i.push(`L${n.x} ${n.y}`),i.join(" ")}_junctionJoinAfterReversePath(e,t,n){const i=[`M${e.x} ${e.y}`];return Math.hypot(e.x-t.exit.x,e.y-t.exit.y)>.5&&i.push(`L${t.exit.x} ${t.exit.y}`),i.push(`A${t.radius} ${t.radius} 0 0 ${Oe(t.sweepFlag)} ${n.x} ${n.y}`),i.join(" ")}},He=12,Ge=32,We=70,Ke=62,qe=["var(--home-flow-junction-1-color, #f6b73c)","var(--home-flow-junction-2-color, #ef6c00)","var(--home-flow-junction-3-color, #f4a340)","var(--home-flow-junction-4-color, #b85f1a)"],Ye=0,Xe=class extends me{constructor(...e){super(...e),this.editable=!0,this.flowMaxValue=12e3,this.flowMinVisibleValue=10,this.hideZeroValues=!1,this.labelStyle="curved",this.leafRouting="funnel",this.layout={},this.links=[],this.nodes=[],this.graphInstanceId=++Ye,this.requestedExternalIcons=/* @__PURE__ */new Set,this._labelTextMeasurer=new $e,this._renderScale=1}connectedCallback(){super.connectedCallback(),this.updateComplete.then(()=>this._observeRenderScale())}disconnectedCallback(){var e;null===(e=this._scaleObserver)||void 0===e||e.disconnect(),super.disconnectedCallback()}_observeRenderScale(){var e;const t=this.renderRoot.querySelector(".flow-svg");t&&"undefined"!=typeof ResizeObserver&&(null!==(e=this._scaleObserver)&&void 0!==e||(this._scaleObserver=new ResizeObserver(e=>{var t;const n=null===(t=e[0])||void 0===t?void 0:t.contentRect;if(!n||n.width<=0||n.height<=0)return;const i=Math.min(n.width/986,n.height/730);!Number.isFinite(i)||Math.abs(i-this._renderScale)<.005||(this._renderScale=i,this.requestUpdate())})),this._scaleObserver.disconnect(),this._scaleObserver.observe(t))}_leafRouter(){var e;if((null===(e=this._leafRouterCache)||void 0===e?void 0:e.routing)===this.leafRouting)return this._leafRouterCache.router;const t=new ze(this.leafRouting,(e,t,n,i)=>this._connectionPoint(e,t,n,i));return this._leafRouterCache={router:t,routing:this.leafRouting},t}_junctionRouter(){var e;return null!==(e=this._junctionRouterInstance)&&void 0!==e||(this._junctionRouterInstance=new Ue((e,t,n,i)=>this._connectionPoint(e,t,n,i),(e,t,n)=>this._defaultConnectorPath(e,t,n),(e,t)=>this._guideNode(e,t),(e,t)=>this._linkAnchor(e,t),(e,t)=>this._nearestAnchorIndex(e,t),(e,t,n)=>this._sameLinkEnds(e,t,n))),this._junctionRouterInstance}_flowEngine(){var e;if((null===(e=this._flowEngineCache)||void 0===e?void 0:e.links)===this.links&&this._flowEngineCache.min===this.flowMinVisibleValue&&this._flowEngineCache.max===this.flowMaxValue)return this._flowEngineCache.engine;const t=new Ne(this.flowMinVisibleValue,this.flowMaxValue,this.links,(e,t)=>this._junctionFlowColor(e,t));return this._flowEngineCache={engine:t,links:this.links,max:this.flowMaxValue,min:this.flowMinVisibleValue},t}_nodeRenderer(){if(this._nodeRendererInstance)return this._nodeRendererInstance;const e=this;return this._nodeRendererInstance=new Ee({get activeNode(){return e.activeNode},get editable(){return e.editable},graphInstanceId:this.graphInstanceId,get hideZeroValues(){return e.hideZeroValues},get labelStyle(){return e.labelStyle},get selectedNode(){return e.selectedNode},_labelTextMeasurer:this._labelTextMeasurer,get _renderScale(){return e._renderScale},_anchorAngle:e=>this._anchorAngle(e),_emitNodeAction:(e,t)=>this._emitNodeAction(e,t),_handleNodeActionKeydown:(e,t)=>this._handleNodeActionKeydown(e,t),_hasNodeFlowArrow:e=>this._hasNodeFlowArrow(e),_isJunctionJunctionLink:(e,t)=>this._isJunctionJunctionLink(e,t),_junctionJoinGeometry:(e,t,n,i)=>this._junctionJoinGeometry(e,t,n,i),_linkAnchor:(e,t)=>this._linkAnchor(e,t),_nearestAnchorIndex:(e,t)=>this._nearestAnchorIndex(e,t),_nodeActionLabel:e=>this._nodeActionLabel(e),_nodeColorCached:(e,t,n,i)=>this._nodeColorCached(e,t,n,i),_nodeDisplayValue:(e,t,n)=>this._nodeDisplayValue(e,t,n),_nodeFlowValue:e=>this._nodeFlowValue(e),_nodePrimaryValue:(e,t,n)=>this._nodePrimaryValue(e,t,n),_normalizeAnchorIndex:e=>this._normalizeAnchorIndex(e),_startLabelDrag:(e,t,n,i)=>this._startLabelDrag(e,t,n,i),_startNodeDrag:(e,t)=>this._startNodeDrag(e,t)}),this._nodeRendererInstance}_interactionController(){if(this._interactionControllerInstance)return this._interactionControllerInstance;const e=this;return this._interactionControllerInstance=new je({get activeNode(){return e.activeNode},set activeNode(t){e.activeNode=t},get editable(){return e.editable},get hoverTarget(){return e.hoverTarget},set hoverTarget(t){e.hoverTarget=t},get labelStyle(){return e.labelStyle},get layout(){return e.layout},set layout(t){e.layout=t},get links(){return e.links},set links(t){e.links=t},get pendingLink(){return e.pendingLink},set pendingLink(t){e.pendingLink=t},get pointerPoint(){return e.pointerPoint},set pointerPoint(t){e.pointerPoint=t},get renderRoot(){return e.renderRoot},get selectedLink(){return e.selectedLink},set selectedLink(t){e.selectedLink=t},get selectedNode(){return e.selectedNode},set selectedNode(t){e.selectedNode=t},_anchorIndexForPointerPoint:(e,t,n,i)=>this._anchorIndexForPointerPoint(e,t,n,i),_anchorPoint:(e,t,n)=>this._anchorPoint(e,t,n),_capturePointer:e=>this._capturePointer(e),_clampedPoint:e=>this._clampedPoint(e),_connectionPoint:(e,t,n,i)=>this._connectionPoint(e,t,n,i),_emitLayoutChange:(e,t)=>this._emitLayoutChange(e,t),_emitLinksChange:(e,t)=>this._emitLinksChange(e,t),_emitNodeLabelChange:(e,t)=>this._emitNodeLabelChange(e,t),_emitNodeRemove:e=>this._emitNodeRemove(e),_emitNodeSelect:e=>this._emitNodeSelect(e),_eventPoint:e=>this._eventPoint(e),_junctionJoinGeometry:(e,t,n)=>this._junctionJoinGeometry(e,t,n),_junctionLineDetour:(e,t,n,i)=>this._junctionLineDetour(e,t,n,i),_linkAnchor:(e,t)=>this._linkAnchor(e,t),_model:()=>this._model(),_nearestAnchorIndex:(e,t)=>this._nearestAnchorIndex(e,t),_nodeCurvedLabelHandlePoint:(e,t,n)=>this._nodeCurvedLabelHandlePoint(e,t,n),_nodeStraightLabelPoint:(e,t,n)=>this._nodeStraightLabelPoint(e,t,n),_normalizeAnchorIndex:e=>this._normalizeAnchorIndex(e)}),this._interactionControllerInstance}render(){const e=this._model(),t=this._normalizedLinks(e.nodes),n=this._hiddenNodeIds(e.nodes,t),i=this._visibleNodes(e.nodes,n),o=t.filter(t=>this._isVisibleLink(t,e.nodes,n)),r=this._renderContext(e,o,t),s=o.filter(t=>this._isJunctionJunctionLink(t,e.nodes)),a=o.filter(t=>!this._isJunctionJunctionLink(t,e.nodes)),l=this._nodesByZLayer(i);return q`
+      <section
+        class=${"card "+(this.editable?"editable":"readonly")}
+        aria-label="Flow graph"
+      >
+        <svg
+          class="flow-svg"
+          viewBox=${"0 0 986 730"}
+          role="group"
+          aria-label="Flow graph"
+          tabindex=${this.editable?0:-1}
+          @pointerdown=${this.editable?this._clearInteraction:void 0}
+          @pointermove=${this.editable?this._handlePointerMove:void 0}
+          @pointerup=${this.editable?this._handlePointerUp:void 0}
+          @pointercancel=${this.editable?this._handlePointerUp:void 0}
+          @keydown=${this.editable?this._handleKeydown:void 0}
+        >
+          ${this.editable?this._renderEditorGrid():Z}
+          ${a.map(n=>this._renderGraphLink(n,e,t,r))}
+          ${s.map(n=>this._renderGraphLink(n,e,t,r))}
+          ${l.map(n=>this._renderNodeLayer(n,e,o,t,r))}
+          ${this.editable?this._renderPendingLink(i,t):Z}
+          ${this.editable?this._renderAnchorControls(i,o):Z}
+          ${this.editable?Y`
+                <text
+                  class="graph-build-version"
+                  x=${972}
+                  y=${718}
+                  text-anchor="end"
+                  aria-hidden="true"
+                >${"2026-07-12 08:25Z"}</text>
+              `:Z}
+        </svg>
+      </section>
+    `}_renderEditorGrid(){const e=`home-flow-grid-minor-${this.graphInstanceId}`,t=`home-flow-grid-major-${this.graphInstanceId}`;return Y`
+      <defs>
+        <pattern
+          id=${e}
+          width=${He}
+          height=${He}
+          patternUnits="userSpaceOnUse"
+          patternTransform=${"translate(70 62)"}
+        >
+          <circle class="editor-grid-dot" cx="0" cy="0" r="0.85" />
+        </pattern>
+        <pattern
+          id=${t}
+          width=${48}
+          height=${48}
+          patternUnits="userSpaceOnUse"
+          patternTransform=${"translate(70 62)"}
+        >
+          <rect width="100%" height="100%" fill=${`url(#${e})`} />
+          <circle class="editor-grid-dot major" cx="0" cy="0" r="1.15" />
+        </pattern>
+      </defs>
+      <rect
+        class="editor-grid"
+        x="0"
+        y="0"
+        width=${986}
+        height=${730}
+        fill=${`url(#${t})`}
+      />
+    `}_renderContext(e,t,n=t){const i=this._geometryCacheFor(e,n),o={colors:/* @__PURE__ */new Map,joinGeometries:i.joinGeometries,maxValues:/* @__PURE__ */new Map,minVisibleValues:/* @__PURE__ */new Map,nodeColors:/* @__PURE__ */new Map,paths:i.paths,sideNodeIds:/* @__PURE__ */new Map,signedValues:/* @__PURE__ */new Map,sourceParts:/* @__PURE__ */new Map},r=e.nodes;return t.forEach(t=>{const i=this._linkSignedValue(t,r,n,o),s=this._linkMinVisibleValue(t,r,n),a=this._linkMaxValue(t,s,r,n);o.paths.has(t.id)||o.paths.set(t.id,this._graphLinkPath(t,r,n,o)),o.signedValues.set(t.id,i),o.minVisibleValues.set(t.id,s),o.maxValues.set(t.id,a),this._shouldShowFlow(Math.abs(i),s)&&(o.colors.set(t.id,this._linkColor(t,e,n,i,o)),o.sourceParts.set(t.id,this._linkSourceParts(t,e,n,i,o)))}),o}_geometryCacheFor(e,t){var n;const i=this._geometryCacheKey(e,t);return(null===(n=this._geometryCache)||void 0===n?void 0:n.key)===i||(this._geometryCache={joinGeometries:/* @__PURE__ */new Map,key:i,paths:/* @__PURE__ */new Map}),this._geometryCache}_geometryCacheKey(e,t){const n=Object.values(e.nodes).sort((e,t)=>e.id.localeCompare(t.id)).map(e=>[e.id,e.kind,Math.round(100*e.point.x)/100,Math.round(100*e.point.y)/100,e.radius].join(":")).join("|"),i=t.map(e=>{var t,n,i,o,r;return[e.id,e.from,e.to,null!==(t=e.fromAnchor)&&void 0!==t?t:"",null!==(n=e.fromAnchorMode)&&void 0!==n?n:"",null!==(i=e.toAnchor)&&void 0!==i?i:"",null!==(o=e.toAnchorMode)&&void 0!==o?o:"",null!==(r=e.junctionJoinId)&&void 0!==r?r:""].join(":")}).join("|");return`${this.leafRouting}::${n}::${i}`}_isJunctionJunctionLink(e,t){var n,i;return"junction"===(null===(n=t[e.from])||void 0===n?void 0:n.kind)&&"junction"===(null===(i=t[e.to])||void 0===i?void 0:i.kind)}_model(){return{nodes:Object.fromEntries(this._positionedNodes().map(e=>[e.id,e]))}}_visibleNodes(e,t){return Object.fromEntries(Object.entries(e).filter(([e])=>!t.has(e)))}_hiddenNodeIds(e,t){return new Set(Object.values(e).filter(n=>this._isHiddenByZero(n,e,t)).map(e=>e.id))}_isVisibleLink(e,t,n){const i=t[e.from],o=t[e.to];return Boolean(i&&o&&!n.has(i.id)&&!n.has(o.id))}_isHiddenByZero(e,t,n){if(!0!==e.hideIfZero)return!1;const i=this._nodeDisplayValue(e,{nodes:t},n);return Math.abs(i)<=.5}_nodesByZLayer(e){return Object.values(e).sort((e,t)=>{const n=t.stackIndex-e.stackIndex;return 0!==n?n:e.id.localeCompare(t.id)})}_defaultNodeRadius(e){return"junction"===e?90:65}_positionedNodes(){return this.nodes.map((e,t)=>{var n,i,o;return{id:e.id,kind:e.kind,stackIndex:t,label:e.label,labelAngle:Number.isFinite(e.labelAngle)?e.labelAngle:void 0,labelOffsetX:Number.isFinite(e.labelOffsetX)?e.labelOffsetX:void 0,labelOffsetY:Number.isFinite(e.labelOffsetY)?e.labelOffsetY:void 0,value:Number.isFinite(e.value)?e.value:0,flowValue:Number.isFinite(e.flowValue)?e.flowValue:void 0,hasOwnValue:e.hasOwnValue,contributesToFlow:e.contributesToFlow,secondary:e.secondary,secondaryDisplayValue:e.secondaryDisplayValue,displayValue:e.displayValue,hideZeroValues:e.hideZeroValues,hideIfZero:e.hideIfZero,showFlowArrow:e.showFlowArrow,junctionDisplayMode:e.junctionDisplayMode,primaryAction:e.primaryAction,secondaryAction:e.secondaryAction,radius:ye(null!==(n=e.radius)&&void 0!==n?n:this._defaultNodeRadius(e.kind),20,100),point:this._clampedPoint(null!==(i=this.layout[e.id])&&void 0!==i?i:this._fallbackPoint(e.kind,t)),icon:null===e.icon?void 0:null!==(o=e.icon)&&void 0!==o?o:this._defaultIcon(e.kind),secondaryIcon:null===e.secondaryIcon?void 0:e.secondaryIcon,unit:e.unit,color:e.color,flowMinVisibleValue:e.flowMinVisibleValue,flowMaxValue:e.flowMaxValue}})}_fallbackPoint(e,t){return"junction"===e?{x:350+t%3*150,y:330+110*Math.floor(t/3)}:"leaf"===e?{x:270+t%4*130,y:100+88*Math.floor(t/4)}:{x:770+t%2*110,y:360+108*Math.floor(t/2)}}_renderGraphLink(e,t,n,i){var o,r,s,a,l;const d=t.nodes,h=d[e.from],c=d[e.to];if(!h||!c)return Z;const u=null!==(o=i.signedValues.get(e.id))&&void 0!==o?o:this._linkSignedValue(e,d,n,i),p=Math.abs(u),f=null!==(r=i.paths.get(e.id))&&void 0!==r?r:this._graphLinkPath(e,d,n,i);if(!f)return Z;const _=this.selectedLink===e.id,v=null!==(s=i.minVisibleValues.get(e.id))&&void 0!==s?s:this._linkMinVisibleValue(e,d,n),m=null!==(a=i.maxValues.get(e.id))&&void 0!==a?a:this._linkMaxValue(e,v,d,n),g=this._shouldShowFlow(p,v),y=g?this._flowWidth(p,v,m):2.4,b=g?null!==(l=i.colors.get(e.id))&&void 0!==l?l:this._linkColor(e,t,n,u,i):"var(--home-flow-junction-1-color, #f6b73c)",x=g?i.sourceParts.has(e.id)?i.sourceParts.get(e.id):this._linkSourceParts(e,t,n,u,i):void 0,$=this._junctionConnectionMarker(e,t,n,i);return Y`
+      <path class=${"connector base "+(_?"selected":"")} d=${f} />
+      ${g?this._renderFlowPath(e,f,u,b,y,x):Z}
+      ${$?this._renderJunctionConnectionMarker($,_):Z}
+      ${this.editable||e.entity?Y`
+            <path
+              class=${"connector-hit "+(_?"selected":"")}
+              d=${f}
+              @pointerdown=${this.editable?t=>this._selectLink(t,e.id):void 0}
+              @click=${!this.editable&&e.entity?t=>this._emitEntityMoreInfo(e.entity,t):void 0}
+            />
+          `:Z}
+    `}_renderFlowPath(e,t,n,i,o,r){const s=r&&r.length>0?r:[{color:i,key:`${e.id}-fallback`,length:18,start:0}];if(1===s.length)return Y`
+        <path
+          class="connector flow source-single"
+          d=${t}
+          stroke=${s[0].color}
+          stroke-width=${o}
+          stroke-dasharray=${"18 22"}
+        >
+          ${this._renderFlowAnimation(n)}
+        </path>
+      `;const[a,...l]=s,d=this._splitFlowMaskId(e);return Y`
+      <mask
+        id=${d}
+        class="source-flow-mask"
+        maskUnits="userSpaceOnUse"
+        maskContentUnits="userSpaceOnUse"
+        x="-24"
+        y="-24"
+        width=${1034}
+        height=${778}
+      >
+        <path
+          class="connector flow source-mask"
+          d=${t}
+          stroke="#fff"
+          stroke-width=${o}
+          stroke-dasharray=${"18 22"}
+        >
+          ${this._renderFlowAnimation(n)}
+        </path>
+      </mask>
+      <g mask=${`url(#${d})`}>
+        <path
+          class="connector flow split-flow source-fill"
+          d=${t}
+          stroke=${a.color}
+          stroke-width=${o}
+          stroke-dasharray=${"18 22"}
+        >
+          ${this._renderFlowAnimation(n)}
+        </path>
+        ${l.map(e=>{const i=this._sourceTailOffset(e),r=this._sourceTailVisibleLength(e);return Y`
+            <path
+              class="connector flow split-flow source-split"
+              d=${t}
+              stroke=${e.color}
+              stroke-width=${o}
+              stroke-dasharray=${`${r} ${40-r}`}
+              stroke-dashoffset=${i}
+            >
+              ${this._renderFlowAnimation(n,i)}
+            </path>
+          `})}
+      </g>
+    `}_renderFlowAnimation(e,t=0){return Y`
+      <animate
+        attributeName="stroke-dashoffset"
+        begin="0s"
+        dur=${"1.8s"}
+        from=${t}
+        to=${e>=0?t-40:t+40}
+        repeatCount="indefinite"
+      />
+    `}_sourceTailOffset(e){return-e.start}_sourceTailVisibleLength(e){return ye(18-e.start,0,40)}_splitFlowMaskId(e){return`home-flow-split-${this.graphInstanceId}-${e.id.replace(/[^a-zA-Z0-9_-]/g,"-")}`}_junctionConnectionMarker(e,t,n,i){if(!this._isJunctionJunctionLink(e,t.nodes))return;const o=this._junctionJoinGeometry(e,t.nodes,n,i);return(null==o?void 0:o.tap)&&o.branchLinkId===e.id?o.tap:void 0}_renderJunctionConnectionMarker(e,t){return Y`
+      <circle
+        class=${"bus-tap "+(t?"selected":"")}
+        cx=${e.x}
+        cy=${e.y}
+        r="6"
+        aria-hidden="true"
+      />
+    `}_junctionFlowColor(e,t){var n;const i=null==t||null===(n=t[e])||void 0===n?void 0:n.color;if(i)return i;const o=Object.values(null!=t?t:{}).filter(e=>"junction"===e.kind),r=Math.max(0,o.findIndex(t=>t.id===e));return qe[r%qe.length]}_graphLinkPath(e,t,n,i){const o=t[e.from],r=t[e.to];if(!o||!r)return"";const s=[o,r].find(e=>"junction"===e.kind),a=[o,r].find(e=>"leaf"===e.kind);if(a&&s)return this._leafRouter().connectorPath(e,a,s,t,n);if("junction"===o.kind&&"junction"===r.kind){return this._junctionJoinedConnectionPath(e,t,n,i)||this._junctionConnectorPath(o,r,t,{from:this._linkAnchor(e,o.id),to:this._linkAnchor(e,r.id)})}return this._defaultConnectorPath(o,r,{from:this._linkAnchor(e,o.id),to:this._linkAnchor(e,r.id)})}_junctionConnectorPath(e,t,n,i={}){return this._junctionRouter().connectorPath(e,t,n,i)}_junctionJoinedConnectionPath(e,t,n,i){return this._junctionRouter().joinedConnectionPath(e,t,n,null==i?void 0:i.joinGeometries)}_junctionJoinGeometry(e,t,n,i){return this._junctionRouter().joinGeometry(e,t,n,null==i?void 0:i.joinGeometries)}_junctionLineDetour(e,t,n,i=0){return this._junctionRouter().lineDetour(e,t,n,i)}_defaultConnectorPath(e,t,n={}){return this._leafRouter().defaultConnectorPath(e,t,n)}_linkAnchor(e,t){return this._leafRouter().linkAnchor(e,t)}_guideNode(e,t){return this._leafRouter().guideNode(e,t)}_renderNodeLayer(e,t,n,i,o){return this._nodeRenderer().render(e,t,n,i,o)}_nodeStraightLabelPoint(e,t,n){return this._nodeRenderer().straightLabelPoint(e,t,n)}_nodeCurvedLabelHandlePoint(e,t,n){return this._nodeRenderer().curvedLabelHandlePoint(e,t,n)}willUpdate(e){if(e.has("nodes")||!this.hasUpdated)for(const t of this.nodes)for(const e of[t.icon,t.secondaryIcon])(null==e?void 0:e.includes(":"))&&this._queueExternalIcon(e)}_queueExternalIcon(e){(e=>Me.has(e))(e)||this.requestedExternalIcons.has(e)||(this.requestedExternalIcons.add(e),async function(e){var t;if(Me.has(e))return null!==(t=Me.get(e))&&void 0!==t?t:null;const n=Ie.get(e);if(n)return n;const i=(async()=>{const t=performance.now()+3e3;for(;!customElements.get("ha-icon");){if(performance.now()>=t)return null;await Se(25)}const n=document.createElement("ha-icon");n.icon=e,n.setAttribute("icon",e),Object.assign(n.style,{height:"24px",left:"-10000px",pointerEvents:"none",position:"fixed",top:"-10000px",visibility:"hidden",width:"24px"}),document.body.append(n);try{const e=performance.now()+5e3;for(;performance.now()<e;){var i,o;await n.updateComplete;const e=null===(i=n.shadowRoot)||void 0===i?void 0:i.querySelector("ha-svg-icon"),t=null!==(o=null==e?void 0:e.path)&&void 0!==o?o:n._path;var r,s,a,l;if(t)return{path:t,secondaryPath:null!==(r=null!==(s=null==e?void 0:e.secondaryPath)&&void 0!==s?s:n._secondaryPath)&&void 0!==r?r:void 0,viewBox:null!==(a=null!==(l=null==e?void 0:e.viewBox)&&void 0!==l?l:n._viewBox)&&void 0!==a?a:"0 0 24 24"};await Se(25)}return null}finally{n.remove()}})();Ie.set(e,i);const o=await i;return Ie.delete(e),Me.set(e,o),o}(e).finally(()=>{this.requestedExternalIcons.delete(e),this.isConnected&&this.requestUpdate()}))}_renderPendingLink(e,t){if(!this.pendingLink||!this.pointerPoint)return Z;const n=e[this.pendingLink.from];if(!n)return Z;const i=this._pendingLinkPath(n,e,t);return i?Y`
+      <path
+        class="connector base selected pending"
+        d=${i}
+      />
+    `:Z}_pendingLinkPath(e,t,n){if(!this.pendingLink||!this.pointerPoint)return"";const i=this.hoverTarget?t[this.hoverTarget]:void 0;if(i&&this._isCompatibleLink(e,i)){const o=this._nearestAnchorIndex(i,this.pointerPoint),r=this._manualLink(this._canonicalLink(e,i,this.pendingLink.fromAnchor,o)),s=this._replaceLink(n,r);return this._graphLinkPath(r,t,s)}const o=this._pendingJunctionConnectionCandidate(e,this.pointerPoint,t);if(o){const t=this._guideNode("pending-junction-connection-pointer",o.point);return this._defaultConnectorPath(e,t,{from:this.pendingLink.fromAnchor})}const r=this._guideNode("pending-pointer",this.pointerPoint);return this._defaultConnectorPath(e,r,{from:this.pendingLink.fromAnchor})}_renderAnchorControls(e,t){if(this.pendingLink){const t=e[this.pendingLink.from],n=this.hoverTarget?e[this.hoverTarget]:void 0,i=n&&this.pointerPoint?this._nearestAnchorIndex(n,this.pointerPoint):void 0;return Y`
+        ${t?this._renderAnchorPoints(t,"source",{selectedAnchorIndex:this.pendingLink.fromAnchor}):Z}
+        ${n?this._renderAnchorPoints(n,"target",{selectedAnchorIndex:i}):Z}
+      `}if(this.selectedLink){const n=t.find(e=>e.id===this.selectedLink);if(n)return Y`
+          ${this._linkEndControls(n,e,t).map(e=>this._renderAnchorPoints(e.node,"source",{fixedLinkEnd:e}))}
+        `}if(!this.selectedNode)return Z;const n=e[this.selectedNode];return n&&this._canStartLink(n)?this._renderAnchorPoints(n,"source",{linkEnds:this._nodeLinkEndControls(n.id,e,t)}):Z}_renderAnchorPoints(e,t,n={}){return Y`
+      <g class=${`anchor-controls ${t}`}>
+        ${Array.from({length:Ge},(i,o)=>{var r,s;const a=this._anchorPoint(e,o),l=null!==(r=n.fixedLinkEnd)&&void 0!==r?r:null===(s=n.linkEnds)||void 0===s?void 0:s.find(e=>e.anchorIndex===o),d=void 0!==n.selectedAnchorIndex&&this._normalizeAnchorIndex(n.selectedAnchorIndex)===o,h=n.fixedLinkEnd?n.fixedLinkEnd.anchorIndex===o:Boolean(l)||d;return Y`
+            <g class=${"anchor-handle "+(h?"selected":"")}>
+              <circle
+                class="anchor-hit"
+                cx=${a.x}
+                cy=${a.y}
+                r=${15}
+                @pointerdown=${n=>l?this._startAnchorDrag(n,l,o):"source"===t?this._startPendingLink(n,e,o):this._commitPendingLink(n,e,o)}
+              />
+              <circle
+                class="anchor-point"
+                cx=${a.x}
+                cy=${a.y}
+                r=${h?7:3.2}
+              />
+            </g>
+          `})}
+      </g>
+    `}_linkEndControls(e,t,n){return["from","to"].map(i=>{const o=t["from"===i?e.from:e.to];if(this._isVirtualJunctionJoinEnd(e,i,t,n))return;const r=this._linkEndAnchorIndex(e,i,t,n);return!o||o.radius<=0||void 0===r?void 0:{anchorIndex:r,end:i,link:e,node:o}}).filter(e=>Boolean(e))}_isVirtualJunctionJoinEnd(e,t,n,i){const o=this._junctionJoinGeometry(e,n,i);return!(!(null==o?void 0:o.pathsByLinkId)||o.busLinkId!==e.id)&&("from"===t?e.from:e.to)===o.middleId}_nodeLinkEndControls(e,t,n){return n.flatMap(i=>this._linkEndControls(i,t,n).filter(t=>t.node.id===e))}_linkEndAnchorIndex(e,t,n,i){const o=n["from"===t?e.from:e.to];if(!o||o.radius<=0)return;const r="from"===t?"manual"===e.fromAnchorMode?e.fromAnchor:void 0:"manual"===e.toAnchorMode?e.toAnchor:void 0;if(void 0!==r)return this._normalizeAnchorIndex(r);if("leaf"===o.kind){const r=this._leafAutoAnchorReferencePoint(e,t,n,i);if(r)return this._nearestAnchorIndex(o,r)}const s=this._graphLinkPath(e,n,i),a=this._pathLinkEndPoint(s,t);return a?this._nearestAnchorIndex(o,a):void 0}_leafAutoAnchorReferencePoint(e,t,n,i){return this._leafRouter().autoAnchorReference(e,t,n,i)}_pathLinkEndPoint(e,t){const n=this._pathNumbers(e);if(!n||n.length<2)return;const i="from"===t?0:n.length-2;return{x:n[i],y:n[i+1]}}_pathNumbers(e){var t,n;return null!==(t=null===(n=e.match(/-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/gi))||void 0===n?void 0:n.map(e=>Number(e)))&&void 0!==t?t:[]}_normalizedLinks(e){return this._interactionController().normalizeLinks(e)}_clearInteraction(e){return this._interactionController().clearInteraction(e)}_handlePointerMove(e){return this._interactionController().handlePointerMove(e)}_handlePointerUp(e){return this._interactionController().handlePointerUp(e)}_handleKeydown(e){return this._interactionController().handleKeydown(e)}_selectLink(e,t){return this._interactionController().selectLink(e,t)}_startAnchorDrag(e,t,n){return this._interactionController().startAnchorDrag(e,t,n)}_startPendingLink(e,t,n){return this._interactionController().startPendingLink(e,t,n)}_commitPendingLink(e,t,n){return this._interactionController().commitPendingLink(e,t,n)}_startNodeDrag(e,t){return this._interactionController().startNodeDrag(e,t)}_startLabelDrag(e,t,n,i){return this._interactionController().startLabelDrag(e,t,n,i)}_canonicalLink(e,t,n,i){return this._interactionController().canonicalLink(e,t,n,i)}_manualLink(e){return this._interactionController().manualLink(e)}_replaceLink(e,t){return this._interactionController().replaceLink(e,t)}_pendingJunctionConnectionCandidate(e,t,n){return this._interactionController().pendingJunctionConnectionCandidate(e,t,n)}_isCompatibleLink(e,t){return this._interactionController().isCompatibleLink(e,t)}_canStartLink(e){return this._interactionController().canStartLink(e)}_sameLinkEnds(e,t,n){return this._interactionController().sameLinkEnds(e,t,n)}_linkSignedValue(e,t,n=this.links,i){return this._flowEngine().signedValue(e,t,n,i)}_nodeFlowValue(e){return this._flowEngine().nodeFlowValue(e)}_linkSourceParts(e,t,n,i,o){return this._flowEngine().sourceParts(e,t,n,i,o)}_linkColor(e,t,n,i,o){return this._flowEngine().color(e,t,n,i,o)}_nodeColorCached(e,t,n,i){return this._flowEngine().nodeColor(e,t,n,i)}_shouldShowFlow(e,t){return this._flowEngine().showsFlow(e,t)}_flowWidth(e,t,n){return this._flowEngine().width(e,t,n)}_linkMinVisibleValue(e,t,n=this.links){return this._flowEngine().linkMinValue(e,t,n)}_linkMaxValue(e,t,n,i=this.links){return this._flowEngine().linkMaxValue(e,t,n,i)}_nodePrimaryValue(e,t,n){return this._flowEngine().primaryValue(e,t,n)}_nodeDisplayValue(e,t,n){return this._flowEngine().displayValue(e,t,n)}_hasNodeFlowArrow(e){return this._flowEngine().hasFlowArrow(e)}_connectionPoint(e,t,n,i){if(e.radius>0){const o=null!=i?i:"junction"===e.kind?10:0;return this._anchorPoint(e,null!=n?n:this._nearestAnchorIndex(e,t.point),o)}return e.point}_anchorPoint(e,t,n=10){const i=this._anchorAngle(t),o=Math.max(0,e.radius+n);return{x:Math.round(e.point.x+Math.cos(i)*o),y:Math.round(e.point.y+Math.sin(i)*o)}}_anchorAngle(e){const t=this._normalizeAnchorIndex(e);return-Math.PI/2+t*(2*Math.PI/Ge)}_nearestAnchorIndex(e,t){const n=(Math.atan2(t.y-e.point.y,t.x-e.point.x)+Math.PI/2)/(2*Math.PI)*Ge;return this._normalizeAnchorIndex(Math.round(n))}_normalizeAnchorIndex(e){return(Math.round(e)%Ge+Ge)%Ge}_anchorIndexForPointerPoint(e,t,n,i){const o=void 0!==n?this._normalizeAnchorIndex(n):void 0,r=void 0!==i?this._normalizeAnchorIndex(i):void 0,s=this._nearestAnchorIndex(e,t);if(void 0!==o){const n=this._anchorPoint(e,o,0),i=this._anchorPoint(e,s,0),r=Math.hypot(t.x-n.x,t.y-n.y),a=Math.hypot(t.x-i.x,t.y-i.y);if(r<=21||r<=a+7)return o}return null!=r?r:s}_clampedPoint(e){const t=ye(e.x,We,916),n=ye(e.y,Ke,658),i={x:We+Math.round((t-We)/He)*He,y:Ke+Math.round((n-Ke)/He)*He};return{x:ye(i.x,We,916),y:ye(i.y,Ke,658)}}_defaultIcon(e){return"junction"===e?"mdi:hub":"mdi:leaf"}_capturePointer(e){try{var t,n;null===(t=e.currentTarget)||void 0===t||null===(n=t.setPointerCapture)||void 0===n||n.call(t,e.pointerId)}catch{}}_eventPoint(e){const t=this.renderRoot.querySelector(".flow-svg"),n=null==t?void 0:t.getScreenCTM();if(!n)return;const i=new DOMPoint(e.clientX,e.clientY).matrixTransform(n.inverse());return{x:i.x,y:i.y}}_emitLayoutChange(e,t=!1){this.dispatchEvent(new CustomEvent("graph-layout-change",{detail:{layout:e,live:t},bubbles:!0,composed:!0}))}_emitLinksChange(e,t=!1){this.dispatchEvent(new CustomEvent("graph-links-change",{detail:{links:e,live:t},bubbles:!0,composed:!0}))}_emitNodeSelect(e){this.dispatchEvent(new CustomEvent("graph-node-select",{detail:{nodeId:e},bubbles:!0,composed:!0}))}_emitNodeRemove(e){this.dispatchEvent(new CustomEvent("graph-node-remove",{detail:{nodeId:e},bubbles:!0,composed:!0}))}_emitNodeLabelChange(e,t=!1){this.dispatchEvent(new CustomEvent("graph-node-label-change",{detail:{...e,live:t},bubbles:!0,composed:!0}))}_nodeActionLabel(e){switch(e.type){case"toggle":return"toggle";case"navigate":return"navigate";case"url":return"open link";default:return"details"}}_emitNodeAction(e,t){e&&(null==t||t.stopPropagation(),null==t||t.preventDefault(),this.dispatchEvent(new CustomEvent("graph-node-action",{detail:{action:e},bubbles:!0,composed:!0})))}_emitEntityMoreInfo(e,t){e&&(null==t||t.stopPropagation(),null==t||t.preventDefault(),this.dispatchEvent(new CustomEvent("graph-entity-more-info",{detail:{entityId:e},bubbles:!0,composed:!0})))}_handleNodeActionKeydown(e,t){"Enter"!==e.key&&" "!==e.key||this._emitNodeAction(t,e)}};(Je=Xe).properties={activeNode:{state:!0},editable:{type:Boolean},hoverTarget:{state:!0},flowMaxValue:{type:Number,attribute:"flow-max-value"},flowMinVisibleValue:{type:Number,attribute:"flow-min-visible-value"},hideZeroValues:{type:Boolean,attribute:"hide-zero-values"},layout:{attribute:!1},labelStyle:{type:String,attribute:"label-style"},leafRouting:{type:String,attribute:"leaf-routing"},links:{attribute:!1},nodes:{attribute:!1},pendingLink:{state:!0},pointerPoint:{state:!0},selectedLink:{state:!0},selectedNode:{state:!0}},Je.styles=we,customElements.get("home-flow-graph-card")||customElements.define("home-flow-graph-card",Xe);var Ze=0;function Qe(e){return`${e}-${Ze+=1}`}function et(e,t={}){var n;window.dispatchEvent(new CustomEvent("home-flow-card-preview-config-changed",{detail:{config:e,configKey:t.configKey,sourceConfigKey:null!==(n=t.sourceConfigKey)&&void 0!==n?n:t.configKey,sourceId:t.sourceId}}))}function tt(e,t={}){window.dispatchEvent(new CustomEvent("home-flow-card-preview-node-selected",{detail:{configKey:t.configKey,nodeId:e,sourceId:t.sourceId,targetId:t.targetId}}))}var nt="home-flow-card",it="curved",ot="funnel",rt="fit-width",st="#2d8f8a",at="#3f79c9",lt="#c65b4a",dt="#3f79c9",ht="#d6a500",ct=["device_class","friendly_name","icon","unit_of_measurement"],ut=["#f6b73c","#ef6c00","#f4a340","#b85f1a"],pt=[st,at,ht,dt,lt,"#ef6c00","#4f9b6d","#8a5cc2","#d04b89","#4d90d9","#7a7f2f","#c86b2f"],ft=[{id:"grid",kind:"junction",label:"Grid",icon:"mdi:transmission-tower",radius:90,color:st,flowDirection:"supply",balance_role:"junction"},{id:"home",kind:"junction",label:"Home",icon:"mdi:home-lightning-bolt",radius:90,color:at,flowDirection:"consume",balance_role:"junction"},{id:"heat-pump",kind:"leaf",label:"Heat pump",icon:"mdi:heat-pump",radius:65,flowDirection:"consume"}],_t=[{id:"grid->home",from:"grid",to:"home"},{id:"heat-pump->home",from:"heat-pump",to:"home"}],vt={grid:{x:245,y:365},home:{x:490,y:365},"heat-pump":{x:705,y:365}};function mt(e){const t=Zt(e)?e:{},n=Array.isArray(t.nodes),i=en(t.flow_min_visible_value,10),o=Math.max(en(t.flow_max_value,12e3),i+1),r=!0===t.hide_zero_values;return{type:"string"==typeof t.type?t.type:`custom:${nt}`,title:"string"==typeof t.title?t.title:void 0,nodes:gt(t.nodes,r),links:Mt(t.links,!n),layout:It(t.layout,!n),flow_min_visible_value:i,flow_max_value:o,label_style:"straight"===t.label_style?"straight":it,leaf_routing:"channel"===t.leaf_routing||"radial"===t.leaf_routing||"orthogonal"===t.leaf_routing||"sweep"===t.leaf_routing?t.leaf_routing:ot,scaling_mode:"fit-width"===t.scaling_mode||"shrink"===t.scaling_mode?t.scaling_mode:rt,width:en(t.width,502),height:en(t.height,360)}}function gt(e,t=!1){return Array.isArray(e)?e.filter(e=>Zt(e)).filter(e=>"string"==typeof e.id&&void 0!==yt(e.kind)).map(e=>{var n,i,o;const r=null!==(n=yt(e.kind))&&void 0!==n?n:"leaf";return{id:String(e.id),kind:r,label:"string"==typeof e.label?e.label:Yt(String(e.id)),label_angle:tn(e.label_angle),label_offset_x:tn(e.label_offset_x),label_offset_y:tn(e.label_offset_y),flow_mode:xt(e.flow_mode),entity:Ot(e.entity),attribute:Qt(e.attribute),incoming_entity:Ot(e.incoming_entity),incoming_attribute:Qt(e.incoming_attribute),outgoing_entity:Ot(e.outgoing_entity),outgoing_attribute:Qt(e.outgoing_attribute),secondary_entity:Ot(e.secondary_entity),secondary_attribute:Qt(e.secondary_attribute),primary_action:At(e.primary_action),primary_action_path:Qt(e.primary_action_path),secondary_action:At(e.secondary_action),secondary_action_path:Qt(e.secondary_action_path),value:tn(e.value),secondary:tn(e.secondary),factor:tn(e.factor),invert:!0===e.invert,flowDirection:bt(e.flowDirection),allowed_flow:wt(e.allowed_flow),balance_role:"junction"===r?null!==(i=$t(e.balance_role))&&void 0!==i?i:Ut(r):void 0,junction_display_value:kt(e.junction_display_value),hide_zero_values:"boolean"==typeof e.hide_zero_values?e.hide_zero_values:!!t||void 0,hide_if_zero:"boolean"==typeof e.hide_if_zero?e.hide_if_zero:void 0,show_flow_arrow:"boolean"==typeof e.show_flow_arrow?e.show_flow_arrow:void 0,flowMinVisibleValue:tn(e.flowMinVisibleValue),flowMaxValue:tn(e.flowMaxValue),radius:nn(null!==(o=tn(e.radius))&&void 0!==o?o:Bt(r),20,100),icon:Lt(e.icon),unit:Qt(e.unit),color:Qt(e.color)}}):Xt(ft).map(e=>({...e,...t?{hide_zero_values:!0}:{}}))}function yt(e){if("junction"===e||"leaf"===e)return e}function bt(e){if("consume"===e||"supply"===e)return e}function xt(e){if("signed"===e||"bidirectional"===e)return e}function $t(e){if("junction"===e||"measured"===e||"ignore"===e)return e}function wt(e){if("both"===e||"supply"===e||"consume"===e)return e}function kt(e){if("incoming"===e||"outgoing"===e||"net"===e)return e}function At(e){if("more-info"===e||"toggle"===e||"navigate"===e||"url"===e||"none"===e)return e}function Lt(e){var t;if(null===e)return null;const n=Qt(e);return n?null!==(t=Nt[n])&&void 0!==t?t:n.includes(":")?n:void 0:void 0}var Pt,Ct,Nt={appliance:"mdi:power-plug",battery:"mdi:battery",ev:"mdi:car-electric",generic:"mdi:circle-outline",grid:"mdi:transmission-tower",heat_pump:"mdi:heat-pump",home:"mdi:home-lightning-bolt",junction:"mdi:hub",node:"mdi:circle-small",plug:"mdi:power-plug",solar:"mdi:solar-power",water:"mdi:water"};function Mt(e,t=!0){return Array.isArray(e)?e.filter(e=>Zt(e)).filter(e=>"string"==typeof e.from&&"string"==typeof e.to).map(e=>({id:"string"==typeof e.id?e.id:`${String(e.from)}->${String(e.to)}`,from:String(e.from),to:String(e.to),entity:Ot(e.entity),attribute:Qt(e.attribute),value:tn(e.value),factor:tn(e.factor),invert:!0===e.invert,unit:Qt(e.unit),color:Qt(e.color),flowMinVisibleValue:tn(e.flowMinVisibleValue),flowMaxValue:tn(e.flowMaxValue),fromAnchor:tn(e.fromAnchor),fromAnchorMode:"manual"===e.fromAnchorMode?"manual":void 0,toAnchor:tn(e.toAnchor),toAnchorMode:"manual"===e.toAnchorMode?"manual":void 0,junctionJoinId:Qt(e.junctionJoinId)})):t?_t.map(e=>({...e})):[]}function It(e,t=!0){return Zt(e)?Object.fromEntries(Object.entries(e).filter(e=>{const t=e[1];return Zt(t)&&Number.isFinite(t.x)&&Number.isFinite(t.y)}).map(([e,t])=>[e,{x:Number(t.x),y:Number(t.y)}])):t?{...vt}:{}}function St(e,t){var n;return(null!==(n=e.nodes)&&void 0!==n?n:Xt(ft)).map(e=>{var n,i,o,r,s,a,l,d,h,c,u,p,f,_,v,m,g,y,b,x,$,w,k,A,L,P,C,N;const M=null!==(n=e.flow_mode)&&void 0!==n?n:"signed",I="signed"===M?Vt(t,e.entity?{entity:e.entity,attribute:e.attribute,factor:e.factor,unit:e.unit}:{value:e.value,unit:e.unit}):void 0,S="bidirectional"===M?Vt(t,{entity:e.incoming_entity,attribute:e.incoming_attribute,unit:e.unit}):void 0,E="bidirectional"===M?Vt(t,{entity:e.outgoing_entity,attribute:e.outgoing_attribute,unit:e.unit}):void 0,j=e.secondary_entity?Vt(t,{entity:e.secondary_entity,attribute:e.secondary_attribute,value:e.secondary}):void 0,V=void 0!==e.value||("bidirectional"===M?Boolean(e.incoming_entity||e.outgoing_entity):Boolean(e.entity)),O=(null!==(i=null==S?void 0:S.value)&&void 0!==i?i:0)-(null!==(o=null==E?void 0:E.value)&&void 0!==o?o:0),F=null!==(r=null!==(s=null!==(a=e.unit)&&void 0!==a?a:null==I?void 0:I.unit)&&void 0!==s?s:null==S?void 0:S.unit)&&void 0!==r?r:null==E?void 0:E.unit,D=null!==(l=null==j?void 0:j.value)&&void 0!==l?l:e.secondary,T=null!==(d=null!==(h=null==j?void 0:j.unit)&&void 0!==h?h:e.unit)&&void 0!==d?d:"%",R=null!==(c=e.flowDirection)&&void 0!==c?c:zt(e),J="bidirectional"===M?O:(null!==(u=null!==(p=null==I?void 0:I.value)&&void 0!==p?p:e.value)&&void 0!==u?u:0)*("consume"===R?-1:1),B=function(e,t){return"supply"===t?Math.max(e,0):"consume"===t?Math.min(e,0):e}(!0===e.invert?-J:J,null!==(f=e.allowed_flow)&&void 0!==f?f:"both"),z=Math.abs(B),U="bidirectional"===M?B>.5?null!==(_=null!==(v=e.incoming_entity)&&void 0!==v?v:e.outgoing_entity)&&void 0!==_?_:e.secondary_entity:B<-.5?null!==(m=null!==(g=e.outgoing_entity)&&void 0!==g?g:e.incoming_entity)&&void 0!==m?m:e.secondary_entity:null!==(y=null!==(b=e.incoming_entity)&&void 0!==b?b:e.outgoing_entity)&&void 0!==y?y:e.secondary_entity:null!==(x=e.entity)&&void 0!==x?x:e.secondary_entity,H=Et(null!==($=e.primary_action)&&void 0!==$?$:"more-info",U,e.primary_action_path),G=Et(null!==(w=e.secondary_action)&&void 0!==w?w:"more-info",e.secondary_entity,e.secondary_action_path),W="bidirectional"===M?null!==(k=e.incoming_entity)&&void 0!==k?k:e.outgoing_entity:e.entity,K=null===e.icon?null:null!==(A=null!==(L=e.icon)&&void 0!==L?L:Dt(t,W))&&void 0!==A?A:Jt(e.kind),q="measured"===Ht(e);return{id:e.id,kind:e.kind,label:null!==(P=null!==(C=e.label)&&void 0!==C?C:Ft(t,e.entity))&&void 0!==P?P:Yt(e.id),labelAngle:e.label_angle,labelOffsetX:e.label_offset_x,labelOffsetY:e.label_offset_y,value:z,flowValue:B,hasOwnValue:V,contributesToFlow:q,junctionDisplayMode:e.junction_display_value,hideZeroValues:e.hide_zero_values,hideIfZero:!0===e.hide_if_zero,showFlowArrow:!0===e.show_flow_arrow,primaryAction:H,secondaryAction:G,secondary:D,secondaryDisplayValue:void 0!==D?`${Tt(D)}${T?` ${T}`:""}`:void 0,radius:null!==(N=e.radius)&&void 0!==N?N:Bt(e.kind),icon:K,secondaryIcon:void 0,unit:F,color:e.color,flowMinVisibleValue:e.flowMinVisibleValue,flowMaxValue:e.flowMaxValue}})}function Et(e,t,n){switch(e){case"none":default:return;case"more-info":case"toggle":return t?{entityId:t,type:e}:void 0;case"navigate":case"url":return(null==n?void 0:n.trim())?{path:n.trim(),type:e}:void 0}}function jt(e,t){var n;return(null!==(n=e.links)&&void 0!==n?n:[]).map(e=>{var n,i;const o=e.entity?Vt(t,{...e,value:void 0}):Vt(t,e),r=null!==(n=null==o?void 0:o.value)&&void 0!==n?n:e.value,s=null!==(i=e.unit)&&void 0!==i?i:null==o?void 0:o.unit;return{...e,value:r,unit:s,displayValue:void 0!==r?Rt(r,s):void 0}})}function Vt(e,t){var n,i,o;if(!(null==t?void 0:t.entity))return void 0===(null==t?void 0:t.value)?void 0:{value:t.value,unit:t.unit};const r=null==e?void 0:e.states[t.entity];if(!r)return void 0===t.value?void 0:{value:t.value,unit:t.unit};const s=function(e){if("number"==typeof e)return e;if("string"!=typeof e)return NaN;const t=e.trim().replace(",",".").match(/[-+]?\d+(?:\.\d+)?/);return t?Number(t[0]):NaN}(t.attribute?r.attributes[t.attribute]:r.state);if(!Number.isFinite(s))return void 0===t.value?void 0:{value:t.value,unit:t.unit};const a=String(null!==(n=r.attributes.unit_of_measurement)&&void 0!==n?n:"").trim(),l=null!==(i=t.unit)&&void 0!==i?i:a,d=function(e){return"kW"===e?1e3:"MW"===e?1e6:1}(l);return{value:s*(null!==(o=t.factor)&&void 0!==o?o:d)*(t.invert?-1:1),unit:1!==d?"W":l}}function Ot(e){var t;return"string"==typeof e?Qt(e):Array.isArray(e)?Ot(e[0]):Zt(e)?null!==(t=Qt(e.entity))&&void 0!==t?t:Qt(e.entity_id):void 0}function Ft(e,t){var n;if(!t)return;const i=null==e||null===(n=e.states[t])||void 0===n?void 0:n.attributes.friendly_name;return"string"==typeof i?i:Yt(t)}function Dt(e,t){if(!t)return;const n=null==e?void 0:e.states[t],i=null==n?void 0:n.attributes.icon;if("string"==typeof i&&i.startsWith("mdi:"))return i;const o=null==n?void 0:n.attributes.device_class;if("string"==typeof o){const e=function(e){return"battery"===e?"mdi:battery":"gas"===e?"mdi:fire":"power"===e||"energy"===e?"mdi:flash":"temperature"===e?"mdi:thermometer":"water"===e?"mdi:water":void 0}(o);if(e)return e}return"battery"===(r=t.split(".")[0])?"mdi:battery":"binary_sensor"===r?"mdi:checkbox-marked-circle-outline":"climate"===r?"mdi:heat-pump":"cover"===r?"mdi:window-shutter":"fan"===r?"mdi:fan":"light"===r?"mdi:lightbulb":"sensor"===r?"mdi:eye":"switch"===r?"mdi:toggle-switch":"water_heater"===r?"mdi:water-boiler":void 0;var r}function Tt(e){return e.toLocaleString("en-US",{maximumFractionDigits:e>=100?0:1})}function Rt(e,t){const n=Math.abs(e);return t&&"W"!==t&&"kW"!==t&&"MW"!==t?`${Tt(n)} ${t}`:n>=1e3?`${Tt(n/1e3)} kW`:`${Math.round(n).toLocaleString("en-US")} W`}function Jt(e){return"junction"===e?"mdi:hub":"mdi:leaf"}function Bt(e){return"junction"===e?90:65}function zt(e){var t;return null!==(t=e.flowDirection)&&void 0!==t?t:"supply"}function Ut(e){return"junction"===e?"junction":"measured"}function Ht(e){var t;return"leaf"===e.kind?"measured":null!==(t=e.balance_role)&&void 0!==t?t:Ut(e.kind)}function Gt(e,t){var n,i,o;const{[t]:r,...s}=null!==(n=e.layout)&&void 0!==n?n:{};return mt({...e,nodes:(null!==(i=e.nodes)&&void 0!==i?i:[]).filter(e=>e.id!==t),links:(null!==(o=e.links)&&void 0!==o?o:[]).filter(e=>e.from!==t&&e.to!==t),layout:s})}function Wt(e,t){const n=t.filter(e=>"junction"===e.kind),i=Math.max(0,n.findIndex(t=>t.id===e));return ut[i%ut.length]}function Kt(e){const t=/^#?([0-9a-f]{6})$/i.exec(null!=e?e:"");return t?`#${t[1].toLowerCase()}`:void 0}function qt(e){const t=Kt(e);if(t)return{r:Number.parseInt(t.slice(1,3),16),g:Number.parseInt(t.slice(3,5),16),b:Number.parseInt(t.slice(5,7),16)}}function Yt(e){return(e.includes(".")?e.split(".").slice(1).join("."):e).replace(/[_-]+/g," ").replace(/\b\w/g,e=>e.toUpperCase())}function Xt(e){return e.map(e=>({...e}))}function Zt(e){return Boolean(e&&"object"==typeof e&&!Array.isArray(e))}function Qt(e){return"string"==typeof e&&e.trim()?e.trim():void 0}function en(e,t){return Number.isFinite(e)?Number(e):t}function tn(e){return Number.isFinite(e)?Number(e):void 0}function nn(e,t,n){return Math.min(Math.max(e,t),n)}function on(e,t){e.dispatchEvent(new CustomEvent("config-changed",{bubbles:!0,composed:!0,detail:{config:t}}))}function rn(e){var t,n;const i=mt(e);return JSON.stringify({links:(null!==(t=i.links)&&void 0!==t?t:[]).map(e=>({from:e.from,id:e.id,to:e.to})),nodes:(null!==(n=i.nodes)&&void 0!==n?n:[]).map(e=>({id:e.id,kind:e.kind})),type:i.type})}function sn(e){var t,n;const i=/* @__PURE__ */new Map,o=(e,t)=>{var n;if(!e)return;const o=null!==(n=i.get(e))&&void 0!==n?n:/* @__PURE__ */new Set;ct.forEach(e=>o.add(e)),t&&o.add(t),i.set(e,o)};return(null!==(t=e.nodes)&&void 0!==t?t:[]).forEach(e=>{o(e.entity,e.attribute),o(e.incoming_entity,e.incoming_attribute),o(e.outgoing_entity,e.outgoing_attribute),o(e.secondary_entity,e.secondary_attribute)}),(null!==(n=e.links)&&void 0!==n?n:[]).forEach(e=>o(e.entity,e.attribute)),Array.from(i.entries()).sort(([e],[t])=>e.localeCompare(t)).map(([e,t])=>({attributes:Array.from(t).sort(),entityId:e}))}function an(e,t){return{links:jt(e,t),nodes:St(e,t)}}var ln=class extends me{constructor(...e){super(...e),this.config=mt(void 0),this.editMode=!1,this._previewSourceId=Qe("preview"),this._entityWatchers=sn(this.config),this._normalizedConfig=this.config,this._resolvedGraphData=an(this.config,void 0),this._handlePreviewNodeSelected=e=>{if(!this.editMode)return;const t=e.detail;this._matchesPreviewNodeSelectedEvent(t)&&(this._selectedNode=null==t?void 0:t.nodeId)}}connectedCallback(){super.connectedCallback(),window.addEventListener("home-flow-card-preview-node-selected",this._handlePreviewNodeSelected)}disconnectedCallback(){window.removeEventListener("home-flow-card-preview-node-selected",this._handlePreviewNodeSelected),super.disconnectedCallback()}_matchesPreviewNodeSelectedEvent(e){return!!e&&e.sourceId!==this._previewSourceId&&(e.targetId?e.targetId===this._previewSourceId:!e.configKey||e.configKey===rn(this.config))}_previewEventScope(e=this.config){return{configKey:rn(this.config),sourceConfigKey:rn(e),sourceId:this._previewSourceId}}setConfig(e){this.config=mt(e)}getCardSize(){var e;return Math.ceil((null!==(e=mt(this.config).height)&&void 0!==e?e:360)/50)}static getStubConfig(){return mt(void 0)}static async getConfigElement(){return document.createElement("home-flow-card-editor")}shouldUpdate(e){if(e.has("config"))return this._syncGraphCache(this.config,this.hass,e.get("config")),!0;if(e.has("hass")){const t=e.get("hass");return!!function(e,t,n){return e.some(e=>function(e,t,n){return t!==n&&(t&&n?t.state!==n.state||e.attributes.some(e=>t.attributes[e]!==n.attributes[e]):t!==n)}(e,null==t?void 0:t.states[e.entityId],null==n?void 0:n.states[e.entityId]))}(this._entityWatchers,t,this.hass)&&(this._resolvedGraphData=an(this._normalizedConfig,this.hass),!0)}return!0}render(){var e,t,n,i,o,r;const s=this._normalizedConfig,a=null!==(e=s.width)&&void 0!==e?e:502,l=null!==(t=s.height)&&void 0!==t?t:360;return q`
+      <ha-card
+        class=${`scale-${null!==(n=s.scaling_mode)&&void 0!==n?n:rt}`}
+        style=${`--graph-width:${a};--graph-height:${l};--graph-aspect:${a} / ${l};`}
+      >
+        ${s.title?q`<div class="title">${s.title}</div>`:Z}
         <div class="graph-frame">
           <div class="graph-canvas">
             <home-flow-graph-card
               .nodes=${this._resolvedGraphData.nodes}
               .links=${this._resolvedGraphData.links}
-              .layout=${(r = o.layout) == null ? {} : r}
-              .labelStyle=${(i = o.label_style) == null ? yt : i}
-              .leafRouting=${(a = o.leaf_routing) == null ? bt : a}
+              .layout=${null!==(i=s.layout)&&void 0!==i?i:{}}
+              .labelStyle=${null!==(o=s.label_style)&&void 0!==o?o:it}
+              .leafRouting=${null!==(r=s.leaf_routing)&&void 0!==r?r:ot}
               .editable=${this.editMode}
               .selectedNode=${this._selectedNode}
               @graph-layout-change=${this._handleLayoutChange}
@@ -3798,94 +640,7 @@ var An, jn, Mn = class extends z {
           </div>
         </div>
       </ha-card>
-    `;
-	}
-	_syncGraphCache(e, t, n) {
-		let r = !!(n && n.nodes === e.nodes && n.links === e.links && n.hide_zero_values === e.hide_zero_values), i = X(e);
-		this._normalizedConfig = i, !r && (this._entityWatchers = En(i), this._resolvedGraphData = kn(i, t));
-	}
-	_handleLayoutChange(e) {
-		if (!this.editMode) return;
-		let t = this.config;
-		this.config = {
-			...this.config,
-			layout: e.detail.layout
-		}, !e.detail.live && ht(this.config, this._previewEventScope(t));
-	}
-	_handleLinksChange(e) {
-		let t = this.config;
-		this.config = X({
-			...this.config,
-			links: e.detail.links
-		}), !e.detail.live && ht(this.config, this._previewEventScope(t));
-	}
-	_handleNodeLabelChange(e) {
-		var t;
-		if (!this.editMode || !e.detail.nodeId) return;
-		let { labelAngle: n, labelOffsetX: r, labelOffsetY: i, nodeId: a } = e.detail, o = this.config;
-		this.config = X({
-			...this.config,
-			nodes: ((t = this.config.nodes) == null ? [] : t).map((e) => e.id === a ? {
-				...e,
-				label_angle: n,
-				label_offset_x: r,
-				label_offset_y: i
-			} : e)
-		}), !e.detail.live && ht(this.config, this._previewEventScope(o));
-	}
-	_handleNodeRemove(e) {
-		if (!this.editMode || !e.detail.nodeId) return;
-		this._selectedNode === e.detail.nodeId && (this._selectedNode = void 0);
-		let t = this.config;
-		this.config = pn(X(this.config), e.detail.nodeId), ht(this.config, this._previewEventScope(t));
-	}
-	_handleNodeSelect(e) {
-		this.editMode && (this._selectedNode = e.detail.nodeId, gt(e.detail.nodeId, this._previewEventScope()));
-	}
-	_handleEntityMoreInfo(e) {
-		this.editMode || !e.detail.entityId || this._showMoreInfo(e.detail.entityId);
-	}
-	_handleNodeAction(e) {
-		if (this.editMode || !e.detail.action) return;
-		let t = e.detail.action;
-		switch (t.type) {
-			case "none": return;
-			case "more-info":
-				this._showMoreInfo(t.entityId);
-				return;
-			case "toggle":
-				var n;
-				if (!t.entityId || typeof ((n = this.hass) == null ? void 0 : n.callService) != "function") return;
-				this.hass.callService("homeassistant", "toggle", { entity_id: t.entityId });
-				return;
-			case "navigate":
-				if (!t.path) return;
-				window.history.pushState(null, "", t.path), window.dispatchEvent(new CustomEvent("location-changed", { detail: { replace: !1 } }));
-				return;
-			case "url":
-				if (!t.path) return;
-				window.open(t.path, "_blank", "noopener");
-				return;
-			default: return;
-		}
-	}
-	_showMoreInfo(e) {
-		e && this.dispatchEvent(new CustomEvent("hass-more-info", {
-			bubbles: !0,
-			composed: !0,
-			detail: { entityId: e }
-		}));
-	}
-};
-An = Mn, An.properties = {
-	config: { attribute: !1 },
-	editMode: {
-		type: Boolean,
-		attribute: "edit-mode"
-	},
-	hass: { attribute: !1 },
-	_selectedNode: { state: !0 }
-}, An.styles = o`
+    `}_syncGraphCache(e,t,n){const i=Boolean(n&&n.nodes===e.nodes&&n.links===e.links&&n.hide_zero_values===e.hide_zero_values),o=mt(e);this._normalizedConfig=o,i||(this._entityWatchers=sn(o),this._resolvedGraphData=an(o,t))}_handleLayoutChange(e){if(!this.editMode)return;const t=this.config;this.config={...this.config,layout:e.detail.layout},e.detail.live||et(this.config,this._previewEventScope(t))}_handleLinksChange(e){const t=this.config;this.config=mt({...this.config,links:e.detail.links}),e.detail.live||et(this.config,this._previewEventScope(t))}_handleNodeLabelChange(e){var t;if(!this.editMode||!e.detail.nodeId)return;const{labelAngle:n,labelOffsetX:i,labelOffsetY:o,nodeId:r}=e.detail,s=this.config;this.config=mt({...this.config,nodes:(null!==(t=this.config.nodes)&&void 0!==t?t:[]).map(e=>e.id===r?{...e,label_angle:n,label_offset_x:i,label_offset_y:o}:e)}),e.detail.live||et(this.config,this._previewEventScope(s))}_handleNodeRemove(e){if(!this.editMode||!e.detail.nodeId)return;this._selectedNode===e.detail.nodeId&&(this._selectedNode=void 0);const t=this.config;this.config=Gt(mt(this.config),e.detail.nodeId),et(this.config,this._previewEventScope(t))}_handleNodeSelect(e){this.editMode&&(this._selectedNode=e.detail.nodeId,tt(e.detail.nodeId,this._previewEventScope()))}_handleEntityMoreInfo(e){!this.editMode&&e.detail.entityId&&this._showMoreInfo(e.detail.entityId)}_handleNodeAction(e){if(this.editMode||!e.detail.action)return;const t=e.detail.action;switch(t.type){case"none":default:return;case"more-info":return void this._showMoreInfo(t.entityId);case"toggle":var n;if(!t.entityId||"function"!=typeof(null===(n=this.hass)||void 0===n?void 0:n.callService))return;return void this.hass.callService("homeassistant","toggle",{entity_id:t.entityId});case"navigate":if(!t.path)return;return window.history.pushState(null,"",t.path),void window.dispatchEvent(new CustomEvent("location-changed",{detail:{replace:!1}}));case"url":if(!t.path)return;return void window.open(t.path,"_blank","noopener")}}_showMoreInfo(e){e&&this.dispatchEvent(new CustomEvent("hass-more-info",{bubbles:!0,composed:!0,detail:{entityId:e}}))}};(Pt=ln).properties={config:{attribute:!1},editMode:{type:Boolean,attribute:"edit-mode"},hass:{attribute:!1},_selectedNode:{state:!0}},Pt.styles=d`
     :host {
       display: block;
       max-width: 100%;
@@ -3975,381 +730,7 @@ An = Mn, An.properties = {
       width: 100%;
       height: 100%;
     }
-  `, customElements.get("home-flow-card") || customElements.define("home-flow-card", Mn), window.customCards = (jn = window.customCards) == null ? [] : jn, window.customCards.some((e) => e.type === "home-flow-card") || window.customCards.push({
-	type: _t,
-	name: "Home Flow Card",
-	description: "Visual flow map for energy, water, gas and other home resources.",
-	preview: !0,
-	documentationURL: "https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card"
-});
-//#endregion
-//#region node_modules/lit-html/directive.js
-var Nn = {
-	ATTRIBUTE: 1,
-	CHILD: 2,
-	PROPERTY: 3,
-	BOOLEAN_ATTRIBUTE: 4,
-	EVENT: 5,
-	ELEMENT: 6
-}, Pn = (e) => (...t) => ({
-	_$litDirective$: e,
-	values: t
-}), Fn = class {
-	constructor(e) {}
-	get _$AU() {
-		return this._$AM._$AU;
-	}
-	_$AT(e, t, n) {
-		this._$Ct = e, this._$AM = t, this._$Ci = n;
-	}
-	_$AS(e, t) {
-		return this.update(e, t);
-	}
-	update(e, t) {
-		return this.render(...t);
-	}
-}, { I: In } = De, Ln = (e) => e, Rn = () => document.createComment(""), zn = (e, t, n) => {
-	let r = e._$AA.parentNode, i = t === void 0 ? e._$AB : t._$AA;
-	if (n === void 0) n = new In(r.insertBefore(Rn(), i), r.insertBefore(Rn(), i), e, e.options);
-	else {
-		let t = n._$AB.nextSibling, o = n._$AM, s = o !== e;
-		if (s) {
-			var a;
-			let t;
-			(a = n._$AQ) == null || a.call(n, e), n._$AM = e, n._$AP !== void 0 && (t = e._$AU) !== o._$AU && n._$AP(t);
-		}
-		if (t !== i || s) {
-			let e = n._$AA;
-			for (; e !== t;) {
-				let t = Ln(e).nextSibling;
-				Ln(r).insertBefore(e, i), e = t;
-			}
-		}
-	}
-	return n;
-}, Bn = (e, t, n = e) => (e._$AI(t, n), e), Vn = {}, Hn = (e, t = Vn) => e._$AH = t, Un = (e) => e._$AH, Wn = (e) => {
-	e._$AR(), e._$AA.remove();
-}, Gn = (e, t, n) => {
-	let r = /* @__PURE__ */ new Map();
-	for (let i = t; i <= n; i++) r.set(e[i], i);
-	return r;
-}, Kn = Pn(class extends Fn {
-	constructor(e) {
-		if (super(e), e.type !== Nn.CHILD) throw Error("repeat() can only be used in text expressions");
-	}
-	dt(e, t, n) {
-		let r;
-		n === void 0 ? n = t : t !== void 0 && (r = t);
-		let i = [], a = [], o = 0;
-		for (let t of e) i[o] = r ? r(t, o) : o, a[o] = n(t, o), o++;
-		return {
-			values: a,
-			keys: i
-		};
-	}
-	render(e, t, n) {
-		return this.dt(e, t, n).values;
-	}
-	update(e, [t, n, r]) {
-		var i;
-		let a = Un(e), { values: o, keys: s } = this.dt(t, n, r);
-		if (!Array.isArray(a)) return this.ut = s, o;
-		let c = (i = this.ut) == null ? this.ut = [] : i, l = [], u, d, f = 0, p = a.length - 1, m = 0, h = o.length - 1;
-		for (; f <= p && m <= h;) if (a[f] === null) f++;
-		else if (a[p] === null) p--;
-		else if (c[f] === s[m]) l[m] = Bn(a[f], o[m]), f++, m++;
-		else if (c[p] === s[h]) l[h] = Bn(a[p], o[h]), p--, h--;
-		else if (c[f] === s[h]) l[h] = Bn(a[f], o[h]), zn(e, l[h + 1], a[f]), f++, h--;
-		else if (c[p] === s[m]) l[m] = Bn(a[p], o[m]), zn(e, a[f], a[p]), p--, m++;
-		else if (u === void 0 && (u = Gn(s, m, h), d = Gn(c, f, p)), u.has(c[f])) if (u.has(c[p])) {
-			let t = d.get(s[m]), n = t === void 0 ? null : a[t];
-			if (n === null) {
-				let t = zn(e, a[f]);
-				Bn(t, o[m]), l[m] = t;
-			} else l[m] = Bn(n, o[m]), zn(e, a[f], n), a[t] = null;
-			m++;
-		} else Wn(a[p]), p--;
-		else Wn(a[f]), f++;
-		for (; m <= h;) {
-			let t = zn(e, l[h + 1]);
-			Bn(t, o[m]), l[m++] = t;
-		}
-		for (; f <= p;) {
-			let e = a[f++];
-			e !== null && Wn(e);
-		}
-		return this.ut = s, Hn(e, l), I;
-	}
-}), qn, Jn = [
-	{
-		label: "Solar",
-		value: "mdi:solar-power"
-	},
-	{
-		label: "Junction",
-		value: "mdi:hub"
-	},
-	{
-		label: "Battery",
-		value: "mdi:battery"
-	},
-	{
-		label: "Home",
-		value: "mdi:home-lightning-bolt"
-	},
-	{
-		label: "Grid",
-		value: "mdi:transmission-tower"
-	},
-	{
-		label: "Heat pump",
-		value: "mdi:heat-pump"
-	},
-	{
-		label: "EV",
-		value: "mdi:car-electric"
-	},
-	{
-		label: "Plug",
-		value: "mdi:power-plug"
-	},
-	{
-		label: "Water",
-		value: "mdi:water"
-	},
-	{
-		label: "Generic",
-		value: "mdi:circle-outline"
-	}
-], Yn = [{
-	label: "Junction",
-	value: "junction"
-}, {
-	label: "Leaf",
-	value: "leaf"
-}], Xn = [{
-	label: "+ supplies, - consumes",
-	value: "supply"
-}, {
-	label: "+ consumes, - supplies",
-	value: "consume"
-}], Zn = [{
-	label: "Single signed entity",
-	value: "signed"
-}, {
-	label: "Separate in/out entities",
-	value: "bidirectional"
-}], Qn = [
-	{
-		label: "Both",
-		value: "both"
-	},
-	{
-		label: "Supply only",
-		value: "supply"
-	},
-	{
-		label: "Consume only",
-		value: "consume"
-	}
-], $n = [
-	{
-		label: "Pass-through only",
-		value: "junction"
-	},
-	{
-		label: "Counts in balance",
-		value: "measured"
-	},
-	{
-		label: "Display only",
-		value: "ignore"
-	}
-], er = [
-	{
-		label: "Incoming flow",
-		value: "incoming"
-	},
-	{
-		label: "Outgoing flow",
-		value: "outgoing"
-	},
-	{
-		label: "Net flow",
-		value: "net"
-	}
-], tr = [
-	{
-		label: "More info",
-		value: "more-info"
-	},
-	{
-		label: "Toggle",
-		value: "toggle"
-	},
-	{
-		label: "Navigate",
-		value: "navigate"
-	},
-	{
-		label: "Open URL",
-		value: "url"
-	},
-	{
-		label: "None",
-		value: "none"
-	}
-], nr = [{
-	label: "Around circle",
-	value: "curved"
-}, {
-	label: "Straight",
-	value: "straight"
-}], rr = [
-	{
-		label: "Funnel",
-		value: "funnel"
-	},
-	{
-		label: "Channel",
-		value: "channel"
-	},
-	{
-		label: "Orthogonal",
-		value: "orthogonal"
-	},
-	{
-		label: "Sweep",
-		value: "sweep"
-	},
-	{
-		label: "Radial",
-		value: "radial"
-	}
-], ir = [
-	{
-		label: "Native (scroll if needed)",
-		value: "native"
-	},
-	{
-		label: "Fit width",
-		value: "fit-width"
-	},
-	{
-		label: "Shrink on narrow screens",
-		value: "shrink"
-	}
-], ar = class extends z {
-	constructor(...e) {
-		super(...e), this._config = X(void 0), this._nodeSectionOpen = {}, this._previewSourceId = mt("editor"), this._handlePreviewConfigChanged = (e) => {
-			let t = e.detail;
-			t != null && t.config && this._matchesPreviewConfigChangedEvent(t) && (this._config = X(t.config), this._rememberPreviewSource(t.sourceId), wn(this, this._config));
-		}, this._handlePreviewNodeSelected = (e) => {
-			let t = e.detail;
-			if (!this._matchesPreviewNodeSelectedEvent(t)) return;
-			let n = t == null ? void 0 : t.nodeId;
-			this._selectedNode = n, this._rememberPreviewSource(t.sourceId), this._syncSelectedNodeEditor(n);
-		}, this._handleEditorKeydown = (e) => {
-			var t;
-			if (!this._selectedNode || e.key !== "Delete" && e.key !== "Backspace" || e.defaultPrevented || this._isInteractiveEvent(e)) return;
-			let n = ((t = X(this._config).nodes) == null ? [] : t).find((e) => e.id === this._selectedNode);
-			n && (e.preventDefault(), e.stopPropagation(), this._removeNode(n.id));
-		}, this._handleNodePointerMove = (e) => {
-			var t, n, r;
-			if (!this._draggedNode || e.pointerId !== this._dragPointerId) return;
-			e.preventDefault();
-			let i = Array.from(this.renderRoot.querySelectorAll(".node-editor-row[data-node-id]")).map((e) => {
-				var t;
-				return {
-					id: (t = e.dataset.nodeId) == null ? "" : t,
-					rect: e.getBoundingClientRect()
-				};
-			}).filter((e) => e.id && e.id !== this._draggedNode);
-			if (i.length === 0) return;
-			let a = (t = i[i.length - 1]) == null ? void 0 : t.id, o = "after";
-			for (let t of i) {
-				let n = t.rect.top + t.rect.height / 2;
-				if (e.clientY < n) {
-					a = t.id, o = "before";
-					break;
-				}
-			}
-			if (!a) return;
-			this._dragOverNode = a, this._dragInsertTarget = a, this._dragInsertSide = o;
-			let s = (n = this._dragPreviewOrder) == null ? ((r = this._config.nodes) == null ? [] : r).map((e) => e.id) : n, c = this._reorderedNodeIds(this._draggedNode, a, o, s);
-			c && c.join("|") !== s.join("|") && (this._dragPreviewOrder = c);
-		}, this._handleNodePointerUp = (e) => {
-			var t;
-			if (!this._draggedNode || e.pointerId !== this._dragPointerId) return;
-			e.preventDefault();
-			let n = this._dragPreviewOrder, r = ((t = this._config.nodes) == null ? [] : t).map((e) => e.id);
-			n != null && n.length && n.join("|") !== r.join("|") && this._commitNodeOrder(n), this._clearNodeDragState();
-		};
-	}
-	connectedCallback() {
-		super.connectedCallback(), window.addEventListener("home-flow-card-preview-config-changed", this._handlePreviewConfigChanged), window.addEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), window.addEventListener("keydown", this._handleEditorKeydown, !0), window.addEventListener("pointermove", this._handleNodePointerMove, !0), window.addEventListener("pointerup", this._handleNodePointerUp, !0), window.addEventListener("pointercancel", this._handleNodePointerUp, !0);
-	}
-	disconnectedCallback() {
-		window.removeEventListener("home-flow-card-preview-config-changed", this._handlePreviewConfigChanged), window.removeEventListener("home-flow-card-preview-node-selected", this._handlePreviewNodeSelected), window.removeEventListener("keydown", this._handleEditorKeydown, !0), window.removeEventListener("pointermove", this._handleNodePointerMove, !0), window.removeEventListener("pointerup", this._handleNodePointerUp, !0), window.removeEventListener("pointercancel", this._handleNodePointerUp, !0), super.disconnectedCallback();
-	}
-	_matchesPreviewConfigChangedEvent(e) {
-		if (!e || e.sourceId === this._previewSourceId) return !1;
-		let t = Tn(this._config);
-		return e.sourceConfigKey === t || e.configKey === t;
-	}
-	_matchesPreviewNodeSelectedEvent(e) {
-		if (!e || e.sourceId === this._previewSourceId) return !1;
-		let t = Tn(this._config);
-		return !e.configKey || e.configKey === t;
-	}
-	_rememberPreviewSource(e) {
-		!e || e === this._previewSourceId || (this._targetPreviewSourceId = e);
-	}
-	_isInteractiveEvent(e) {
-		let t = window.getSelection();
-		if (t && !t.isCollapsed && t.toString().trim()) return !0;
-		let n = typeof e.composedPath == "function" ? e.composedPath() : [];
-		for (let e of n) if (e instanceof Element && this._matchesInteractiveElement(e)) return !0;
-		let r = this._deepActiveElement();
-		return r ? this._matchesInteractiveElement(r) : !1;
-	}
-	_deepActiveElement() {
-		var e, t;
-		let n = (e = (t = this.ownerDocument) == null ? void 0 : t.activeElement) == null ? document.activeElement : e;
-		for (; n;) {
-			var r;
-			let e = n.shadowRoot, t = (r = e == null ? void 0 : e.activeElement) == null ? null : r;
-			if (!t || t === n) break;
-			n = t;
-		}
-		return n;
-	}
-	_matchesInteractiveElement(e) {
-		return e.matches("input, textarea, select, button, [contenteditable=''], [contenteditable='true'], ha-textfield, ha-textarea, ha-combo-box, ha-selector, hui-entity-picker, hui-icon-picker, ha-button, mwc-textfield, mwc-select, mwc-button") || e instanceof HTMLElement && e.isContentEditable ? !0 : !!e.closest("input, textarea, select, button, [contenteditable=''], [contenteditable='true'], ha-textfield, ha-textarea, ha-combo-box, ha-selector, hui-entity-picker, hui-icon-picker, ha-button, mwc-textfield, mwc-select, mwc-button");
-	}
-	async _syncSelectedNodeEditor(e) {
-		await this.updateComplete, await new Promise((e) => requestAnimationFrame(e));
-		let t = Array.from(this.renderRoot.querySelectorAll(".node-editor[data-node-id]"));
-		if (t.forEach((t) => {
-			t.open = t.dataset.nodeId === e;
-		}), !e) return;
-		let n = t.find((t) => t.dataset.nodeId === e);
-		n == null || n.scrollIntoView({
-			behavior: "smooth",
-			block: "nearest",
-			inline: "nearest"
-		});
-	}
-	setConfig(e) {
-		this._config = X(e);
-	}
-	willUpdate(e) {
-		e.has("config") && this.config && (this._config = X(this.config));
-	}
-	render() {
-		var e, t, n, r, i, a;
-		let o = X(this._config);
-		return P`
+  `,customElements.get("home-flow-card")||customElements.define("home-flow-card",ln),window.customCards=null!==(Ct=window.customCards)&&void 0!==Ct?Ct:[],window.customCards.some(e=>"home-flow-card"===e.type)||window.customCards.push({type:nt,name:"Home Flow Card",description:"Visual flow map for energy, water, gas and other home resources.",preview:!0,documentationURL:"https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card"});var dn,hn=class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t,n){this._$Ct=e,this._$AM=t,this._$Ci=n}_$AS(e,t){return this.update(e,t)}update(e,t){return this.render(...t)}},{I:cn}=ue,un=e=>e,pn=()=>document.createComment(""),fn=(e,t,n)=>{const i=e._$AA.parentNode,o=void 0===t?e._$AB:t._$AA;if(void 0===n){const t=i.insertBefore(pn(),o),r=i.insertBefore(pn(),o);n=new cn(t,r,e,e.options)}else{const t=n._$AB.nextSibling,s=n._$AM,a=s!==e;if(a){var r;let t;null===(r=n._$AQ)||void 0===r||r.call(n,e),n._$AM=e,void 0!==n._$AP&&(t=e._$AU)!==s._$AU&&n._$AP(t)}if(t!==o||a){let e=n._$AA;for(;e!==t;){const t=un(e).nextSibling;un(i).insertBefore(e,o),e=t}}}return n},_n=(e,t,n=e)=>(e._$AI(t,n),e),vn={},mn=(e,t=vn)=>e._$AH=t,gn=e=>{e._$AR(),e._$AA.remove()},yn=(e,t,n)=>{const i=/* @__PURE__ */new Map;for(let o=t;o<=n;o++)i.set(e[o],o);return i},bn=(e=>(...t)=>({_$litDirective$:e,values:t}))(class extends hn{constructor(e){if(super(e),2!==e.type)throw Error("repeat() can only be used in text expressions")}dt(e,t,n){let i;void 0===n?n=t:void 0!==t&&(i=t);const o=[],r=[];let s=0;for(const a of e)o[s]=i?i(a,s):s,r[s]=n(a,s),s++;return{values:r,keys:o}}render(e,t,n){return this.dt(e,t,n).values}update(e,[t,n,i]){var o;const r=(e=>e._$AH)(e),{values:s,keys:a}=this.dt(t,n,i);if(!Array.isArray(r))return this.ut=a,s;const l=null!==(o=this.ut)&&void 0!==o?o:this.ut=[],d=[];let h,c,u=0,p=r.length-1,f=0,_=s.length-1;for(;u<=p&&f<=_;)if(null===r[u])u++;else if(null===r[p])p--;else if(l[u]===a[f])d[f]=_n(r[u],s[f]),u++,f++;else if(l[p]===a[_])d[_]=_n(r[p],s[_]),p--,_--;else if(l[u]===a[_])d[_]=_n(r[u],s[_]),fn(e,d[_+1],r[u]),u++,_--;else if(l[p]===a[f])d[f]=_n(r[p],s[f]),fn(e,r[u],r[p]),p--,f++;else if(void 0===h&&(h=yn(a,f,_),c=yn(l,u,p)),h.has(l[u]))if(h.has(l[p])){const t=c.get(a[f]),n=void 0!==t?r[t]:null;if(null===n){const t=fn(e,r[u]);_n(t,s[f]),d[f]=t}else d[f]=_n(n,s[f]),fn(e,r[u],n),r[t]=null;f++}else gn(r[p]),p--;else gn(r[u]),u++;for(;f<=_;){const t=fn(e,d[_+1]);_n(t,s[f]),d[f++]=t}for(;u<=p;){const e=r[u++];null!==e&&gn(e)}return this.ut=a,mn(e,d),X}}),xn=[{label:"Solar",value:"mdi:solar-power"},{label:"Junction",value:"mdi:hub"},{label:"Battery",value:"mdi:battery"},{label:"Home",value:"mdi:home-lightning-bolt"},{label:"Grid",value:"mdi:transmission-tower"},{label:"Heat pump",value:"mdi:heat-pump"},{label:"EV",value:"mdi:car-electric"},{label:"Plug",value:"mdi:power-plug"},{label:"Water",value:"mdi:water"},{label:"Generic",value:"mdi:circle-outline"}],$n=[{label:"Junction",value:"junction"},{label:"Leaf",value:"leaf"}],wn=[{label:"+ supplies, - consumes",value:"supply"},{label:"+ consumes, - supplies",value:"consume"}],kn=[{label:"Single signed entity",value:"signed"},{label:"Separate in/out entities",value:"bidirectional"}],An=[{label:"Both",value:"both"},{label:"Supply only",value:"supply"},{label:"Consume only",value:"consume"}],Ln=[{label:"Pass-through only",value:"junction"},{label:"Counts in balance",value:"measured"},{label:"Display only",value:"ignore"}],Pn=[{label:"Incoming flow",value:"incoming"},{label:"Outgoing flow",value:"outgoing"},{label:"Net flow",value:"net"}],Cn=[{label:"More info",value:"more-info"},{label:"Toggle",value:"toggle"},{label:"Navigate",value:"navigate"},{label:"Open URL",value:"url"},{label:"None",value:"none"}],Nn=[{label:"Around circle",value:"curved"},{label:"Straight",value:"straight"}],Mn=[{label:"Funnel",value:"funnel"},{label:"Channel",value:"channel"},{label:"Orthogonal",value:"orthogonal"},{label:"Sweep",value:"sweep"},{label:"Radial",value:"radial"}],In=[{label:"Native (scroll if needed)",value:"native"},{label:"Fit width",value:"fit-width"},{label:"Shrink on narrow screens",value:"shrink"}],Sn=class extends me{constructor(...e){super(...e),this._config=mt(void 0),this._nodeSectionOpen={},this._previewSourceId=Qe("editor"),this._handlePreviewConfigChanged=e=>{const t=e.detail;(null==t?void 0:t.config)&&this._matchesPreviewConfigChangedEvent(t)&&(this._config=mt(t.config),this._rememberPreviewSource(t.sourceId),on(this,this._config))},this._handlePreviewNodeSelected=e=>{const t=e.detail;if(!this._matchesPreviewNodeSelectedEvent(t))return;const n=null==t?void 0:t.nodeId;this._selectedNode=n,this._rememberPreviewSource(t.sourceId),this._syncSelectedNodeEditor(n)},this._handleEditorKeydown=e=>{var t;if(!this._selectedNode)return;if("Delete"!==e.key&&"Backspace"!==e.key)return;if(e.defaultPrevented)return;if(this._isInteractiveEvent(e))return;const n=(null!==(t=mt(this._config).nodes)&&void 0!==t?t:[]).find(e=>e.id===this._selectedNode);n&&(e.preventDefault(),e.stopPropagation(),this._removeNode(n.id))},this._handleNodePointerMove=e=>{var t,n,i;if(!this._draggedNode||e.pointerId!==this._dragPointerId)return;e.preventDefault();const o=Array.from(this.renderRoot.querySelectorAll(".node-editor-row[data-node-id]")).map(e=>{var t;return{id:null!==(t=e.dataset.nodeId)&&void 0!==t?t:"",rect:e.getBoundingClientRect()}}).filter(e=>e.id&&e.id!==this._draggedNode);if(0===o.length)return;let r=null===(t=o[o.length-1])||void 0===t?void 0:t.id,s="after";for(const d of o){const t=d.rect.top+d.rect.height/2;if(e.clientY<t){r=d.id,s="before";break}}if(!r)return;this._dragOverNode=r,this._dragInsertTarget=r,this._dragInsertSide=s;const a=null!==(n=this._dragPreviewOrder)&&void 0!==n?n:(null!==(i=this._config.nodes)&&void 0!==i?i:[]).map(e=>e.id),l=this._reorderedNodeIds(this._draggedNode,r,s,a);l&&l.join("|")!==a.join("|")&&(this._dragPreviewOrder=l)},this._handleNodePointerUp=e=>{var t;if(!this._draggedNode||e.pointerId!==this._dragPointerId)return;e.preventDefault();const n=this._dragPreviewOrder,i=(null!==(t=this._config.nodes)&&void 0!==t?t:[]).map(e=>e.id);(null==n?void 0:n.length)&&n.join("|")!==i.join("|")&&this._commitNodeOrder(n),this._clearNodeDragState()}}connectedCallback(){super.connectedCallback(),window.addEventListener("home-flow-card-preview-config-changed",this._handlePreviewConfigChanged),window.addEventListener("home-flow-card-preview-node-selected",this._handlePreviewNodeSelected),window.addEventListener("keydown",this._handleEditorKeydown,!0),window.addEventListener("pointermove",this._handleNodePointerMove,!0),window.addEventListener("pointerup",this._handleNodePointerUp,!0),window.addEventListener("pointercancel",this._handleNodePointerUp,!0)}disconnectedCallback(){window.removeEventListener("home-flow-card-preview-config-changed",this._handlePreviewConfigChanged),window.removeEventListener("home-flow-card-preview-node-selected",this._handlePreviewNodeSelected),window.removeEventListener("keydown",this._handleEditorKeydown,!0),window.removeEventListener("pointermove",this._handleNodePointerMove,!0),window.removeEventListener("pointerup",this._handleNodePointerUp,!0),window.removeEventListener("pointercancel",this._handleNodePointerUp,!0),super.disconnectedCallback()}_matchesPreviewConfigChangedEvent(e){if(!e)return!1;if(e.sourceId===this._previewSourceId)return!1;const t=rn(this._config);return e.sourceConfigKey===t||e.configKey===t}_matchesPreviewNodeSelectedEvent(e){if(!e)return!1;if(e.sourceId===this._previewSourceId)return!1;const t=rn(this._config);return!e.configKey||e.configKey===t}_rememberPreviewSource(e){e&&e!==this._previewSourceId&&(this._targetPreviewSourceId=e)}_isInteractiveEvent(e){const t=window.getSelection();if(t&&!t.isCollapsed&&t.toString().trim())return!0;const n="function"==typeof e.composedPath?e.composedPath():[];for(const o of n)if(o instanceof Element&&this._matchesInteractiveElement(o))return!0;const i=this._deepActiveElement();return!!i&&this._matchesInteractiveElement(i)}_deepActiveElement(){var e,t;let n=null!==(e=null===(t=this.ownerDocument)||void 0===t?void 0:t.activeElement)&&void 0!==e?e:document.activeElement;for(;n;){var i;const e=n.shadowRoot,t=null!==(i=null==e?void 0:e.activeElement)&&void 0!==i?i:null;if(!t||t===n)break;n=t}return n}_matchesInteractiveElement(e){return!!e.matches("input, textarea, select, button, [contenteditable=''], [contenteditable='true'], ha-textfield, ha-textarea, ha-combo-box, ha-selector, hui-entity-picker, hui-icon-picker, ha-button, mwc-textfield, mwc-select, mwc-button")||!!(e instanceof HTMLElement&&e.isContentEditable)||Boolean(e.closest("input, textarea, select, button, [contenteditable=''], [contenteditable='true'], ha-textfield, ha-textarea, ha-combo-box, ha-selector, hui-entity-picker, hui-icon-picker, ha-button, mwc-textfield, mwc-select, mwc-button"))}async _syncSelectedNodeEditor(e){await this.updateComplete,await new Promise(e=>requestAnimationFrame(e));const t=Array.from(this.renderRoot.querySelectorAll(".node-editor[data-node-id]"));if(t.forEach(t=>{t.open=t.dataset.nodeId===e}),!e)return;const n=t.find(t=>t.dataset.nodeId===e);null==n||n.scrollIntoView({behavior:"smooth",block:"nearest",inline:"nearest"})}setConfig(e){this._config=mt(e)}willUpdate(e){e.has("config")&&this.config&&(this._config=mt(this.config))}render(){var e,t,n,i,o,r;const s=mt(this._config);return q`
       <div class="editor-shell">
         <section class="panel">
           <header>
@@ -4359,10 +740,10 @@ var Nn = {
           <label>
             <span>Label style</span>
             <select
-              .value=${(e = o.label_style) == null ? yt : e}
-              @change=${(e) => this._patchConfig({ label_style: e.currentTarget.value })}
+              .value=${null!==(e=s.label_style)&&void 0!==e?e:it}
+              @change=${e=>this._patchConfig({label_style:e.currentTarget.value})}
             >
-              ${nr.map((e) => P`
+              ${Nn.map(e=>q`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4370,10 +751,10 @@ var Nn = {
           <label>
             <span>Leaf routing</span>
             <select
-              .value=${(t = o.leaf_routing) == null ? bt : t}
-              @change=${(e) => this._patchConfig({ leaf_routing: e.currentTarget.value })}
+              .value=${null!==(t=s.leaf_routing)&&void 0!==t?t:ot}
+              @change=${e=>this._patchConfig({leaf_routing:e.currentTarget.value})}
             >
-              ${rr.map((e) => P`
+              ${Mn.map(e=>q`
                   <option value=${e.value}>${e.label}</option>
                 `)}
             </select>
@@ -4381,20 +762,17 @@ var Nn = {
           <label>
             <span>Scaling mode</span>
             <select
-              .value=${(n = o.scaling_mode) == null ? xt : n}
-              @change=${(e) => this._patchConfig({ scaling_mode: e.currentTarget.value })}
+              .value=${null!==(n=s.scaling_mode)&&void 0!==n?n:rt}
+              @change=${e=>this._patchConfig({scaling_mode:e.currentTarget.value})}
             >
-              ${ir.map((e) => {
-			var t;
-			return P`
+              ${In.map(e=>{var t;return q`
                   <option
                     value=${e.value}
-                    ?selected=${((t = o.scaling_mode) == null ? xt : t) === e.value}
+                    ?selected=${(null!==(t=s.scaling_mode)&&void 0!==t?t:rt)===e.value}
                   >
                     ${e.label}
                   </option>
-                `;
-		})}
+                `})}
             </select>
           </label>
         </section>
@@ -4405,11 +783,11 @@ var Nn = {
             <p>Junctions can connect to junctions. Leaves connect to junctions.</p>
           </header>
           <div class="button-row">
-            ${Yn.map((e) => P`
+            ${$n.map(e=>q`
                 <button
                   type="button"
                   class="add-node-button"
-                  @click=${() => this._addNode(e.value)}
+                  @click=${()=>this._addNode(e.value)}
                 >
                   <ha-icon icon="mdi:playlist-plus"></ha-icon>
                   <span>Add ${e.label}</span>
@@ -4421,134 +799,106 @@ var Nn = {
         <section class="panel">
           <header>
             <h3>Nodes</h3>
-            <p>${(r = (i = o.nodes) == null ? void 0 : i.length) == null ? 0 : r} configured</p>
+            <p>${null!==(i=null===(o=s.nodes)||void 0===o?void 0:o.length)&&void 0!==i?i:0} configured</p>
           </header>
           <div class="nodes-list">
-            ${Kn((a = o.nodes) == null ? [] : a, (e) => e.id, (e) => this._nodeEditor(e, o))}
+            ${bn(null!==(r=s.nodes)&&void 0!==r?r:[],e=>e.id,e=>this._nodeEditor(e,s))}
           </div>
         </section>
       </div>
-    `;
-	}
-	_nodeVisualOrder(e, t) {
-		var n, r;
-		let i = (n = this._dragPreviewOrder) == null ? ((r = t.nodes) == null ? [] : r).map((e) => e.id) : n, a = i.indexOf(e);
-		return a >= 0 ? a : i.length;
-	}
-	_nodeEditor(e, t) {
-		var n, r, i, a, o, s, c, l, u, d, f, p, m, h, g, _;
-		let v = ((n = e.label) == null ? void 0 : n.trim()) || "Empty", y = (r = e.color) == null ? this._defaultNodeColor(e, t) : r, b = this._selectedNode === e.id, x = (i = e.flow_mode) == null ? "signed" : i, S = x === "bidirectional" ? (a = e.incoming_entity) == null ? e.outgoing_entity : a : e.entity, ee = e.icon === null ? void 0 : (o = (s = e.icon) == null ? $t(this.hass, S) : s) == null ? sn(e.kind) : o, C = (c = e.primary_action) == null ? "more-info" : c, w = (l = e.secondary_action) == null ? "more-info" : l, T = this._busJunctionIds(e.id, t), E = `${(u = e.radius) == null ? cn(e.kind) : u} px`, te = x === "bidirectional" ? "Separate in/out" : "Single signed", D = e.secondary_entity ? "Configured" : "Not set", O = `Applies to ${T.length} junction${T.length === 1 ? "" : "s"}`;
-		return P`
+    `}_nodeVisualOrder(e,t){var n,i;const o=null!==(n=this._dragPreviewOrder)&&void 0!==n?n:(null!==(i=t.nodes)&&void 0!==i?i:[]).map(e=>e.id),r=o.indexOf(e);return r>=0?r:o.length}_nodeEditor(e,t){var n,i,o,r,s,a,l,d,h,c,u,p,f,_,v,m;const g=(null===(n=e.label)||void 0===n?void 0:n.trim())||"Empty",y=null!==(i=e.color)&&void 0!==i?i:this._defaultNodeColor(e,t),b=this._selectedNode===e.id,x=null!==(o=e.flow_mode)&&void 0!==o?o:"signed",$="bidirectional"===x?null!==(r=e.incoming_entity)&&void 0!==r?r:e.outgoing_entity:e.entity,w=null===e.icon?void 0:null!==(s=null!==(a=e.icon)&&void 0!==a?a:Dt(this.hass,$))&&void 0!==s?s:Jt(e.kind),k=null!==(l=e.primary_action)&&void 0!==l?l:"more-info",A=null!==(d=e.secondary_action)&&void 0!==d?d:"more-info",L=this._busJunctionIds(e.id,t),P=`${null!==(h=e.radius)&&void 0!==h?h:Bt(e.kind)} px`,C="bidirectional"===x?"Separate in/out":"Single signed",N=e.secondary_entity?"Configured":"Not set",M=`Applies to ${L.length} junction${1===L.length?"":"s"}`;return q`
       <div
-        class=${`node-editor-row ${this._draggedNode === e.id ? "dragging" : ""} ${this._dragOverNode === e.id ? "drag-over" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "before" ? "insert-before" : ""} ${this._dragInsertTarget === e.id && this._dragInsertSide === "after" ? "insert-after" : ""}`}
+        class=${`node-editor-row ${this._draggedNode===e.id?"dragging":""} ${this._dragOverNode===e.id?"drag-over":""} ${this._dragInsertTarget===e.id&&"before"===this._dragInsertSide?"insert-before":""} ${this._dragInsertTarget===e.id&&"after"===this._dragInsertSide?"insert-after":""}`}
         data-node-id=${e.id}
-        style=${`order:${this._nodeVisualOrder(e.id, t)}`}
+        style=${`order:${this._nodeVisualOrder(e.id,t)}`}
       >
         <div
           class="node-drag-handle"
-          @pointerdown=${(t) => this._handleNodePointerDown(t, e.id)}
+          @pointerdown=${t=>this._handleNodePointerDown(t,e.id)}
           aria-label="Reorder node"
           title="Drag to reorder"
         >
           <ha-icon icon="mdi:drag-vertical"></ha-icon>
         </div>
         <details
-          class=${`node-editor ${b ? "editor-selected" : ""}`}
+          class=${"node-editor "+(b?"editor-selected":"")}
           data-node-id=${e.id}
           ?open=${b}
         >
-        ${this._nodeSummary(v, e.id)}
-        ${this._renderNodeSubsection(e, "appearance", "Appearance", E, P`
+        ${this._nodeSummary(g,e.id)}
+        ${this._renderNodeSubsection(e,"appearance","Appearance",P,q`
             <div class="form-grid">
               <label>
                 <span>Name</span>
                 <input
-                  .value=${(d = e.label) == null ? "" : d}
-                  @input=${(n) => this._updateNode(t, e.id, { label: n.currentTarget.value })}
+                  .value=${null!==(c=e.label)&&void 0!==c?c:""}
+                  @input=${n=>this._updateNode(t,e.id,{label:n.currentTarget.value})}
                 />
               </label>
               <label>
                 <span>Icon</span>
-                ${this._iconSelect(ee, (n) => this._updateNode(t, e.id, { icon: n }), e.icon === null ? void 0 : () => this._updateNode(t, e.id, { icon: null }))}
+                ${this._iconSelect(w,n=>this._updateNode(t,e.id,{icon:n}),null!==e.icon?()=>this._updateNode(t,e.id,{icon:null}):void 0)}
               </label>
               <label>
                 <span>Radius</span>
                 <input
                   type="number"
-                  min=${"20"}
-                  max=${"100"}
-                  .value=${String((f = e.radius) == null ? cn(e.kind) : f)}
-                  @change=${(n) => this._updateNode(t, e.id, { radius: Number(n.currentTarget.value) })}
+                  min=${String(20)}
+                  max=${String(100)}
+                  .value=${String(null!==(u=e.radius)&&void 0!==u?u:Bt(e.kind))}
+                  @change=${n=>this._updateNode(t,e.id,{radius:Number(n.currentTarget.value)})}
                 />
               </label>
-              ${this._colorInput("Color", y, (n) => this._updateNode(t, e.id, { color: n }), e.color ? () => this._updateNode(t, e.id, { color: void 0 }) : void 0)}
+              ${this._colorInput("Color",y,n=>this._updateNode(t,e.id,{color:n}),e.color?()=>this._updateNode(t,e.id,{color:void 0}):void 0)}
             </div>
             <div class="node-actions inline-actions">
-              <button type="button" @click=${() => this._duplicateNode(e.id)}>
+              <button type="button" @click=${()=>this._duplicateNode(e.id)}>
                 Duplicate
               </button>
               <button
                 type="button"
                 class="danger"
-                @click=${() => this._removeNode(e.id)}
+                @click=${()=>this._removeNode(e.id)}
               >
                 Delete
               </button>
             </div>
-          `, t, { forceOpen: e.kind === "leaf" || e.kind === "junction" })}
+          `,t,{forceOpen:"leaf"===e.kind||"junction"===e.kind})}
 
-        ${this._renderNodeSubsection(e, "flow", "Flow", te, P`
+        ${this._renderNodeSubsection(e,"flow","Flow",C,q`
             <div class="form-grid">
               <label class="span-all">
                 <span>Flow input</span>
                 <select
                   .value=${x}
-                  @change=${(n) => this._updateNode(t, e.id, { flow_mode: n.currentTarget.value })}
+                  @change=${n=>this._updateNode(t,e.id,{flow_mode:n.currentTarget.value})}
                 >
-                  ${Zn.map((e) => P`
+                  ${kn.map(e=>q`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${x === "bidirectional" ? P`
+              ${"bidirectional"===x?q`
                     <label class="span-all">
                       <span>Inflow entity</span>
-                      ${this._entitySelect(e.incoming_entity, (n) => {
-			let r = n ? $t(this.hass, n) : void 0;
-			this._updateNode(t, e.id, {
-				incoming_entity: n,
-				...r && e.icon === void 0 ? { icon: r } : {}
-			});
-		})}
+                      ${this._entitySelect(e.incoming_entity,n=>{const i=n?Dt(this.hass,n):void 0;this._updateNode(t,e.id,{incoming_entity:n,...i&&void 0===e.icon?{icon:i}:{}})})}
                     </label>
                     <label class="span-all">
                       <span>Outflow entity</span>
-                      ${this._entitySelect(e.outgoing_entity, (n) => {
-			let r = n ? $t(this.hass, n) : void 0;
-			this._updateNode(t, e.id, {
-				outgoing_entity: n,
-				...r && e.icon === void 0 ? { icon: r } : {}
-			});
-		})}
+                      ${this._entitySelect(e.outgoing_entity,n=>{const i=n?Dt(this.hass,n):void 0;this._updateNode(t,e.id,{outgoing_entity:n,...i&&void 0===e.icon?{icon:i}:{}})})}
                     </label>
-                  ` : P`
+                  `:q`
                     <label class="span-all">
                       <span>Flow entity</span>
-                      ${this._entitySelect(e.entity, (n) => {
-			let r = n ? $t(this.hass, n) : void 0;
-			this._updateNode(t, e.id, {
-				entity: n,
-				...r ? { icon: r } : {}
-			});
-		})}
+                      ${this._entitySelect(e.entity,n=>{const i=n?Dt(this.hass,n):void 0;this._updateNode(t,e.id,{entity:n,...i?{icon:i}:{}})})}
                     </label>
                     <label>
                       <span>Flow direction</span>
                       <select
-                        .value=${(p = e.flowDirection) == null ? ln(e) : p}
-                        @change=${(n) => this._updateNode(t, e.id, { flowDirection: n.currentTarget.value })}
+                        .value=${null!==(p=e.flowDirection)&&void 0!==p?p:zt(e)}
+                        @change=${n=>this._updateNode(t,e.id,{flowDirection:n.currentTarget.value})}
                       >
-                        ${Xn.map((e) => P`
+                        ${wn.map(e=>q`
                             <option value=${e.value}>${e.label}</option>
                           `)}
                       </select>
@@ -4557,22 +907,22 @@ var Nn = {
               <label>
                 <span>Allowed flow</span>
                 <select
-                  .value=${(m = e.allowed_flow) == null ? "both" : m}
-                  @change=${(n) => this._updateNode(t, e.id, { allowed_flow: n.currentTarget.value })}
+                  .value=${null!==(f=e.allowed_flow)&&void 0!==f?f:"both"}
+                  @change=${n=>this._updateNode(t,e.id,{allowed_flow:n.currentTarget.value})}
                 >
-                  ${Qn.map((e) => P`
+                  ${An.map(e=>q`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${e.kind === "junction" ? P`
+              ${"junction"===e.kind?q`
                     <label>
                       <span>Balance role</span>
                       <select
-                        .value=${dn(e)}
-                        @change=${(n) => this._updateNode(t, e.id, { balance_role: n.currentTarget.value })}
+                        .value=${Ht(e)}
+                        @change=${n=>this._updateNode(t,e.id,{balance_role:n.currentTarget.value})}
                       >
-                        ${$n.map((e) => P`
+                        ${Ln.map(e=>q`
                             <option value=${e.value}>${e.label}</option>
                           `)}
                       </select>
@@ -4580,200 +930,174 @@ var Nn = {
                     <label>
                       <span>Display value</span>
                       <select
-                        .value=${(h = e.junction_display_value) == null ? "incoming" : h}
-                        @change=${(n) => this._updateNode(t, e.id, { junction_display_value: n.currentTarget.value })}
+                        .value=${null!==(_=e.junction_display_value)&&void 0!==_?_:"incoming"}
+                        @change=${n=>this._updateNode(t,e.id,{junction_display_value:n.currentTarget.value})}
                       >
-                        ${er.map((e) => P`
+                        ${Pn.map(e=>q`
                             <option value=${e.value}>${e.label}</option>
                           `)}
                       </select>
                     </label>
-                  ` : L}
+                  `:Z}
               <label>
                 <span>Primary click action</span>
                 <select
-                  .value=${C}
-                  @change=${(n) => this._updateNode(t, e.id, { primary_action: n.currentTarget.value })}
+                  .value=${k}
+                  @change=${n=>this._updateNode(t,e.id,{primary_action:n.currentTarget.value})}
                 >
-                  ${tr.map((e) => P`
+                  ${Cn.map(e=>q`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${C === "navigate" || C === "url" ? P`
+              ${"navigate"===k||"url"===k?q`
                     <label class="span-all">
-                      <span>${C === "navigate" ? "Primary navigation path" : "Primary URL"}</span>
+                      <span>${"navigate"===k?"Primary navigation path":"Primary URL"}</span>
                       <input
                         type="text"
-                        .value=${(g = e.primary_action_path) == null ? "" : g}
-                        placeholder=${C === "navigate" ? "/lovelace/0" : "https://example.com"}
-                        @input=${(n) => this._updateNode(t, e.id, { primary_action_path: n.currentTarget.value })}
+                        .value=${null!==(v=e.primary_action_path)&&void 0!==v?v:""}
+                        placeholder=${"navigate"===k?"/lovelace/0":"https://example.com"}
+                        @input=${n=>this._updateNode(t,e.id,{primary_action_path:n.currentTarget.value})}
                       />
                     </label>
-                  ` : L}
+                  `:Z}
             </div>
             <div class="toggle-grid compact">
               <label class="checkbox-field">
                 <input
                   type="checkbox"
-                  .checked=${e.hide_zero_values === !0}
-                  @change=${(n) => this._updateNode(t, e.id, { hide_zero_values: n.currentTarget.checked })}
+                  .checked=${!0===e.hide_zero_values}
+                  @change=${n=>this._updateNode(t,e.id,{hide_zero_values:n.currentTarget.checked})}
                 />
                 <span>Hide zero values</span>
               </label>
               <label class="checkbox-field">
                 <input
                   type="checkbox"
-                  .checked=${e.hide_if_zero === !0}
-                  @change=${(n) => this._updateNode(t, e.id, { hide_if_zero: n.currentTarget.checked })}
+                  .checked=${!0===e.hide_if_zero}
+                  @change=${n=>this._updateNode(t,e.id,{hide_if_zero:n.currentTarget.checked})}
                 />
                 <span>Hide if zero</span>
               </label>
               <label class="checkbox-field">
                 <input
                   type="checkbox"
-                  .checked=${e.show_flow_arrow === !0}
-                  @change=${(n) => this._updateNode(t, e.id, { show_flow_arrow: n.currentTarget.checked })}
+                  .checked=${!0===e.show_flow_arrow}
+                  @change=${n=>this._updateNode(t,e.id,{show_flow_arrow:n.currentTarget.checked})}
                 />
                 <span>Show flow arrow</span>
               </label>
               <label class="checkbox-field">
                 <input
                   type="checkbox"
-                  .checked=${e.invert === !0}
-                  @change=${(n) => this._updateNode(t, e.id, { invert: n.currentTarget.checked })}
+                  .checked=${!0===e.invert}
+                  @change=${n=>this._updateNode(t,e.id,{invert:n.currentTarget.checked})}
                 />
                 <span>Invert flow</span>
               </label>
             </div>
-          `, t)}
+          `,t)}
 
-        ${this._renderNodeSubsection(e, "secondary", "Secondary value", D, P`
+        ${this._renderNodeSubsection(e,"secondary","Secondary value",N,q`
             <div class="form-grid">
               <label class="span-all">
                 <span>Secondary entity</span>
-                ${this._entitySelect(e.secondary_entity, (n) => this._updateNode(t, e.id, { secondary_entity: n }))}
+                ${this._entitySelect(e.secondary_entity,n=>this._updateNode(t,e.id,{secondary_entity:n}))}
               </label>
               <label>
                 <span>Secondary click action</span>
                 <select
-                  .value=${w}
-                  @change=${(n) => this._updateNode(t, e.id, { secondary_action: n.currentTarget.value })}
+                  .value=${A}
+                  @change=${n=>this._updateNode(t,e.id,{secondary_action:n.currentTarget.value})}
                 >
-                  ${tr.map((e) => P`
+                  ${Cn.map(e=>q`
                       <option value=${e.value}>${e.label}</option>
                     `)}
                 </select>
               </label>
-              ${w === "navigate" || w === "url" ? P`
+              ${"navigate"===A||"url"===A?q`
                     <label class="span-all">
-                      <span>${w === "navigate" ? "Secondary navigation path" : "Secondary URL"}</span>
+                      <span>${"navigate"===A?"Secondary navigation path":"Secondary URL"}</span>
                       <input
                         type="text"
-                        .value=${(_ = e.secondary_action_path) == null ? "" : _}
-                        placeholder=${w === "navigate" ? "/lovelace/0" : "https://example.com"}
-                        @input=${(n) => this._updateNode(t, e.id, { secondary_action_path: n.currentTarget.value })}
+                        .value=${null!==(m=e.secondary_action_path)&&void 0!==m?m:""}
+                        placeholder=${"navigate"===A?"/lovelace/0":"https://example.com"}
+                        @input=${n=>this._updateNode(t,e.id,{secondary_action_path:n.currentTarget.value})}
                       />
                     </label>
-                  ` : L}
+                  `:Z}
             </div>
-          `, t)}
-        ${T.length > 0 ? this._renderNodeSubsection(e, "bus", "Bus options", O, this._busOptionsEditor(e, t, T), t) : L}
+          `,t)}
+        ${L.length>0?this._renderNodeSubsection(e,"bus","Bus options",M,this._busOptionsEditor(e,t,L),t):Z}
         </details>
       </div>
-    `;
-	}
-	_busOptionsEditor(e, t, n) {
-		return P`
+    `}_busOptionsEditor(e,t,n){return q`
       <p class="subsection-note">
-        Applies to ${n.length} junction${n.length === 1 ? "" : "s"} on this bus.
+        Applies to ${n.length} junction${1===n.length?"":"s"} on this bus.
       </p>
       <div class="form-grid compact">
-        ${this._numberInput("Show flow from", this._busOptionValue(e.id, t, "flowMinVisibleValue", 10), (n) => this._updateBusOptions(t, e.id, { flowMinVisibleValue: n }))}
-        ${this._numberInput("Full line width at", this._busOptionValue(e.id, t, "flowMaxValue", vt), (n) => this._updateBusOptions(t, e.id, { flowMaxValue: n }))}
+        ${this._numberInput("Show flow from",this._busOptionValue(e.id,t,"flowMinVisibleValue",10),n=>this._updateBusOptions(t,e.id,{flowMinVisibleValue:n}))}
+        ${this._numberInput("Full line width at",this._busOptionValue(e.id,t,"flowMaxValue",12e3),n=>this._updateBusOptions(t,e.id,{flowMaxValue:n}))}
       </div>
-    `;
-	}
-	_renderNodeSubsection(e, t, n, r, i, a, o = {}) {
-		return P`
+    `}_renderNodeSubsection(e,t,n,i,o,r,s={}){return q`
       <details
         class="node-subsection"
-        ?open=${this._isNodeSectionOpen(e, t, a, o)}
-        @toggle=${(n) => this._handleNodeSectionToggle(n, e.id, t)}
+        ?open=${this._isNodeSectionOpen(e,t,r,s)}
+        @toggle=${n=>this._handleNodeSectionToggle(n,e.id,t)}
       >
         <summary class="node-subsection-summary">
           <strong>${n}</strong>
-          <span>${r}</span>
+          <span>${i}</span>
         </summary>
         <div class="node-subsection-content">
-          ${i}
+          ${o}
         </div>
       </details>
-    `;
-	}
-	_nodeSummary(e, t) {
-		return P`
+    `}_nodeSummary(e,t){return q`
       <summary
         class="node-summary"
-        @click=${() => this._selectNodeFromEditor(t)}
+        @click=${()=>this._selectNodeFromEditor(t)}
       >
         <div class="node-summary-text">
           <strong>${e}</strong>
         </div>
       </summary>
-    `;
-	}
-	_selectNodeFromEditor(e) {
-		this._selectedNode = e, gt(e, {
-			configKey: Tn(this._config),
-			sourceId: this._previewSourceId,
-			targetId: this._targetPreviewSourceId
-		});
-	}
-	_entitySelect(e, t, n = !1) {
-		let r = e && !n ? P`
+    `}_selectNodeFromEditor(e){this._selectedNode=e,tt(e,{configKey:rn(this._config),sourceId:this._previewSourceId,targetId:this._targetPreviewSourceId})}_entitySelect(e,t,n=!1){const i=e&&!n?q`
             <button
               type="button"
               class="entity-clear"
-              @click=${() => t(void 0)}
+              @click=${()=>t(void 0)}
             >
               Clear
             </button>
-          ` : L;
-		return this._isHomeAssistantEditor() ? P`
+          `:Z;return this._isHomeAssistantEditor()?q`
         <div class="entity-picker">
           <ha-selector
             .hass=${this.hass}
-            .selector=${{ entity: {} }}
-            .value=${e == null ? "" : e}
+            .selector=${{entity:{}}}
+            .value=${null!=e?e:""}
             ?disabled=${n}
-            @value-changed=${(e) => this._handleEntityValueChanged(e, t)}
+            @value-changed=${e=>this._handleEntityValueChanged(e,t)}
           ></ha-selector>
-          ${r}
+          ${i}
         </div>
-      ` : P`
+      `:q`
       <div class="entity-picker">
         <select
-          .value=${e == null ? "" : e}
+          .value=${null!=e?e:""}
           ?disabled=${n}
-          @change=${(e) => t(e.currentTarget.value.trim() || void 0)}
+          @change=${e=>t(e.currentTarget.value.trim()||void 0)}
         >
           <option value="">Manual</option>
-          ${Qt(this.hass).map((t) => P`
-              <option value=${t} ?selected=${t === e}>
+          ${(o=this.hass,Object.keys(null!==(r=null==o?void 0:o.states)&&void 0!==r?r:{}).sort()).map(t=>q`
+              <option value=${t} ?selected=${t===e}>
                 ${t}
               </option>
             `)}
         </select>
-        ${r}
+        ${i}
       </div>
-    `;
-	}
-	_handleEntityValueChanged(e, t) {
-		t(Z(e.detail.value));
-	}
-	_iconSelect(e, t, n) {
-		let r = n ? P`
+    `;var o,r}_handleEntityValueChanged(e,t){t(Ot(e.detail.value))}_iconSelect(e,t,n){const i=n?q`
           <button
             type="button"
             class="field-clear icon-clear"
@@ -4783,273 +1107,57 @@ var Nn = {
           >
             ×
           </button>
-        ` : L;
-		return this._isHomeAssistantEditor() ? P`
+        `:Z;return this._isHomeAssistantEditor()?q`
         <div class="field-picker icon-picker">
           <ha-selector
             .hass=${this.hass}
-            .selector=${{ icon: {} }}
-            .value=${e == null ? "" : e}
-            @value-changed=${(e) => {
-			var n;
-			let r = (n = e.detail.value) == null ? void 0 : n.trim();
-			r && t(r);
-		}}
+            .selector=${{icon:{}}}
+            .value=${null!=e?e:""}
+            @value-changed=${e=>{var n;const i=null===(n=e.detail.value)||void 0===n?void 0:n.trim();i&&t(i)}}
           ></ha-selector>
-          ${r}
+          ${i}
         </div>
-      ` : P`
+      `:q`
       <div class="field-picker icon-picker">
         <select
-          .value=${e == null ? "" : e}
-          @change=${(e) => {
-			let n = e.currentTarget.value.trim();
-			n && t(n);
-		}}
+          .value=${null!=e?e:""}
+          @change=${e=>{const n=e.currentTarget.value.trim();n&&t(n)}}
         >
           <option value="">No icon</option>
-          ${Jn.map((t) => P`
-              <option value=${t.value} ?selected=${t.value === e}>
+          ${xn.map(t=>q`
+              <option value=${t.value} ?selected=${t.value===e}>
                 ${t.label}
               </option>
             `)}
         </select>
-        ${r}
+        ${i}
       </div>
-    `;
-	}
-	_isHomeAssistantEditor() {
-		return !!(this.hass && typeof this.hass == "object" && "connection" in this.hass);
-	}
-	_colorInput(e, t, n, r) {
-		return P`
+    `}_isHomeAssistantEditor(){return Boolean(this.hass&&"object"==typeof this.hass&&"connection"in this.hass)}_colorInput(e,t,n,i){return q`
       <label class="color-field">
         <span>${e}</span>
         <div class="color-picker">
           <input
             type="color"
-            .value=${vn(t)}
-            @input=${(e) => n(e.currentTarget.value)}
+            .value=${function(e){return/^#[0-9a-f]{6}$/i.test(null!=e?e:"")?e:lt}(t)}
+            @input=${e=>n(e.currentTarget.value)}
           />
-          ${r ? P`
-                <button type="button" class="field-clear" @click=${r}>
+          ${i?q`
+                <button type="button" class="field-clear" @click=${i}>
                   Reset
                 </button>
-              ` : L}
+              `:Z}
         </div>
       </label>
-    `;
-	}
-	_defaultNodeColor(e, t) {
-		var n, r;
-		if (e.kind === "junction") {
-			var i;
-			return mn(e.id, (i = t.nodes) == null ? [] : i);
-		}
-		let a = ((n = t.links) == null ? [] : n).filter((t) => t.from === e.id || t.to === e.id).map((t) => t.from === e.id ? t.to : t.from).find((e) => {
-			var n, r;
-			return ((n = ((r = t.nodes) == null ? [] : r).find((t) => t.id === e)) == null ? void 0 : n.kind) === "junction";
-		});
-		if (a) {
-			var o, s, c;
-			let e = ((o = t.nodes) == null ? [] : o).find((e) => e.id === a);
-			return (s = e == null ? void 0 : e.color) == null ? mn(a, (c = t.nodes) == null ? [] : c) : s;
-		}
-		return e.icon === "mdi:solar-power" ? Et : (r = e.icon) != null && r.startsWith("mdi:battery") ? Tt : wt;
-	}
-	_nextNodeColor(e, t, n) {
-		var r, i;
-		let a = t.map((e) => {
-			var t;
-			return hn((t = e.color) == null ? this._defaultNodeColor(e, n) : t);
-		}).filter((e) => !!e), o = e === "junction" ? kt[0] : wt;
-		if (a.length === 0) return o;
-		let s = At.filter((e) => !a.includes(e.toLowerCase()));
-		return (r = (i = (s.length > 0 ? s : At).map((e) => ({
-			color: e,
-			distance: Math.min(...a.map((t) => gn(e, t)))
-		})).sort((e, t) => t.distance - e.distance)[0]) == null ? void 0 : i.color) == null ? o : r;
-	}
-	_numberInput(e, t, n) {
-		return P`
+    `}_defaultNodeColor(e,t){var n,i,o;if("junction"===e.kind)return Wt(e.id,null!==(o=t.nodes)&&void 0!==o?o:[]);const r=(null!==(n=t.links)&&void 0!==n?n:[]).filter(t=>t.from===e.id||t.to===e.id).map(t=>t.from===e.id?t.to:t.from).find(e=>{var n,i;return"junction"===(null===(n=(null!==(i=t.nodes)&&void 0!==i?i:[]).find(t=>t.id===e))||void 0===n?void 0:n.kind)});if(r){var s,a,l;const e=(null!==(s=t.nodes)&&void 0!==s?s:[]).find(e=>e.id===r);return null!==(a=null==e?void 0:e.color)&&void 0!==a?a:Wt(r,null!==(l=t.nodes)&&void 0!==l?l:[])}return"mdi:solar-power"===e.icon?ht:(null===(i=e.icon)||void 0===i?void 0:i.startsWith("mdi:battery"))?dt:lt}_nextNodeColor(e,t,n){var i,o;const r=t.map(e=>{var t;return Kt(null!==(t=e.color)&&void 0!==t?t:this._defaultNodeColor(e,n))}).filter(e=>Boolean(e)),s="junction"===e?ut[0]:lt;if(0===r.length)return s;const a=pt.filter(e=>!r.includes(e.toLowerCase()));return null!==(i=null===(o=(a.length>0?a:pt).map(e=>({color:e,distance:Math.min(...r.map(t=>function(e,t){const n=qt(e),i=qt(t);return n&&i?Math.hypot(n.r-i.r,n.g-i.g,n.b-i.b):0}(e,t)))})).sort((e,t)=>t.distance-e.distance)[0])||void 0===o?void 0:o.color)&&void 0!==i?i:s}_numberInput(e,t,n){return q`
       <label>
         <span>${e}</span>
         <input
           type="number"
           .value=${String(Math.round(t))}
-          @input=${(e) => n(Number(e.currentTarget.value))}
+          @input=${e=>n(Number(e.currentTarget.value))}
         />
       </label>
-    `;
-	}
-	_busOptionValue(e, t, n, r) {
-		var i;
-		let a = (i = t.nodes) == null ? [] : i, o = this._busJunctionIds(e, t), s = a.find((e) => o.includes(e.id) && Number.isFinite(e[n])), c = s == null ? void 0 : s[n];
-		return Number.isFinite(c) ? Number(c) : r;
-	}
-	_updateBusOptions(e, t, n) {
-		var r;
-		let i = this._busJunctionIds(t, e);
-		i.length !== 0 && this._patchConfig({ nodes: ((r = e.nodes) == null ? [] : r).map((e) => i.includes(e.id) ? {
-			...e,
-			...n
-		} : e) });
-	}
-	_busJunctionIds(e, t) {
-		var n;
-		let r = (n = t.nodes) == null ? [] : n, i = new Map(r.map((e) => [e.id, e])), a = /* @__PURE__ */ new Set(), o = [e];
-		for (; o.length > 0;) {
-			var s;
-			let e = o.shift();
-			!e || a.has(e) || (a.add(e), ((s = t.links) == null ? [] : s).forEach((t) => {
-				if (t.from !== e && t.to !== e) return;
-				let n = t.from === e ? t.to : t.from;
-				!a.has(n) && i.has(n) && o.push(n);
-			}));
-		}
-		return r.filter((e) => e.kind === "junction" && a.has(e.id)).map((e) => e.id);
-	}
-	_addNode(e) {
-		var t, n, r, i;
-		let a = X(this._config), o = (t = a.nodes) == null ? [] : t, s = this._uniqueNodeId(e, o), c = {
-			id: s,
-			kind: e,
-			label: (n = (r = Yn.find((t) => t.value === e)) == null ? void 0 : r.label) == null ? "Node" : n,
-			icon: sn(e),
-			radius: cn(e),
-			...e === "junction" ? { color: this._nextNodeColor(e, o, a) } : {},
-			flowDirection: "supply",
-			...e === "junction" ? { balance_role: un(e) } : {}
-		};
-		this._patchConfig({
-			nodes: [c, ...o],
-			layout: {
-				...(i = a.layout) == null ? {} : i,
-				[s]: this._initialPoint(e, o.filter((t) => t.kind === e).length)
-			}
-		});
-	}
-	_uniqueNodeId(e, t) {
-		let n = new Set(t.map((e) => e.id)), r = 1;
-		for (; n.has(`${e}-${r}`);) r += 1;
-		return `${e}-${r}`;
-	}
-	_initialPoint(e, t) {
-		return e === "junction" ? {
-			x: 360 + t * 130,
-			y: 348
-		} : {
-			x: 300 + t % 4 * 120,
-			y: 86 + Math.floor(t / 4) * 110
-		};
-	}
-	_duplicateNode(e) {
-		var t, n, r, i, a;
-		let o = X(this._config), s = (t = o.nodes) == null ? [] : t, c = s.find((t) => t.id === e);
-		if (!c) return;
-		let l = this._uniqueDuplicateNodeId(c.id, s), u = (n = (r = o.layout) == null ? void 0 : r[c.id]) == null ? this._initialPoint(c.kind, s.filter((e) => e.kind === c.kind).length) : n, d = {
-			...c,
-			id: l,
-			label: this._duplicateNodeLabel((i = c.label) == null ? c.id : i, s)
-		};
-		this._selectedNode = l, this._patchConfig({
-			nodes: [d, ...s],
-			layout: {
-				...(a = o.layout) == null ? {} : a,
-				[l]: this._duplicatePoint(u)
-			}
-		}), this._syncSelectedNodeEditor(l);
-	}
-	_uniqueDuplicateNodeId(e, t) {
-		let n = new Set(t.map((e) => e.id)), r = 1, i = `${e}-copy`;
-		for (; n.has(i);) r += 1, i = `${e}-copy-${r}`;
-		return i;
-	}
-	_duplicateNodeLabel(e, t) {
-		let n = new Set(t.map((e) => e.label).filter(Boolean)), r = 1, i = `${e} copy`;
-		for (; n.has(i);) r += 1, i = `${e} copy ${r}`;
-		return i;
-	}
-	_duplicatePoint(e) {
-		let t = e.x + 46 > 916 ? e.x - 46 : e.x + 46, n = e.y + 46 > 658 ? e.y - 46 : e.y + 46;
-		return {
-			x: Math.max(70, Math.min(916, t)),
-			y: Math.max(62, Math.min(658, n))
-		};
-	}
-	_updateNode(e, t, n) {
-		var r;
-		this._patchConfig({ nodes: ((r = e.nodes) == null ? [] : r).map((e) => e.id === t ? {
-			...e,
-			...n
-		} : e) });
-	}
-	_reorderedNodeIds(e, t, n, r) {
-		let i = [...r], a = i.indexOf(e), o = i.indexOf(t);
-		if (a < 0 || o < 0 || a === o) return;
-		let [s] = i.splice(a, 1), c = a < o ? o - 1 : o;
-		return n === "after" && (c += 1), i.splice(c, 0, s), i;
-	}
-	_commitNodeOrder(e) {
-		var t;
-		let n = (t = X(this._config).nodes) == null ? [] : t, r = new Map(n.map((e) => [e.id, e])), i = e.map((e) => r.get(e)).filter((e) => !!e), a = n.filter((t) => !e.includes(t.id));
-		this._patchConfig({ nodes: [...i, ...a] });
-	}
-	_handleNodePointerDown(e, t) {
-		var n, r, i;
-		e.button === 0 && (e.preventDefault(), e.stopPropagation(), this._draggedNode = t, this._dragPointerId = e.pointerId, this._dragInsertSide = void 0, this._dragInsertTarget = void 0, this._dragOverNode = void 0, this._dragPreviewOrder = ((n = this._config.nodes) == null ? [] : n).map((e) => e.id), (r = e.currentTarget) == null || (i = r.setPointerCapture) == null || i.call(r, e.pointerId));
-	}
-	_clearNodeDragState() {
-		this._draggedNode = void 0, this._dragPointerId = void 0, this._dragOverNode = void 0, this._dragInsertTarget = void 0, this._dragInsertSide = void 0, this._dragPreviewOrder = void 0;
-	}
-	_removeNode(e) {
-		let t = X(this._config);
-		if (this._selectedNode === e && (this._selectedNode = void 0), this._nodeSectionOpen[e]) {
-			let t = { ...this._nodeSectionOpen };
-			delete t[e], this._nodeSectionOpen = t;
-		}
-		this._patchConfig(pn(t, e));
-	}
-	_handleNodeSectionToggle(e, t, n) {
-		var r;
-		let i = e.currentTarget;
-		i && (this._nodeSectionOpen = {
-			...this._nodeSectionOpen,
-			[t]: {
-				...(r = this._nodeSectionOpen[t]) == null ? {} : r,
-				[n]: i.open
-			}
-		});
-	}
-	_isNodeSectionOpen(e, t, n, r = {}) {
-		var i;
-		let a = (i = this._nodeSectionOpen[e.id]) == null ? void 0 : i[t];
-		return a === void 0 ? r.forceOpen ? !0 : this._defaultNodeSectionOpen(e, t, n) : a;
-	}
-	_defaultNodeSectionOpen(e, t, n) {
-		switch (t) {
-			case "appearance": return !0;
-			default: return !1;
-		}
-	}
-	_patchConfig(e) {
-		this._config = X({
-			...this._config,
-			...e
-		}), wn(this, this._config);
-	}
-};
-qn = ar, qn.properties = {
-	config: { attribute: !1 },
-	_config: { state: !0 },
-	_dragInsertSide: { state: !0 },
-	_dragInsertTarget: { state: !0 },
-	_dragPreviewOrder: { state: !0 },
-	_dragOverNode: { state: !0 },
-	_draggedNode: { state: !0 },
-	_selectedNode: { state: !0 },
-	hass: { attribute: !1 }
-}, qn.styles = o`
+    `}_busOptionValue(e,t,n,i){var o;const r=null!==(o=t.nodes)&&void 0!==o?o:[],s=this._busJunctionIds(e,t),a=r.find(e=>s.includes(e.id)&&Number.isFinite(e[n])),l=null==a?void 0:a[n];return Number.isFinite(l)?Number(l):i}_updateBusOptions(e,t,n){var i;const o=this._busJunctionIds(t,e);0!==o.length&&this._patchConfig({nodes:(null!==(i=e.nodes)&&void 0!==i?i:[]).map(e=>o.includes(e.id)?{...e,...n}:e)})}_busJunctionIds(e,t){var n;const i=null!==(n=t.nodes)&&void 0!==n?n:[],o=new Map(i.map(e=>[e.id,e])),r=/* @__PURE__ */new Set,s=[e];for(;s.length>0;){var a;const e=s.shift();e&&!r.has(e)&&(r.add(e),(null!==(a=t.links)&&void 0!==a?a:[]).forEach(t=>{if(t.from!==e&&t.to!==e)return;const n=t.from===e?t.to:t.from;!r.has(n)&&o.has(n)&&s.push(n)}))}return i.filter(e=>"junction"===e.kind&&r.has(e.id)).map(e=>e.id)}_addNode(e){var t,n,i,o;const r=mt(this._config),s=null!==(t=r.nodes)&&void 0!==t?t:[],a=this._uniqueNodeId(e,s),l={id:a,kind:e,label:null!==(n=null===(i=$n.find(t=>t.value===e))||void 0===i?void 0:i.label)&&void 0!==n?n:"Node",icon:Jt(e),radius:Bt(e),..."junction"===e?{color:this._nextNodeColor(e,s,r)}:{},flowDirection:"supply",..."junction"===e?{balance_role:Ut(e)}:{}};this._patchConfig({nodes:[l,...s],layout:{...null!==(o=r.layout)&&void 0!==o?o:{},[a]:this._initialPoint(e,s.filter(t=>t.kind===e).length)}})}_uniqueNodeId(e,t){const n=new Set(t.map(e=>e.id));let i=1;for(;n.has(`${e}-${i}`);)i+=1;return`${e}-${i}`}_initialPoint(e,t){return"junction"===e?{x:360+130*t,y:348}:{x:300+t%4*120,y:86+110*Math.floor(t/4)}}_duplicateNode(e){var t,n,i,o,r;const s=mt(this._config),a=null!==(t=s.nodes)&&void 0!==t?t:[],l=a.find(t=>t.id===e);if(!l)return;const d=this._uniqueDuplicateNodeId(l.id,a),h=null!==(n=null===(i=s.layout)||void 0===i?void 0:i[l.id])&&void 0!==n?n:this._initialPoint(l.kind,a.filter(e=>e.kind===l.kind).length),c={...l,id:d,label:this._duplicateNodeLabel(null!==(o=l.label)&&void 0!==o?o:l.id,a)};this._selectedNode=d,this._patchConfig({nodes:[c,...a],layout:{...null!==(r=s.layout)&&void 0!==r?r:{},[d]:this._duplicatePoint(h)}}),this._syncSelectedNodeEditor(d)}_uniqueDuplicateNodeId(e,t){const n=new Set(t.map(e=>e.id));let i=1,o=`${e}-copy`;for(;n.has(o);)i+=1,o=`${e}-copy-${i}`;return o}_duplicateNodeLabel(e,t){const n=new Set(t.map(e=>e.label).filter(Boolean));let i=1,o=`${e} copy`;for(;n.has(o);)i+=1,o=`${e} copy ${i}`;return o}_duplicatePoint(e){const t=46,n=e.x+t>916?e.x-t:e.x+t,i=e.y+t>658?e.y-t:e.y+t;return{x:Math.max(70,Math.min(916,n)),y:Math.max(62,Math.min(658,i))}}_updateNode(e,t,n){var i;this._patchConfig({nodes:(null!==(i=e.nodes)&&void 0!==i?i:[]).map(e=>e.id===t?{...e,...n}:e)})}_reorderedNodeIds(e,t,n,i){const o=[...i],r=o.indexOf(e),s=o.indexOf(t);if(r<0||s<0||r===s)return;const[a]=o.splice(r,1);let l=r<s?s-1:s;return"after"===n&&(l+=1),o.splice(l,0,a),o}_commitNodeOrder(e){var t;const n=null!==(t=mt(this._config).nodes)&&void 0!==t?t:[],i=new Map(n.map(e=>[e.id,e])),o=e.map(e=>i.get(e)).filter(e=>Boolean(e)),r=n.filter(t=>!e.includes(t.id));this._patchConfig({nodes:[...o,...r]})}_handleNodePointerDown(e,t){var n,i,o;0===e.button&&(e.preventDefault(),e.stopPropagation(),this._draggedNode=t,this._dragPointerId=e.pointerId,this._dragInsertSide=void 0,this._dragInsertTarget=void 0,this._dragOverNode=void 0,this._dragPreviewOrder=(null!==(n=this._config.nodes)&&void 0!==n?n:[]).map(e=>e.id),null===(i=e.currentTarget)||void 0===i||null===(o=i.setPointerCapture)||void 0===o||o.call(i,e.pointerId))}_clearNodeDragState(){this._draggedNode=void 0,this._dragPointerId=void 0,this._dragOverNode=void 0,this._dragInsertTarget=void 0,this._dragInsertSide=void 0,this._dragPreviewOrder=void 0}_removeNode(e){const t=mt(this._config);if(this._selectedNode===e&&(this._selectedNode=void 0),this._nodeSectionOpen[e]){const t={...this._nodeSectionOpen};delete t[e],this._nodeSectionOpen=t}this._patchConfig(Gt(t,e))}_handleNodeSectionToggle(e,t,n){var i;const o=e.currentTarget;o&&(this._nodeSectionOpen={...this._nodeSectionOpen,[t]:{...null!==(i=this._nodeSectionOpen[t])&&void 0!==i?i:{},[n]:o.open}})}_isNodeSectionOpen(e,t,n,i={}){var o;const r=null===(o=this._nodeSectionOpen[e.id])||void 0===o?void 0:o[t];return void 0!==r?r:!!i.forceOpen||this._defaultNodeSectionOpen(e,t,n)}_defaultNodeSectionOpen(e,t,n){return"appearance"===t}_patchConfig(e){this._config=mt({...this._config,...e}),on(this,this._config)}};(dn=Sn).properties={config:{attribute:!1},_config:{state:!0},_dragInsertSide:{state:!0},_dragInsertTarget:{state:!0},_dragPreviewOrder:{state:!0},_dragOverNode:{state:!0},_draggedNode:{state:!0},_selectedNode:{state:!0},hass:{attribute:!1}},dn.styles=d`
     :host {
       display: block;
       max-width: 100%;
@@ -5551,5 +1659,4 @@ qn = ar, qn.properties = {
       border-color: #d7aaa3;
       color: #8f3329;
     }
-  `, customElements.get("home-flow-card-editor") || customElements.define("home-flow-card-editor", ar);
-//#endregion
+  `,customElements.get("home-flow-card-editor")||customElements.define("home-flow-card-editor",Sn);

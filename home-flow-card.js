@@ -370,7 +370,7 @@ var e,t,n,i,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.native
         ${a?this._renderNodeIcons(e,b):Z}
         ${this._renderNodeFlowArrow(e,b)}
         ${p.length>0?this._renderTextLines(`${this._textLineClass("node-value",p,e)} ${b}`.trim(),p,g,e,0,_):Z}
-        ${f.length>0?this._renderTextLines(this._textLineClass("node-secondary",f,e),f,y,e,0,_):Z}
+        ${f.length>0?this._renderTextLines(`${this._textLineClass("node-secondary",f,e)} ${b}`.trim(),f,y,e,0,_):Z}
         ${f.length>0?this._renderSecondaryActionHitArea(e,f,y):Z}
       </g>
     `}_activeHighlightClass(e,t,n){var i;if(!e.highlightWhenActive)return"";const o=Math.abs(this.host._nodeDisplayValue(e,t,n)),r=Math.max(0,null!==(i=e.activeFrom)&&void 0!==i?i:1);return"node-active-target "+(o>0&&o>=r?"is-active":"is-inactive")}_nodePrimaryTextY(e,t,n,i,o){return t?i?"leaf"===e.kind?n?this._radiusLerp(e.radius,-20,-30):this._radiusLerp(e.radius,-18,-28):n?this._radiusLerp(e.radius,-28,-42):this._radiusLerp(e.radius,-22,-34):0:o&&i?this._radiusLerp(e.radius,-12,-18):0}_nodeSecondaryTextY(e,t,n,i,o){return t?o?"leaf"===e.kind?this._radiusLerp(e.radius,34,47):this._radiusLerp(e.radius,27,40):0:i&&o?this._radiusLerp(e.radius,12,18):0}_renderNodeLabel(e,t,n){const i=e.label.trim();if(!i)return Z;if("straight"===this.host.labelStyle){const o=this._nodeStraightLabelPoint(e,t,n),r=we(i,o,986,this.host._labelTextMeasurer),s=31,a=function(e,t,n){return"top"===e.className?e.y-(t-1)*n:"bottom"===e.className?e.y:e.y-(t-1)*n/2}(o,r.length,s);return Y`
@@ -484,7 +484,7 @@ var e,t,n,i,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.native
                   y=${718}
                   text-anchor="end"
                   aria-hidden="true"
-                >${"2026-07-13 20:56Z"}</text>
+                >${"2026-07-14 10:13Z"}</text>
               `:Z}
         </svg>
       </section>

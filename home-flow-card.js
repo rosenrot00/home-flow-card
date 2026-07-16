@@ -29,7 +29,7 @@ var e,t,i,n,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.native
       color: var(--primary-text-color, #17211c);
       outline: none;
       overflow: visible;
-      touch-action: none;
+      touch-action: auto;
     }
 
     .graph-build-version {
@@ -128,8 +128,13 @@ var e,t,i,n,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.native
       color: var(--primary-text-color, #17211c);
       cursor: grab;
       outline: none;
-      touch-action: none;
       user-select: none;
+    }
+
+    .editable .node,
+    .node-hit-proxy,
+    .label-handle-hit {
+      touch-action: none;
     }
 
     .node.dragging {
@@ -484,7 +489,7 @@ var e,t,i,n,o=globalThis,r=o.ShadowRoot&&(void 0===o.ShadyCSS||o.ShadyCSS.native
                   y=${718}
                   text-anchor="end"
                   aria-hidden="true"
-                >${"2026-07-15 13:14Z"}</text>
+                >${"2026-07-16 15:05Z"}</text>
               `:Z}
         </svg>
       </section>
